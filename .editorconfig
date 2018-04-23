@@ -1,0 +1,19 @@
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+end_of_line = lf
+insert_final_newline = true
+charset = utf-8
+indent_style = tab
+
+# Indentation override for all everything under lib directory
+[lib/**]
+indent_style = space
+indent_size = 4
+
+# Different indentaion rules for JSON files
+[*.{json}]
+indent_style = space
+indent_size = 2
