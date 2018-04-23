@@ -24,7 +24,13 @@ router.get('/', (req, res, next) => {
 				// Start forming the response, which will be a JSON object.
 				let fields = _.map(filtered, row => {
 					let field = row.split(':');
-					return { key: field[0], value: field[1] };
+					let key = field[0];
+
+					// Some fields contain URLs, so they were split multiple
+					// times. This will stitch them back together.
+					let value = _.join(_.tail(field), ':');
+
+					return { key, value };
 				});
 				response.fields = fields;
 
