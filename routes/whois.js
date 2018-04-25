@@ -30,7 +30,11 @@ router.get('/', (req, res, next) => {
 					// times. This will stitch them back together.
 					let value = _.join(_.tail(field), ':');
 
-					return { key, value };
+					// Add some stuff to be used by the template.
+					let id = _.snakeCase(_.lowerCase(key));
+					let htmlClass = _.kebabCase(_.lowerCase(key));
+
+					return { id, htmlClass, key, value };
 				});
 				response.fields = fields;
 
