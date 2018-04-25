@@ -44,8 +44,8 @@
 				<div class="card-body">
 					<dl class="row mb-0">
 						{{#each response.fields}}
-						<dt class="col-sm-4">{{key}}</dt>
-						<dd class="col-sm-8">{{value}}</dd>
+						<dt class="col-sm-4 {{htmlClass}}" id="{{id}}_key">{{key}}</dt>
+						<dd class="col-sm-8 {{htmlClass}}" id="{{id}}_value">{{value}}</dd>
 						{{/each}}
 					</dl>
 				</div>
