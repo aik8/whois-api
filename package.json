@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prestart": "npm install",
-    "start": "cross-env DEBUG=\"whois:*\" nodemon ./bin/www"
+    "predev": "npm install",
+		"dev": "cross-env DEBUG=\"whois:*\" nodemon ./bin/www",
+		"start": "node ./bin/www"
   },
   "dependencies": {
     "axios": "^0.18.0",
