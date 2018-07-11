@@ -6,7 +6,7 @@ const JSDOM = jsdom.JSDOM;
 const _ = require('lodash');
 
 router.get('/', (req, res, next) => {
-	axios.get(`http://grwhois.ics.forth.gr:800/plainwhois/plainWhois?domainName=${req.query.domain}`)
+	axios.get(`https://grwhois.ics.forth.gr:800/plainwhois/plainWhois?domainName=${req.query.domain}`)
 		.then(response => response.data) // Extract the data from the response.
 		.then(response => new JSDOM(response)) // Parse the HTML in the response.
 		.then(dom => {
