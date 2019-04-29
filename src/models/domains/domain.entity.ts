@@ -1,7 +1,8 @@
 import { Column, Model, Table } from 'sequelize-typescript';
 
 @Table({
-	timestamps: true
+	timestamps: true,
+	tableName: 'domains'
 })
 export class Domain extends Model<Domain> {
 	@Column
