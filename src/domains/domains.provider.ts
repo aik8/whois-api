@@ -1,4 +1,4 @@
-import { Domain } from './domain.entity';
+import { Domain } from '../models/domain.entity';
 
 export const domainsProviders = [
 	{

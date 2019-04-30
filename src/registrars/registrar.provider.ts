@@ -1,4 +1,4 @@
-import { Registrar } from './registrar.entity';
+import { Registrar } from '../models/registrar.entity';
 
 export const registrarProviders = [
 	{

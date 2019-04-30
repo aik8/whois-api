@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { Registrar } from './registrar.entity';
+import { Registrar } from '../models/registrar.entity';
 import { CreateRegistrarDto } from './dto/create-registrar.dto';
 
 @Injectable()

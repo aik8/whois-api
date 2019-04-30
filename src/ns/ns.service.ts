@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { NameServer } from './ns.entity';
+import { NameServer } from '../models/ns.entity';
 import { NameServerDto } from './dto/ns.dto';
 
 @Injectable()

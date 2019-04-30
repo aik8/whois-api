@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get } from '@nestjs/common';
 import { NameServersService } from './ns.service';
 import { NameServerDto } from './dto/ns.dto';
-import { NameServer } from './ns.entity';
+import { NameServer } from '../models/ns.entity';
 
 @Controller('ns')
 export class NameServerController {

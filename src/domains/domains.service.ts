@@ -1,5 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { Domain } from './domain.entity';
+import { Domain } from '../models/domain.entity';
 import { CreateDomainDto } from './dto/create-domain.dto';
 
 @Injectable()

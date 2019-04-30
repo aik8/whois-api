@@ -1,9 +1,9 @@
 import { Sequelize } from 'sequelize-typescript';
-import { Domain } from '../models/domains/domain.entity';
-import { Snapshot } from 'src/models/snapshots/snapshot.entity';
-import { Registrar } from 'src/models/registrars/registrar.entity';
-import { NameServer } from 'src/models/ns/ns.entity';
-import { SnapshotNameservers } from 'src/models/snapshots/snapshot-ns.entity';
+import { Domain } from '../models/domain.entity';
+import { Snapshot } from 'src/models/snapshot.entity';
+import { Registrar } from 'src/models/registrar.entity';
+import { NameServer } from 'src/models/ns.entity';
+import { SnapshotNameservers } from 'src/models/snapshot-ns.entity';
 
 export const databaseProviders = [
 	{

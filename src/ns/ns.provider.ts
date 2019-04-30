@@ -1,4 +1,4 @@
-import { NameServer } from './ns.entity';
+import { NameServer } from '../models/ns.entity';
 
 export const nsProviders = [
 	{

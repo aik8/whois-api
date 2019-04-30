@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get } from '@nestjs/common';
 import { DomainsService } from './domains.service';
 import { CreateDomainDto } from './dto/create-domain.dto';
-import { Domain } from './domain.entity';
+import { Domain } from '../models/domain.entity';
 
 @Controller('domains')
 export class DomainsController {
