@@ -9,14 +9,8 @@ export const databaseProviders = [
 	{
 		provide: 'SEQUELIZE',
 		useFactory: async () => {
-			const sequelize = new Sequelize({
-				operatorsAliases: false,
-				dialect: 'mariadb',
-				host: 'localhost',
-				port: 3306,
-				username: 'whois',
-				password: 'siohw',
-				database: 'whois'
+			const sequelize = new Sequelize('whois', 'whois', 'siohw', {
+				dialect: 'mariadb'
 			});
 
 			sequelize.addModels([
@@ -30,7 +24,7 @@ export const databaseProviders = [
 			Domain.hasMany(Snapshot, { as: 'snapshots' });
 			Snapshot.hasOne(Registrar, { as: 'registrar' });
 
-			Snapshot.belongsToMany(NameServer, { through: { model: SnapshotNameservers }});
+			Snapshot.belongsToMany(NameServer, { through: { model: SnapshotNameservers } });
 			NameServer.belongsToMany(Snapshot, { through: SnapshotNameservers });
 
 			await sequelize.sync();
