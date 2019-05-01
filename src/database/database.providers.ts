@@ -24,7 +24,7 @@ export const databaseProviders = [
 			Domain.hasMany(Snapshot, { as: 'snapshots' });
 			Snapshot.hasOne(Registrar, { as: 'registrar' });
 
-			Snapshot.belongsToMany(NameServer, { through: { model: SnapshotNameservers } });
+			Snapshot.belongsToMany(NameServer, { through: SnapshotNameservers });
 			NameServer.belongsToMany(Snapshot, { through: SnapshotNameservers });
 
 			await sequelize.sync();
