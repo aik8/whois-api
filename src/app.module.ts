@@ -4,12 +4,14 @@ import { AppService } from './app.service';
 import { DomainsModule } from './domains/domains.module';
 import { NameServersModule } from './ns/ns.module';
 import { RegistrarsModule } from './registrars/registrars.module';
+import { SnapshotsModule } from './snapshots/snapshots.module';
 
 @Module({
 	imports: [
 		DomainsModule,
 		NameServersModule,
-		RegistrarsModule
+		RegistrarsModule,
+		SnapshotsModule
 	],
 	controllers: [AppController],
 	providers: [AppService],
