@@ -5,13 +5,20 @@ import { Registrar } from 'src/models/registrar.entity';
 import { NameServer } from 'src/models/ns.entity';
 import { SnapshotNameservers } from 'src/models/snapshot-ns.entity';
 
+import { config } from '../config';
+
 export const databaseProviders = [
 	{
 		provide: 'SEQUELIZE',
 		useFactory: async () => {
-			const sequelize = new Sequelize('whois', 'whois', 'siohw', {
-				dialect: 'mariadb'
-			});
+			const sequelize = new Sequelize(
+				config.database.schema,
+				config.database.user,
+				config.database.password,
+				{
+					dialect: 'mariadb'
+				}
+			);
 
 			sequelize.addModels([
 				Domain,
