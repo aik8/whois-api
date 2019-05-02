@@ -6,7 +6,11 @@ import { NameServersModule } from './ns/ns.module';
 import { RegistrarsModule } from './registrars/registrars.module';
 
 @Module({
-	imports: [DomainsModule, NameServersModule, RegistrarsModule],
+	imports: [
+		DomainsModule,
+		NameServersModule,
+		RegistrarsModule
+	],
 	controllers: [AppController],
 	providers: [AppService],
 })

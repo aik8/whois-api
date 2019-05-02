@@ -12,4 +12,8 @@ export class RegistrarsService {
 
 		return await registrar.save();
 	}
+
+	async findAll(): Promise<Registrar[]> {
+		return await this.registrarsRepository.findAll<Registrar>();
+	}
 }
