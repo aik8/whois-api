@@ -5,7 +5,7 @@ import { Domain } from '../models/domain.entity';
 
 @Controller('domains')
 export class DomainsController {
-	constructor(private readonly domainsService: DomainsService) {}
+	constructor(private readonly domainsService: DomainsService) { }
 
 	@Post()
 	async create(@Body() createDomainDto: CreateDomainDto) {

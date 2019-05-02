@@ -6,7 +6,7 @@ import { CreateDomainDto } from './dto/create-domain.dto';
 export class DomainsService {
 	constructor(
 		@Inject('DOMAINS_REPOSITORY') private readonly domainsRepository: typeof Domain
-	) {}
+	) { }
 
 	async create(createDomainDto: CreateDomainDto): Promise<Domain> {
 		const domain = new Domain();
