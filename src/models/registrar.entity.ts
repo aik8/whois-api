@@ -1,19 +1,32 @@
-import { Table, Column, Model } from 'sequelize-typescript';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, VersionColumn, OneToMany } from 'typeorm';
+import { Snapshot } from './snapshot.entity';
 
-@Table({
-	timestamps: true,
-	tableName: 'registrars'
-})
-export class Registrar extends Model<Registrar> {
-	@Column
+@Entity()
+export class Registrar {
+	@PrimaryGeneratedColumn()
+	id: number;
+
+	@Column('varchar', { length: 45 })
 	name: string;
 
-	@Column
+	@Column()
 	url: string;
 
-	@Column
+	@Column()
 	email: string;
 
-	@Column
+	@Column()
 	phone: string;
+
+	@OneToMany(type => Snapshot, snapshot => snapshot.registrar)
+	snapshots: Snapshot[];
+
+	@CreateDateColumn()
+	created_at: Date;
+
+	@UpdateDateColumn()
+	updated_at: Date;
+
+	@VersionColumn()
+	version: number;
 }
