@@ -1,15 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, ManyToOne } from 'typeorm';
-
+import { CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Domain } from './domain.entity';
 import { NameServer } from './name-server.entity';
 import { Registrar } from './registrar.entity';
-import { Domain } from './domain.entity';
+
 
 @Entity()
 export class Snapshot {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column()
+	@CreateDateColumn()
 	timestamp: Date;
 
 	@ManyToMany(type => NameServer)

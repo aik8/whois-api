@@ -1,11 +1,16 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { Snapshot } from 'src/models/snapshot.entity';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Snapshot } from '../models/snapshot.entity';
 
 @Injectable()
 export class SnapshotsService {
-	constructor(@Inject('SNAPSHOTS_REPOSITORY') private readonly snapshotsRepository: typeof Snapshot) { }
+	constructor(
+		@InjectRepository(Snapshot)
+		private readonly snapshotsRepository: Repository<Snapshot>
+	) { }
 
-	async findAll(): Promise<Snapshot[]> {
-		return await this.snapshotsRepository.findAll<Snapshot>();
+	findAll(): Promise<Snapshot[]> {
+		return this.snapshotsRepository.find();
 	}
 }

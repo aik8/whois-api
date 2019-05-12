@@ -1,19 +1,23 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+
 import { Registrar } from '../models/registrar.entity';
 import { CreateRegistrarDto } from './dto/create-registrar.dto';
 
 @Injectable()
 export class RegistrarsService {
-	constructor(@Inject('REGISTRARS_REPOSITORY') private readonly registrarsRepository: typeof Registrar) { }
+	constructor(
+		@InjectRepository(Registrar)
+		private readonly registrarRepository: Repository<Registrar>
+	) { }
 
-	async create(createRegistrarDto: CreateRegistrarDto): Promise<Registrar> {
-		const registrar = new Registrar();
-		registrar.name = createRegistrarDto.name;
-
-		return await registrar.save();
+	findAll(): Promise<Registrar[]> {
+		return this.registrarRepository.find();
 	}
 
-	async findAll(): Promise<Registrar[]> {
-		return await this.registrarsRepository.findAll<Registrar>();
+	create(createRegistrarDto: CreateRegistrarDto): Promise<Registrar> {
+		const registrar = this.registrarRepository.create(createRegistrarDto);
+		return this.registrarRepository.save(registrar);
 	}
 }

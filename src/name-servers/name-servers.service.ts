@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { NameServer } from '../models/name-server.entity';
-import { NameServerDto } from 'dist/src/ns/dto/ns.dto';
+import { NameServerDto } from './dto/name-server.dto';
+
 
 @Injectable()
 export class NameServersService {
@@ -14,5 +15,10 @@ export class NameServersService {
 
 	findAll(): Promise<NameServer[]> {
 		return this.nameServerRepository.find();
+	}
+
+	create(nameServer: NameServerDto): Promise<NameServer> {
+		const ns = this.nameServerRepository.create(nameServer);
+		return this.nameServerRepository.save(ns);
 	}
 }

@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from 'src/database/database.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { RegistrarsController } from './registrars.controller';
 import { RegistrarsService } from './registrars.services';
-import { registrarProviders } from './registrars.provider';
+import { Registrar } from '../models/registrar.entity';
 
 @Module({
-	imports: [DatabaseModule],
+	imports: [TypeOrmModule.forFeature([Registrar])],
 	controllers: [RegistrarsController],
-	providers: [RegistrarsService, ...registrarProviders]
+	providers: [RegistrarsService]
 })
 export class RegistrarsModule { }

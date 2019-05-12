@@ -1,11 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 
 @Entity()
 export class NameServer {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column('varchar', { length: 45 })
+	@Column('varchar', { length: 45, unique: true })
 	name: string;
 
 	@CreateDateColumn()

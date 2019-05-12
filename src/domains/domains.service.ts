@@ -1,21 +1,16 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
 import { Domain } from '../models/domain.entity';
-import { CreateDomainDto } from './dto/create-domain.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DomainsService {
 	constructor(
-		@Inject('DOMAINS_REPOSITORY') private readonly domainsRepository: typeof Domain
+		@InjectRepository(Domain)
+		private readonly domainsRepository: Repository<Domain>
 	) { }
 
-	async create(createDomainDto: CreateDomainDto): Promise<Domain> {
-		const domain = new Domain();
-		domain.name = createDomainDto.name;
-
-		return await domain.save();
-	}
-
-	async findAll(): Promise<Domain[]> {
-		return await this.domainsRepository.findAll<Domain>();
+	findAll(): Promise<Domain[]> {
+		return this.domainsRepository.find();
 	}
 }

@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from 'src/database/database.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Domain } from '../models/domain.entity';
 import { DomainsController } from './domains.controller';
 import { DomainsService } from './domains.service';
-import { domainsProviders } from './domains.provider';
 
 @Module({
-	imports: [DatabaseModule],
+	imports: [TypeOrmModule.forFeature([Domain])],
 	controllers: [DomainsController],
-	providers: [DomainsService, ...domainsProviders]
+	providers: [DomainsService]
 })
 export class DomainsModule { }

@@ -1,21 +1,22 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, VersionColumn, OneToMany } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { Snapshot } from './snapshot.entity';
+
 
 @Entity()
 export class Registrar {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column('varchar', { length: 45 })
+	@Column('varchar', { length: 45, unique: true })
 	name: string;
 
-	@Column()
+	@Column({ nullable: true })
 	url: string;
 
-	@Column()
+	@Column({ nullable: true })
 	email: string;
 
-	@Column()
+	@Column({ nullable: true })
 	phone: string;
 
 	@OneToMany(type => Snapshot, snapshot => snapshot.registrar)
