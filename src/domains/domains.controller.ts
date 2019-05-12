@@ -1,13 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
-import { Domain } from '../models/domain.entity';
+import { Controller } from '@nestjs/common';
+import { Crud } from '@nestjsx/crud';
+import { Domain } from 'src/models/domain.entity';
 import { DomainsService } from './domains.service';
 
+@Crud(Domain)
 @Controller('domains')
 export class DomainsController {
-	constructor(private readonly domainsService: DomainsService) { }
-
-	@Get()
-	async findAll(): Promise<Domain[]> {
-		return this.domainsService.findAll();
-	}
+	constructor(public service: DomainsService) { }
 }

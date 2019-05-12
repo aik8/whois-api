@@ -1,16 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { Domain } from '../models/domain.entity';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { RepositoryService } from '@nestjsx/crud/typeorm';
+import { Repository } from 'typeorm';
+import { Domain } from 'src/models/domain.entity';
 
 @Injectable()
-export class DomainsService {
-	constructor(
-		@InjectRepository(Domain)
-		private readonly domainsRepository: Repository<Domain>
-	) { }
-
-	findAll(): Promise<Domain[]> {
-		return this.domainsRepository.find();
+export class DomainsService extends RepositoryService<Domain> {
+	constructor(@InjectRepository(Domain) repo: Repository<Domain>) {
+		super(repo);
 	}
 }

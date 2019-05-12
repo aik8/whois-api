@@ -1,15 +1,10 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
-
-import { RegistrarsService } from './registrars.services';
-import { CreateRegistrarDto } from './dto/create-registrar.dto';
+import { Controller, Get } from '@nestjs/common';
+import { Crud } from '@nestjsx/crud';
 import { Registrar } from 'src/models/registrar.entity';
+import { RegistrarsService } from './registrars.service';
 
+@Crud(Registrar)
 @Controller('registrars')
 export class RegistrarsController {
-	constructor(private readonly registrarsService: RegistrarsService) {}
-
-	@Get()
-	async findAll(): Promise<Registrar[]> {
-		return await this.registrarsService.findAll();
-	}
+	constructor(public service: RegistrarsService) {}
 }
