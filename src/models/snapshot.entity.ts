@@ -1,4 +1,4 @@
-import { CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { Domain } from './domain.entity';
 import { NameServer } from './name-server.entity';
 import { Registrar } from './registrar.entity';
@@ -12,11 +12,14 @@ export class Snapshot {
 	@CreateDateColumn()
 	timestamp: Date;
 
+	@Column({ nullable: false, default: false })
+	registered: boolean;
+
 	@ManyToMany(type => NameServer)
 	@JoinTable()
 	nameServers: NameServer[];
 
-	@ManyToOne(type => Registrar, registrar => registrar.snapshots)
+	@ManyToOne(type => Registrar, registrar => registrar.snapshots, { eager: true })
 	registrar: Registrar;
 
 	@ManyToOne(type => Domain, domain => domain.snapshots)

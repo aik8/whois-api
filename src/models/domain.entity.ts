@@ -22,6 +22,9 @@ export class Domain {
 	@Column()
 	last_update: Date;
 
+	@Column({ nullable: false, default: false })
+	registered: boolean;
+
 	@OneToMany(type => Snapshot, snapshot => snapshot.domain)
 	snapshots: Snapshot[];
 
