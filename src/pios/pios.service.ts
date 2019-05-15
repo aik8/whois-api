@@ -9,12 +9,10 @@ import { NameServer } from '../models/name-server.entity';
 import { Registrar } from '../models/registrar.entity';
 import { PiosResult } from './pios-result';
 
-
 @Injectable()
 export class PiosService {
 	query(domain: string): Promise<PiosResult | null> {
 		const url = new URL(`https://grwhois.ics.forth.gr:800/plainwhois/plainWhois?domainName=${domain}`);
-
 		return axios.default.get(url.href).then(this.parseResponse);
 	}
 
@@ -71,7 +69,7 @@ export class PiosService {
 
 			/* Name Servers */
 			for (let i = 12; i < fields.length; i ++) {
-				let j = result.nameServers.push(new NameServer());
+				const j = result.nameServers.push(new NameServer());
 				result.nameServers[j - 1].name = fields[i].value;
 			}
 		} else {

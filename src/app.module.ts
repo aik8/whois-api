@@ -6,6 +6,7 @@ import { DomainsModule } from './domains/domains.module';
 import { NameServersModule } from './name-servers/name-servers.module';
 import { RegistrarsModule } from './registrars/registrars.module';
 import { SnapshotsModule } from './snapshots/snapshots.module';
+import { PiosModule } from './pios/pios.module';
 
 
 @Module({
@@ -14,7 +15,8 @@ import { SnapshotsModule } from './snapshots/snapshots.module';
 		NameServersModule,
 		RegistrarsModule,
 		DomainsModule,
-		SnapshotsModule
+		SnapshotsModule,
+		PiosModule
 	],
 	controllers: [AppController],
 	providers: [AppService],
