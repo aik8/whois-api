@@ -10,16 +10,19 @@ export class Domain {
 	@Column()
 	name: string;
 
-	@Column()
+	@Column({ nullable: true })
 	handle: string;
 
-	@Column()
+	@Column({ nullable: true })
+	protonum: number;
+
+	@Column({ nullable: true })
 	creation: Date;
 
-	@Column()
+	@Column({ nullable: true })
 	expiration: Date;
 
-	@Column()
+	@Column({ nullable: true })
 	last_update: Date;
 
 	@Column({ nullable: false, default: false })
