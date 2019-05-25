@@ -7,22 +7,26 @@ import { URL } from 'url';
 import { Domain } from '../models/domain.entity';
 import { NameServer } from '../models/name-server.entity';
 import { Registrar } from '../models/registrar.entity';
-import { PiosResult } from './pios-result';
+import { PiosPositiveResult, PiosNegativeResult } from './pios-result';
 
 @Injectable()
 export class PiosService {
-	query(domain: string): Promise<PiosResult | null> {
+	query(domain: string): Promise<PiosPositiveResult | PiosNegativeResult> {
 		const url = new URL(`https://grwhois.ics.forth.gr:800/plainwhois/plainWhois?domainName=${domain}`);
-		return axios.default.get(url.href).then(this.parseResponse);
+		return axios.default.get(url.href)
+			.then(this.parseResponse)
+			.then(result => result ? result : this.createNegativeResult(domain));
 	}
 
-	private parseResponse(response: axios.AxiosResponse<any>): PiosResult | null {
+	private parseResponse(response: axios.AxiosResponse<any>): PiosPositiveResult | null {
 		// Parse the HTML in the response.
 		const dom = new jsdom.JSDOM(response.data);
 
 		// Get the contents of body, removing all new line chars.
 		const html = _.replace(dom.window.document.body.innerHTML, /\n/gm, '');
-		let result: PiosResult = {
+
+		// Create an empty result (yes, we are optimists).
+		let result: PiosPositiveResult = {
 			domain: new Domain(),
 			registrar: new Registrar(),
 			nameServers: new Array<NameServer>()
@@ -60,6 +64,7 @@ export class PiosService {
 			result.domain.creation = creation;         // Creation Date
 			result.domain.expiration = expiration;     // Expiration Date
 			result.domain.last_update = updated;       // Updated Date
+			result.domain.registered = true;           // Apparently....
 
 			/* Current Registrar */
 			result.registrar.name = fields[6].value;   // Registrar
@@ -68,7 +73,7 @@ export class PiosService {
 			result.registrar.phone = fields[9].value;  // Registrar Telephone
 
 			/* Name Servers */
-			for (let i = 12; i < fields.length; i ++) {
+			for (let i = 12; i < fields.length; i++) {
 				const j = result.nameServers.push(new NameServer());
 				result.nameServers[j - 1].name = fields[i].value;
 			}
@@ -79,5 +84,9 @@ export class PiosService {
 		}
 
 		return result;
+	}
+
+	private createNegativeResult(name: string): PiosNegativeResult {
+		return { domain: { name, registered: false } };
 	}
 }

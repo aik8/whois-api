@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { PiosService } from './pios.service';
-import { SnapshotsService } from 'src/snapshots/snapshots.service';
+import { SnapshotsService } from '../snapshots/snapshots.service';
 
 @Controller('pios')
 export class PiosController {
@@ -11,7 +11,6 @@ export class PiosController {
 
 	@Get()
 	pios(@Query('domain') domain: string) {
-		return this.$pios.query(domain)
-			.then(res => res ? res : { domain: { name: domain, registered: false } });
+		return this.$pios.query(domain);
 	}
 }
