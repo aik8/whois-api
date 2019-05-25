@@ -5,6 +5,9 @@
   "username": "whois",
   "password": "siohw",
   "database": "whois",
-  "entities": ["src/**/*.entity{.ts,.js}"],
-  "synchronize": true
+	"entities": ["src/**/*.entity{.ts,.js}"],
+	"migrations": ["migration/{.ts,.js}"],
+	"cli": {
+		"migrationsDir": "migration"
+	}
 }
