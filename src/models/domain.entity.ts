@@ -14,7 +14,7 @@ export class Domain {
 	handle: string;
 
 	@Column({ nullable: true })
-	protonum: number;
+	protonum: string;
 
 	@Column({ nullable: true })
 	creation: Date;

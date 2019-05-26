@@ -61,6 +61,7 @@ export class PiosService {
 			/* Domain */
 			result.domain.name = fields[0].value;      // Domain Name
 			result.domain.handle = fields[1].value;    // Domain Handle
+			result.domain.protonum = fields[2].value;  // Protocol Number
 			result.domain.creation = creation;         // Creation Date
 			result.domain.expiration = expiration;     // Expiration Date
 			result.domain.last_update = updated;       // Updated Date

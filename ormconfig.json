@@ -6,8 +6,8 @@
   "password": "siohw",
   "database": "whois",
 	"entities": ["src/**/*.entity{.ts,.js}"],
-	"migrations": ["migration/{.ts,.js}"],
+	"migrations": ["migrations/{.ts,.js}"],
 	"cli": {
-		"migrationsDir": "migration"
+		"migrationsDir": "migrations"
 	}
 }
