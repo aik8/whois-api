@@ -1,13 +1,13 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import { IRegistrarCreateDto } from '../registrars/dtos/registrar-create.dto';
 import { Snapshot } from './snapshot.entity';
-
 
 @Entity()
 export class Registrar {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column('varchar', { length: 45, unique: true })
+	@PrimaryColumn()
 	name: string;
 
 	@Column({ nullable: true })
@@ -30,4 +30,8 @@ export class Registrar {
 
 	@VersionColumn()
 	version: number;
+
+	constructor(registrarDto?: IRegistrarCreateDto) {
+		Object.assign(this, registrarDto);
+	}
 }

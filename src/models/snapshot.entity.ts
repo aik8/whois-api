@@ -3,7 +3,6 @@ import { Domain } from './domain.entity';
 import { NameServer } from './name-server.entity';
 import { Registrar } from './registrar.entity';
 
-
 @Entity()
 export class Snapshot {
 	@PrimaryGeneratedColumn()

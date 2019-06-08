@@ -1,11 +1,12 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import { CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import { INameServerCreateDto } from '../name-servers/dtos/name-server-create.dto';
 
 @Entity()
 export class NameServer {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column('varchar', { length: 45, unique: true })
+	@PrimaryColumn()
 	name: string;
 
 	@CreateDateColumn()
@@ -16,4 +17,8 @@ export class NameServer {
 
 	@VersionColumn()
 	version: number;
+
+	constructor(nameServerDto?: INameServerCreateDto) {
+		Object.assign(this, nameServerDto);
+	}
 }

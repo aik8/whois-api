@@ -1,16 +1,16 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
 import { Snapshot } from './snapshot.entity';
-
+import { IDomainCreateDto } from '../domains/dtos/domain-create.dto';
 
 @Entity()
 export class Domain {
 	@PrimaryGeneratedColumn()
 	id: number;
 
-	@Column({ unique: true })
+	@PrimaryColumn({ unique: true, nullable: false })
 	name: string;
 
-	@Column({ nullable: true })
+	@Column({ unique: true, nullable: true })
 	handle: string;
 
 	@Column({ nullable: true })
@@ -39,4 +39,8 @@ export class Domain {
 
 	@VersionColumn()
 	version: number;
+
+	constructor(domainDto?: IDomainCreateDto) {
+		Object.assign(this, domainDto);
+	}
 }
