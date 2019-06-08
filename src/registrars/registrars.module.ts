@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { RegistrarsController } from './registrars.controller';
 import { RegistrarsService } from './registrars.service';
-import { Registrar } from 'src/models/registrar.entity';
+import { Registrar } from '../models';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([Registrar])],

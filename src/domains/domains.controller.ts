@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { Crud } from '@nestjsx/crud';
-import { Domain } from 'src/models/domain.entity';
+import { Domain } from '../models';
 import { DomainsService } from './domains.service';
 
 @Crud(Domain)
