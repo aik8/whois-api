@@ -11,6 +11,7 @@ export class PiosController {
 
 	@Get()
 	whois(@Query('domain') domain: string) {
-		return this.pios.query(domain);
+		return this.pios.query(domain)
+			.then(this.snapshots.createSnapshot);
 	}
 }
