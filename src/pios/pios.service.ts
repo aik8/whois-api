@@ -7,11 +7,11 @@ import { URL } from 'url';
 import { Domain } from '../models/domain.entity';
 import { NameServer } from '../models/name-server.entity';
 import { Registrar } from '../models/registrar.entity';
-import { IPiosPositiveResult, IPiosNegativeResult } from './pios-result';
+import { IPiosResult } from './pios-result';
 
 @Injectable()
 export class PiosService {
-	query(domain: string): Promise<IPiosPositiveResult | IPiosNegativeResult> {
+	query(domain: string): Promise<IPiosResult> {
 		const url = new URL(`https://grwhois.ics.forth.gr:800/plainwhois/plainWhois?domainName=${domain}`);
 		return axios.default.get(url.href)
 			.then(this.parseResponse)
@@ -25,8 +25,8 @@ export class PiosService {
 		// Get the contents of body, removing all new line chars.
 		const html = _.replace(dom.window.document.body.innerHTML, /\n/gm, '');
 
-		// Create an empty result (yes, we are optimists).
-		let result: IPiosPositiveResult = {
+		// Create an empty result.
+		let result: IPiosResult = {
 			domain: new Domain(),
 			registrar: new Registrar(),
 			nameServers: new Array<NameServer>(),
