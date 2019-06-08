@@ -4,10 +4,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DomainsModule } from './domains/domains.module';
 import { NameServersModule } from './name-servers/name-servers.module';
+import { PiosModule } from './pios/pios.module';
 import { RegistrarsModule } from './registrars/registrars.module';
 import { SnapshotsModule } from './snapshots/snapshots.module';
-import { PiosModule } from './pios/pios.module';
-
 
 @Module({
 	imports: [
