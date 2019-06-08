@@ -12,6 +12,14 @@ describe('PiosService', () => {
 		piosService = app.get<PiosService>(PiosService);
 	});
 
+	it('should be defined', () => {
+		expect(piosService).toBeDefined();
+	});
+
+	it('should be an instance of PiosService', () => {
+		expect(piosService).toBeInstanceOf(PiosService);
+	});
+
 	describe('parseResponse', () => {
 		it('should return a JSON object from the HTML registry\'s response', () => {
 			piosService.query('devoid.gr')
@@ -19,13 +27,15 @@ describe('PiosService', () => {
 					expect(result).toHaveProperty('domain');
 					expect(result).toHaveProperty('registrar');
 					expect(result).toHaveProperty('nameServers');
+					expect(result).toHaveProperty('registered');
 				});
 		});
 
 		it('should anticipate a "not registered" response', () => {
 			piosService.query('oaseofaisoevfiasovndasvasdvmdsa.gr')
 				.then(result => {
-					expect(result).toBeNull();
+					expect(result).toHaveProperty('domain');
+					expect(result).toHaveProperty('registered');
 				});
 		});
 	});
