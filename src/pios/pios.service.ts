@@ -18,7 +18,12 @@ export class PiosService {
 			.then(result => result ? result : this.createNegativeResult(domain));
 	}
 
-	private parseResponse(response: axios.AxiosResponse<any>): IPiosPositiveResult | null {
+	/**
+	 * Parses the response from GRnet and converts it to a nice, manageable
+	 * object. (I know it's a big blob of code, but it works for now.)
+	 * @param response The raw resuponse to be parsed.
+	 */
+	private parseResponse(response: axios.AxiosResponse<any>): IPiosResult | null {
 		// Parse the HTML in the response.
 		const dom = new jsdom.JSDOM(response.data);
 
@@ -88,7 +93,11 @@ export class PiosService {
 		return result;
 	}
 
-	private createNegativeResult(name: string): IPiosNegativeResult {
+	/**
+	 * Creates a "domain not registered" result.
+	 * @param name The domain name of the query.
+	 */
+	private createNegativeResult(name: string): IPiosResult {
 		return { domain: { name }, registered: false };
 	}
 }
