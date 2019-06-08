@@ -1,11 +1,19 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DomainsModule } from '../domains/domains.module';
+import { Snapshot } from '../models';
+import { NameServersModule } from '../name-servers/name-servers.module';
+import { RegistrarsModule } from '../registrars/registrars.module';
 import { SnapshotsController } from './snapshots.controller';
 import { SnapshotsService } from './snapshots.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Snapshot } from 'src/models/snapshot.entity';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([Snapshot])],
+	imports: [
+		RegistrarsModule,
+		NameServersModule,
+		DomainsModule,
+		TypeOrmModule.forFeature([Snapshot])
+	],
 	controllers: [SnapshotsController],
 	providers: [SnapshotsService]
 })

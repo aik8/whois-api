@@ -1,13 +1,10 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { Crud } from '@nestjsx/crud';
+import { Snapshot } from '../models';
 import { SnapshotsService } from './snapshots.service';
-import { Snapshot } from 'src/models/snapshot.entity';
 
+@Crud(Snapshot)
 @Controller('snapshots')
 export class SnapshotsController {
-	constructor(private readonly snapshotsService: SnapshotsService) { }
-
-	@Get()
-	async findAll(): Promise<Snapshot[]> {
-		return await this.snapshotsService.findAll();
-	}
+	constructor(public service: SnapshotsService) { }
 }
