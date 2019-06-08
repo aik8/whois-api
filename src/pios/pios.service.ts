@@ -7,18 +7,18 @@ import { URL } from 'url';
 import { Domain } from '../models/domain.entity';
 import { NameServer } from '../models/name-server.entity';
 import { Registrar } from '../models/registrar.entity';
-import { PiosPositiveResult, PiosNegativeResult } from './pios-result';
+import { IPiosPositiveResult, IPiosNegativeResult } from './pios-result';
 
 @Injectable()
 export class PiosService {
-	query(domain: string): Promise<PiosPositiveResult | PiosNegativeResult> {
+	query(domain: string): Promise<IPiosPositiveResult | IPiosNegativeResult> {
 		const url = new URL(`https://grwhois.ics.forth.gr:800/plainwhois/plainWhois?domainName=${domain}`);
 		return axios.default.get(url.href)
 			.then(this.parseResponse)
 			.then(result => result ? result : this.createNegativeResult(domain));
 	}
 
-	private parseResponse(response: axios.AxiosResponse<any>): PiosPositiveResult | null {
+	private parseResponse(response: axios.AxiosResponse<any>): IPiosPositiveResult | null {
 		// Parse the HTML in the response.
 		const dom = new jsdom.JSDOM(response.data);
 
@@ -26,10 +26,11 @@ export class PiosService {
 		const html = _.replace(dom.window.document.body.innerHTML, /\n/gm, '');
 
 		// Create an empty result (yes, we are optimists).
-		let result: PiosPositiveResult = {
+		let result: IPiosPositiveResult = {
 			domain: new Domain(),
 			registrar: new Registrar(),
-			nameServers: new Array<NameServer>()
+			nameServers: new Array<NameServer>(),
+			registered: true
 		};
 
 		// If the query returned a result, it will contain <br> elements.
@@ -87,7 +88,7 @@ export class PiosService {
 		return result;
 	}
 
-	private createNegativeResult(name: string): PiosNegativeResult {
-		return { domain: { name, registered: false } };
+	private createNegativeResult(name: string): IPiosNegativeResult {
+		return { domain: { name }, registered: false };
 	}
 }
