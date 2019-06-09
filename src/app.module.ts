@@ -12,14 +12,15 @@ import { SnapshotsModule } from './snapshots/snapshots.module';
 @Module({
 	imports: [
 		TypeOrmModule.forRoot({
-			type: process.env.TYPEORM_CONNECTION as any,
-			host: process.env.TYPEORM_HOST,
-			username: process.env.TYPEORM_USERNAME,
-			password: process.env.TYPEORM_PASSWORD,
-			database: process.env.TYPEORM_DATABASE,
-			port: Number.parseInt(process.env.TYPEORM_PORT, 10),
+			type: process.env.TYPEORM_CONNECTION as any || 'mongodb',
+			host: process.env.TYPEORM_HOST || 'localhost',
+			username: process.env.TYPEORM_USERNAME || 'whois',
+			password: process.env.TYPEORM_PASSWORD || 'siohw',
+			database: process.env.TYPEORM_DATABASE || 'whois',
+			port: Number.parseInt(process.env.TYPEORM_PORT, 10) || 3306,
 			entities: [Domain, NameServer, Registrar, Snapshot],
-			migrations: ['../migrations/{.js,.ts}']
+			migrations: ['../migrations/{.js,.ts}'],
+			synchronize: true
 		}),
 		NameServersModule,
 		RegistrarsModule,
