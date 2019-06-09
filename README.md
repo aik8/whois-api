@@ -2,7 +2,9 @@
 
 An extremely simple service that relays whois requests through the `grwhois.ics.forth.gr` service.
 
-## NOT ANYMORE, IT'S NOT!
+## **NOT ANYMORE, IT'S NOT!**
+
+# KOW Whois API
 
 This project has now become a bit more complicated. This is the API part, that provides a simple (yes, it is still quite simple **and does not implement any kind of security mechanism**... _yet!_) relay to the `grwhois.ics.forth.gr` service. It also has a brand new feature:
 - It keeps track of the results.
