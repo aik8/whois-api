@@ -1,17 +1,19 @@
 {
   "name": "whois",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "private": true,
   "description": "",
   "author": "John Kitsantas <proteus@devoidgr>",
   "license": "MIT",
   "scripts": {
+    "prebuild": "npm run clean",
     "build": "tsc -p tsconfig.build.json",
+    "clean": "rimraf dist",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
-    "start:dev": "nodemon",
+    "start:dev": "env-cmd nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
-    "prestart:prod": "rimraf dist && npm run build",
-    "start:prod": "node dist/main.js",
+    "start:prod": "node dist/src/main.js",
+    "start:docker": "node src/main",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -19,7 +21,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "orm:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
-    "orm:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate"
+    "orm:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate",
+    "orm:migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^6.3.1",
@@ -36,7 +39,6 @@
     "moment": "^2.24.0",
     "mysql": "^2.17.1",
     "reflect-metadata": "^0.1.12",
-    "rimraf": "^2.6.3",
     "rxjs": "^6.5.2",
     "swagger-ui-express": "^4.0.6",
     "typeorm": "^0.2.17"
@@ -49,9 +51,10 @@
     "@types/lodash": "^4.14.126",
     "@types/node": "^12.0.0",
     "@types/supertest": "^2.0.7",
-    "cross-env": "^5.2.0",
+    "env-cmd": "^9.0.3",
     "jest": "^24.8.0",
     "nodemon": "^1.19.0",
+    "rimraf": "^2.6.3",
     "supertest": "^4.0.2",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.1.0",

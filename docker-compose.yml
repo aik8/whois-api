@@ -1,0 +1,47 @@
+version: '3.6'
+
+services:
+  db:
+    image: mariadb
+    restart: unless-stopped
+    networks:
+      apinet: {}
+    environment:
+      MYSQL_ROOT_PASSWORD: "toor"
+      MYSQL_DATABASE: "whois"
+      MYSQL_USER: "whois"
+      MYSQL_PASSWORD: "siohw"
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    environment:
+      - PMA_HOST=db
+    ports:
+      - 127.0.0.1:8080:80
+    networks:
+      apinet: {}
+    depends_on:
+      - db
+
+  api:
+    image: kow-whois-api:latest
+    build: .
+    restart: unless-stopped
+    networks:
+      apinet: {}
+    ports:
+      - 127.0.0.1:3000:3000
+    depends_on:
+      - db
+    environment:
+      TYPEORM_CONNECTION: "mariadb"
+      TYPEORM_HOST: db
+      TYPEORM_USERNAME: "whois"
+      TYPEORM_PASSWORD: "siohw"
+      TYPEORM_DATABASE: "whois"
+      TYPEORM_PORT: 3306
+      TYPEORM_LOGGING: "true"
+
+networks:
+  apinet:
