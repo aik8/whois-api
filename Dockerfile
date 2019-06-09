@@ -1,4 +1,16 @@
-FROM node:carbon
+## Build Stage ##
+FROM node:carbon-alpine as build
+
+# Set the workdir.
+WORKDIR /usr/src/app
+
+# Copy our source and build.
+COPY . .
+RUN npm install
+RUN npm run build
+
+## Final Stage ##
+FROM node:carbon-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -7,11 +19,11 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install --only=production
 
-# Copy our stuff over.
-COPY . .
+# Copy our built stuff over.
+COPY --from=build /usr/src/app/dist .
 
 # Open up to the network.
 EXPOSE 3000
 
 # Start the application.
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:docker"]
