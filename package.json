@@ -13,6 +13,7 @@
     "start:dev": "env-cmd nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
     "start:prod": "node dist/src/main.js",
+    "start:docker": "node src/main",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -20,7 +21,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "orm:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
-    "orm:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate"
+    "orm:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate",
+    "orm:migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "dependencies": {
     "@nestjs/common": "^6.3.1",
