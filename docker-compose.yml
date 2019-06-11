@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: "whois"
       MYSQL_USER: "whois"
       MYSQL_PASSWORD: "siohw"
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   pma:
     image: phpmyadmin/phpmyadmin
