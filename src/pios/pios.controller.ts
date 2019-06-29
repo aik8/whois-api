@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Query, HttpStatus, HttpCode } from '@nestjs/common';
 import { SnapshotsService } from '../snapshots/snapshots.service';
 import { PiosService } from './pios.service';
 
@@ -10,7 +10,13 @@ export class PiosController {
 	) { }
 
 	@Get()
-	whois(@Query('domain') domain: string) {
+	@HttpCode(200)
+	whois(@Query('domain') domain: string, @Query('fast') fast: boolean = false) {
+		if (fast) { return Promise.resolve(); }
+		return this.piosQuery(domain);
+	}
+
+	piosQuery(domain: string) {
 		return this.pios.query(domain)
 			.then(this.snapshots.createSnapshot);
 	}
