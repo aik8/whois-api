@@ -58,9 +58,9 @@ export class PiosService {
 			});
 
 			// Parse the dates properly for JavaScript.
-			const creation = moment(fields[3].value, 'YYYY-MM-DD').toDate();
-			const expiration = moment(fields[4].value, 'YYYY-MM-DD').toDate();
-			const updated = moment(fields[5].value, 'YYYY-MM-DD').toDate();
+			const creation = moment(fields[3].value, 'DD-MM-YYYY').toDate();
+			const expiration = moment(fields[4].value, 'DD-MM-YYYY').toDate();
+			const updated = moment(fields[5].value, 'DD-MM-YYYY').toDate();
 
 			// Just fill all the fields in the result with the values above.
 
