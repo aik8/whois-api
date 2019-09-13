@@ -8,6 +8,7 @@ import { Registrar } from '../models';
 @Module({
 	imports: [TypeOrmModule.forFeature([Registrar])],
 	controllers: [RegistrarsController],
-	providers: [RegistrarsService]
+	providers: [RegistrarsService],
+	exports: [RegistrarsService]
 })
 export class RegistrarsModule { }

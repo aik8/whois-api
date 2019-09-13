@@ -7,6 +7,6 @@ import { SnapshotsService } from '../snapshots/snapshots.service';
 @Module({
 	imports: [SnapshotsModule],
 	controllers: [PiosController],
-	providers: [PiosService, SnapshotsService]
+	providers: [PiosService]
 })
 export class PiosModule { }

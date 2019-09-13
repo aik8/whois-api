@@ -15,6 +15,7 @@ import { SnapshotsService } from './snapshots.service';
 		TypeOrmModule.forFeature([Snapshot])
 	],
 	controllers: [SnapshotsController],
-	providers: [SnapshotsService]
+	providers: [SnapshotsService],
+	exports: [SnapshotsService]
 })
 export class SnapshotsModule { }
