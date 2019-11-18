@@ -20,9 +20,14 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "orm:sync": "ts-node ./node_modules/typeorm/cli.js schema:sync",
-    "orm:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate",
-    "orm:migrate": "ts-node ./node_modules/typeorm/cli.js migration:run"
+    "typeorm": "ts-node node_modules/typeorm/cli.js",
+    "migration": "ts-node node_modules/typeorm/cli.js migration:run",
+    "migration:create": "ts-node node_modules/typeorm/cli.js migration:create",
+    "migration:generate": "ts-node node_modules/typeorm/cli.js migration:generate",
+    "migration:show": "ts-node node_modules/typeorm/cli.js migration:show",
+    "migration:revert": "ts-node node_modules/typeorm/cli.js migration:revert",
+    "schema:sync": "ts-node node_modules/typeorm/cli.js schema:sync",
+    "schema:log": "ts-node node_modules/typeorm/cli.js schema:log"
   },
   "dependencies": {
     "@nestjs/common": "^6.10.1",
