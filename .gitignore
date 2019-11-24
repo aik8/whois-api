@@ -4,6 +4,7 @@ dist
 config/production.json
 reports
 ormconfig.json
+.env
 
 
 # Created by https://www.gitignore.io
