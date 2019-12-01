@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { Registrar } from '../models';
 import { RegistrarsController } from './registrars.controller';
 import { RegistrarsService } from './registrars.service';
-import { Registrar } from '../models';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([Registrar])],
