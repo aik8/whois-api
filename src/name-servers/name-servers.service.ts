@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
+import { INameServerCreateDto } from '../interfaces';
 import { NameServer } from '../models';
-import { INameServerCreateDto } from './dtos/name-server-create.dto';
 
 @Injectable()
 export class NameServersService extends TypeOrmCrudService<NameServer> {

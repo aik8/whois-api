@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
 import { DomainsService } from '../domains/domains.service';
+import { IPiosResult } from '../interfaces';
 import { NameServer, Snapshot } from '../models';
 import { NameServersService } from '../name-servers/name-servers.service';
-import { IPiosResult } from '../pios/pios-result';
 import { RegistrarsService } from '../registrars/registrars.service';
 
 @Injectable()

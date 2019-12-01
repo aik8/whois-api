@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
-import { IRegistrarCreateDto } from '../registrars/dtos/registrar-create.dto';
+import { IRegistrarCreateDto } from '../interfaces';
 import { Snapshot } from './snapshot.entity';
 
 @Entity()

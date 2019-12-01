@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
-import { PiosService } from './pios.service';
-import { PiosController } from './pios.controller';
 import { SnapshotsModule } from '../snapshots/snapshots.module';
-import { SnapshotsService } from '../snapshots/snapshots.service';
+import { PiosController } from './pios.controller';
+import { PiosService } from './pios.service';
 
 @Module({
 	imports: [SnapshotsModule],

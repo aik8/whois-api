@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
+import { IDomainCreateDto } from '../interfaces';
 import { Domain } from '../models';
-import { IDomainCreateDto } from './dtos/domain-create.dto';
 
 @Injectable()
 export class DomainsService extends TypeOrmCrudService<Domain> {

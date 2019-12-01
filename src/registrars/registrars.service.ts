@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
 import { Repository } from 'typeorm';
+import { IRegistrarCreateDto } from '../interfaces';
 import { Registrar } from '../models';
-import { IRegistrarCreateDto } from './dtos/registrar-create.dto';
 
 @Injectable()
 export class RegistrarsService extends TypeOrmCrudService<Registrar> {
