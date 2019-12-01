@@ -31,7 +31,7 @@ export class PiosService {
 		const html = _.replace(dom.window.document.body.innerHTML, /\n/gm, '');
 
 		// Create an empty result.
-		let result: IPiosResult = {
+		let result: IPiosResult | null = {
 			domain: new Domain(),
 			registrar: new Registrar(),
 			nameServers: new Array<NameServer>(),
@@ -74,12 +74,20 @@ export class PiosService {
 			result.domain.registered = true;           // Apparently....
 
 			/* Current Registrar */
+
+			// Check that the registrar field is created (TypeScript insists...).
+			if (!result.registrar) result.registrar = new Registrar();
+
 			result.registrar.name = fields[6].value;   // Registrar
 			result.registrar.url = fields[7].value;    // Registrar Referral URL
 			result.registrar.email = fields[8].value;  // Registrar Email
 			result.registrar.phone = fields[9].value;  // Registrar Telephone
 
 			/* Name Servers */
+
+			// Check that the nameServers field is created (TypeScript insists...).
+			if (!result.nameServers) result.nameServers = new Array<NameServer>();
+
 			for (let i = 12; i < fields.length; i++) {
 				const j = result.nameServers.push(new NameServer());
 				result.nameServers[j - 1].name = fields[i].value;
