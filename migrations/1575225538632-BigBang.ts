@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Initialize1574106837807 implements MigrationInterface {
-	name = 'Initialize1574106837807';
+export class BigBang1575225538632 implements MigrationInterface {
+	name = 'BigBang1575225538632';
 
 	public async up(queryRunner: QueryRunner): Promise<any> {
 		await queryRunner.query('CREATE TABLE `name_server` (`id` int NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), `updated_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), `version` int NOT NULL, PRIMARY KEY (`id`, `name`)) ENGINE=InnoDB', undefined);
