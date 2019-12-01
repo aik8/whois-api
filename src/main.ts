@@ -18,7 +18,12 @@ async function bootstrap() {
 	const document = SwaggerModule.createDocument(app, options);
 	SwaggerModule.setup('swagger', app, document);
 
+	// Define the port.
+	const port = process.env.WHOIS_PORT
+		? Number.parseInt(process.env.WHOIS_PORT, 10)
+		: 3000;
+
 	// Start listening.
-	await app.listen(process.env.WHOIS_PORT || 3000, '127.0.0.1');
+	await app.listen(port, '127.0.0.1');
 }
 bootstrap();
