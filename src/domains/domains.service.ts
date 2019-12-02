@@ -11,7 +11,15 @@ export class DomainsService extends TypeOrmCrudService<Domain> {
 		super(repo);
 	}
 
-	public save(domain: IDomainCreateDto): Promise<Domain> {
-		return this.repo.save(this.repo.create(domain));
+	public findOrInsert = async (domain: Partial<Domain> | IDomainCreateDto): Promise<Domain> => {
+		// Check if the domain exists and return it, if it does.
+		const existing = await this.repo.findOne(domain);
+		if (existing) return existing;
+
+		// At this ponit it is clear that such a domain does not exist.
+		const newDomain = this.repo.create(domain);
+
+		// Return the operation result (a Domain).
+		return this.repo.save(newDomain);
 	}
 }

@@ -11,7 +11,15 @@ export class NameServersService extends TypeOrmCrudService<NameServer> {
 		super(repo);
 	}
 
-	public save(ns: INameServerCreateDto): Promise<NameServer> {
-		return this.repo.save(this.repo.create(ns));
+	public findOrInsert = async (ns: Partial<NameServer> | INameServerCreateDto): Promise<NameServer> => {
+		// Check if the domain exists and return it, if it does.
+		const existing = await this.repo.findOne(ns);
+		if (existing) return existing;
+
+		// At this point it is clear that such a NameServer does not exist.
+		const newNameServer = this.repo.create(ns);
+
+		// Return the operation result (a NameServer).
+		return this.repo.save(newNameServer);
 	}
 }

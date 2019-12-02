@@ -11,7 +11,15 @@ export class RegistrarsService extends TypeOrmCrudService<Registrar> {
 		super(registrars);
 	}
 
-	public save(registrar: IRegistrarCreateDto): Promise<Registrar> {
-		return this.repo.save(this.repo.create(registrar));
+	public findOrInsert = async (registrar: Partial<Registrar> | IRegistrarCreateDto): Promise<Registrar> => {
+		// Check if the registrar exists and return it, if it does.
+		const existing = await this.repo.findOne(registrar);
+		if (existing) return existing;
+
+		// At this point it is clear that such a registrar does not exist.
+		const newRegistrar = this.repo.create(registrar);
+
+		// Return the operation result (a Registrar).
+		return this.repo.save(newRegistrar);
 	}
 }
