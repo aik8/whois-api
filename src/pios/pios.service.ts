@@ -3,11 +3,11 @@ import * as axios from 'axios';
 import * as jsdom from 'jsdom';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { URL } from 'url';
 import { IPiosResult } from '../interfaces';
 import { Domain } from '../models/domain.entity';
 import { NameServer } from '../models/name-server.entity';
 import { Registrar } from '../models/registrar.entity';
+const URL = require('url').URL;
 
 @Injectable()
 export class PiosService {
