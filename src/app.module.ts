@@ -1,8 +1,10 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer } from '@nestjs/common/interfaces';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DomainsModule } from './domains/domains.module';
+import { LoggerMiddleware } from './logger.middleware';
 import { Domain, NameServer, Registrar, Snapshot } from './models';
 import { NameServersModule } from './name-servers/name-servers.module';
 import { PiosModule } from './pios/pios.module';
@@ -32,4 +34,10 @@ import { SnapshotsModule } from './snapshots/snapshots.module';
 	controllers: [AppController],
 	providers: [AppService],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer
+			.apply(LoggerMiddleware)
+			.forRoutes('*');
+	}
+}
