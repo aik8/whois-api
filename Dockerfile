@@ -20,10 +20,10 @@ COPY package*.json ./
 RUN npm install --only=production
 
 # Copy our built stuff over.
-COPY --from=build /usr/src/app/dist .
+COPY --from=build /usr/src/app/dist ./dist
 
 # Open up to the network.
 EXPOSE 3000
 
 # Start the application.
-CMD ["npm", "run", "start:docker"]
+CMD ["npm", "run", "start:prod"]
