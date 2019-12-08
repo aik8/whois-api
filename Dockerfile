@@ -1,5 +1,5 @@
 ## Build Stage ##
-FROM node:carbon-alpine as build
+FROM node:dubnium-alpine as build
 
 # Set the workdir.
 WORKDIR /usr/src/app
@@ -15,7 +15,7 @@ FROM node:carbon-alpine
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies 
+# Install app dependencies
 COPY package*.json ./
 RUN npm install --only=production
 
@@ -26,4 +26,4 @@ COPY --from=build /usr/src/app/dist .
 EXPOSE 3000
 
 # Start the application.
-CMD ["npm", "run", "start:docker"]
+CMD ["npm", "run", "start:prod"]
