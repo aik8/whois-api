@@ -22,7 +22,7 @@ import { SnapshotsModule } from './snapshots/snapshots.module';
 			port: Number.parseInt(process.env.TYPEORM_PORT || '3306', 10),
 			entities: [Domain, NameServer, Registrar, Snapshot],
 			migrations: ['../migrations/*.ts'],
-			synchronize: false,
+			synchronize: true,
 			logging: process.env.NODE_ENV !== 'production'
 		}),
 		NameServersModule,
