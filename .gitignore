@@ -5,7 +5,7 @@ config/production.json
 reports
 ormconfig.json
 .env
-
+migrations/*.js
 
 # Created by https://www.gitignore.io
 
