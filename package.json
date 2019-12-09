@@ -7,9 +7,10 @@
   "license": "MIT",
   "main": "main.js",
   "scripts": {
-    "prebuild": "npm run clean",
+    "prebuild": "npm run clean && npm run build:migrations",
     "build": "nest build",
-    "clean": "rimraf dist",
+    "build:migrations": "tsc migrations/*.ts",
+    "clean": "rimraf dist && rimraf migrations/*.js",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
