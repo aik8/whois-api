@@ -1,6 +1,9 @@
 ## Build Stage ##
 FROM node:erbium-alpine as build
 
+# Install TypeScript.
+RUN npm -g i typescript
+
 # Set the workdir.
 WORKDIR /usr/src/app
 
@@ -8,6 +11,7 @@ WORKDIR /usr/src/app
 COPY . .
 RUN npm install
 RUN npm run build
+RUN tsc migrations/*.ts
 
 ## Final Stage ##
 FROM node:erbium-alpine
@@ -21,6 +25,7 @@ RUN npm install --only=production
 
 # Copy our built stuff over.
 COPY --from=build /usr/src/app/dist ./dist
+COPY --from=build /usr/src/app/migrations/*.js ./migrations/
 
 # Open up to the network.
 EXPOSE 3000
