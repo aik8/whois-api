@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
+import { IDomainCreateDto } from '../interfaces';
 import { Snapshot } from './snapshot.entity';
-import { IDomainCreateDto } from '../domains/dtos/domain-create.dto';
 
 @Entity()
 export class Domain {

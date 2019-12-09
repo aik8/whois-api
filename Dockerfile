@@ -1,5 +1,5 @@
 ## Build Stage ##
-FROM node:carbon-alpine as build
+FROM node:erbium-alpine as build
 
 # Set the workdir.
 WORKDIR /usr/src/app
@@ -10,20 +10,20 @@ RUN npm install
 RUN npm run build
 
 ## Final Stage ##
-FROM node:carbon-alpine
+FROM node:erbium-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies 
+# Install app dependencies
 COPY package*.json ./
 RUN npm install --only=production
 
 # Copy our built stuff over.
-COPY --from=build /usr/src/app/dist .
+COPY --from=build /usr/src/app/dist ./dist
 
 # Open up to the network.
 EXPOSE 3000
 
 # Start the application.
-CMD ["npm", "run", "start:docker"]
+CMD ["npm", "run", "start:prod"]

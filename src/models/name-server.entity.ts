@@ -1,5 +1,5 @@
 import { CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn, VersionColumn } from 'typeorm';
-import { INameServerCreateDto } from '../name-servers/dtos/name-server-create.dto';
+import { INameServerCreateDto } from '../interfaces';
 
 @Entity()
 export class NameServer {
