@@ -1,5 +1,5 @@
 ## Build Stage ##
-FROM node:dubnium-alpine as build
+FROM node:erbium-alpine as build
 
 # Set the workdir.
 WORKDIR /usr/src/app
@@ -10,7 +10,7 @@ RUN npm install
 RUN npm run build
 
 ## Final Stage ##
-FROM node:carbon-alpine
+FROM node:erbium-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
