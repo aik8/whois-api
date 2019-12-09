@@ -18,7 +18,7 @@ export class Snapshot {
 	@JoinTable()
 	nameServers: NameServer[];
 
-	@ManyToOne(type => Registrar, registrar => registrar.snapshots, { eager: true })
+	@ManyToOne(type => Registrar, registrar => registrar.snapshots)
 	registrar: Registrar;
 
 	@ManyToOne(type => Domain, domain => domain.snapshots)
