@@ -24,6 +24,6 @@ async function bootstrap() {
 		: 3000;
 
 	// Start listening.
-	await app.listen(port, '127.0.0.1');
+	await app.listen(port);
 }
 bootstrap();
