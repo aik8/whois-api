@@ -17,8 +17,4 @@ export class NameServer {
 
 	@VersionColumn()
 	version: number;
-
-	constructor(nameServerDto?: INameServerCreateDto) {
-		Object.assign(this, nameServerDto);
-	}
 }

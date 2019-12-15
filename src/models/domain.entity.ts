@@ -39,8 +39,4 @@ export class Domain {
 
 	@VersionColumn()
 	version: number;
-
-	constructor(domainDto?: IDomainCreateDto) {
-		Object.assign(this, domainDto);
-	}
 }

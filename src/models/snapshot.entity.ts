@@ -23,8 +23,4 @@ export class Snapshot {
 
 	@ManyToOne(type => Domain, domain => domain.snapshots)
 	domain: Domain;
-
-	constructor(partial?: Partial<Snapshot>) {
-		Object.assign(this, partial);
-	}
 }

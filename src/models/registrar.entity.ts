@@ -30,8 +30,4 @@ export class Registrar {
 
 	@VersionColumn()
 	version: number;
-
-	constructor(registrarDto?: IRegistrarCreateDto) {
-		Object.assign(this, registrarDto);
-	}
 }
