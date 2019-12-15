@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
-import { Crud } from '@nestjsx/crud';
+import { Crud, CrudController } from '@nestjsx/crud';
 import { Domain } from '../models';
 import { DomainsService } from './domains.service';
 
@@ -16,6 +16,6 @@ import { DomainsService } from './domains.service';
 })
 @ApiUseTags('domains')
 @Controller('domains')
-export class DomainsController {
+export class DomainsController implements CrudController<Domain> {
 	constructor(public service: DomainsService) { }
 }
