@@ -5,24 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace kow_whois_api
 {
-	[Table("registrar")]
-	public class Registrar
+	[Table("nameserver")]
+	public class NameServer
 	{
 		[Column("id")]
 		public int Id { get; set; }
 
 		[Column("name")]
+		[Required]
 		public string Name { get; set; }
-
-		[Column("url")]
-		public string url { get; set; }
-
-		[Column("email")]
-		public string email { get; set; }
-
-		[Column("phone")]
-		[MaxLength(20)]
-		public string phone { get; set; }
 
 		[Column("created_at")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -32,11 +23,6 @@ namespace kow_whois_api
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
 
-		public virtual ICollection<Snapshot> Snapshots { get; set; }
-
-		public Registrar()
-		{
-			Snapshots = new List<Snapshot>();
-		}
+		public virtual List<NameServerSnapshot> NameServerSnapshots { get; set; }
 	}
 }

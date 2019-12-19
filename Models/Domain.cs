@@ -5,24 +5,31 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace kow_whois_api
 {
-	[Table("registrar")]
-	public class Registrar
+	[Table("domain")]
+	public class Domain
 	{
 		[Column("id")]
 		public int Id { get; set; }
 
 		[Column("name")]
+		[Required]
 		public string Name { get; set; }
 
-		[Column("url")]
-		public string url { get; set; }
+		[Column("handle")]
+		public string Handle { get; set; }
 
-		[Column("email")]
-		public string email { get; set; }
+		[Column("protonum")]
+		[MaxLength(128)]
+		public string ProtocolNumber { get; set; }
 
-		[Column("phone")]
-		[MaxLength(20)]
-		public string phone { get; set; }
+		[Column("creation")]
+		public DateTime? CreationDate { get; set; }
+
+		[Column("expiration")]
+		public DateTime? ExpirationDate { get; set; }
+
+		[Column("last_update")]
+		public DateTime? LastUpdate { get; set; }
 
 		[Column("created_at")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -34,7 +41,7 @@ namespace kow_whois_api
 
 		public virtual ICollection<Snapshot> Snapshots { get; set; }
 
-		public Registrar()
+		public Domain()
 		{
 			Snapshots = new List<Snapshot>();
 		}
