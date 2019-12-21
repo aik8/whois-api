@@ -10,16 +10,15 @@ namespace kow_whois_api
 		public DbSet<Domain> Domains { get; set; }
 		public DbSet<NameServer> NameServers { get; set; }
 		public DbSet<Snapshot> Snapshots { get; set; }
-		public DbSet<NameServerSnapshot> NameServerSnapshots { get; set; }
+		public DbSet<SnapshotNameServer> NameServerSnapshots { get; set; }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder options)
-			=> options.UseMySql("server=localhost;database=whois;username=kootoor;password=funkybudha", mysqlOptions
-				=> mysqlOptions.CharSet(CharSet.Utf8Mb4));
+		public WhoisContext(DbContextOptions<WhoisContext> options) : base(options) { }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			// Domain
-			modelBuilder.Entity<Domain>(entity => {
+			modelBuilder.Entity<Domain>(entity =>
+			{
 				entity.HasIndex(e => e.Name).IsUnique();
 				entity.HasIndex(e => e.Handle).IsUnique();
 			});
@@ -31,17 +30,18 @@ namespace kow_whois_api
 			modelBuilder.Entity<NameServer>().HasIndex(e => e.Name).IsUnique();
 
 			// NameServer - Snapshot Relationship
-			modelBuilder.Entity<NameServerSnapshot>()
-				.HasKey(nss => new { nss.NameServerId, nss.SnapshotId });
-			modelBuilder.Entity<NameServerSnapshot>()
-				.HasOne(nss => nss.NameServer)
-				.WithMany(nss => nss.NameServerSnapshots)
-				.HasForeignKey(nss => nss.NameServerId);
-			modelBuilder.Entity<NameServerSnapshot>()
-				.HasOne(nss => nss.Snapshot)
-				.WithMany(nss => nss.NameServerSnapshots)
-				.HasForeignKey(nss => nss.SnapshotId);
-		}
+			modelBuilder.Entity<SnapshotNameServer>(entity =>
+			{
+				entity.HasKey(sns => new { sns.SnapshotId, sns.NameServerId });
 
+				entity.HasOne(sns => sns.Snapshot)
+					.WithMany(s => s.SnapshotNameServers)
+					.HasForeignKey(sns => sns.SnapshotId);
+
+				entity.HasOne(sns => sns.NameServer)
+					.WithMany(ns => ns.SnapshotNameServers)
+					.HasForeignKey(sns => sns.NameServerId);
+			});
+		}
 	}
 }

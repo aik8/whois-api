@@ -1,14 +1,19 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace kow_whois_api
 {
-	[Table("rel_nameserver_snapshot")]
-	public class NameServerSnapshot
+	[Table("rel_snapshot_nameserver")]
+	public class SnapshotNameServer
 	{
-		public int NameServerId { get; set; }
-		public NameServer NameServer { get; set; }
-
-		public int SnapshotId { get; set; }
+		[Column("snapshot_id")]
+		[Required]
+		public uint SnapshotId { get; set; }
 		public Snapshot Snapshot { get; set; }
+
+		[Column("nameserver_id")]
+		[Required]
+		public uint NameServerId { get; set; }
+		public NameServer NameServer { get; set; }
 	}
 }

@@ -9,7 +9,7 @@ namespace kow_whois_api
 	public class NameServer
 	{
 		[Column("id")]
-		public int Id { get; set; }
+		public uint Id { get; set; }
 
 		[Column("name")]
 		[Required]
@@ -23,6 +23,11 @@ namespace kow_whois_api
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
 
-		public virtual List<NameServerSnapshot> NameServerSnapshots { get; set; }
+		public virtual ICollection<SnapshotNameServer> SnapshotNameServers { get; set; }
+
+		public NameServer()
+		{
+			SnapshotNameServers = new List<SnapshotNameServer>();
+		}
 	}
 }

@@ -9,17 +9,17 @@ namespace kow_whois_api
 	public class Snapshot
 	{
 		[Column("id")]
-		public int Id { get; set; }
+		public uint Id { get; set; }
 
 		// Registrar
 		[Column("registrar_id")]
-		public int? RegistrarId { get; set; }
+		public uint? RegistrarId { get; set; }
 		public virtual Registrar Registrar { get; set; }
 
 		// Domain
 		[Column("domain_id")]
 		[Required]
-		public int DomainId { get; set; }
+		public uint DomainId { get; set; }
 		public virtual Domain Domain { get; set; }
 
 		[Column("created_at")]
@@ -31,6 +31,11 @@ namespace kow_whois_api
 		public DateTime UpdatedAt { get; set; }
 
 		// NameServers
-		public virtual List<NameServerSnapshot> NameServerSnapshots { get; set; }
+		public virtual ICollection<SnapshotNameServer> SnapshotNameServers { get; set; }
+
+		public Snapshot()
+		{
+			SnapshotNameServers = new List<SnapshotNameServer>();
+		}
 	}
 }

@@ -9,20 +9,24 @@ namespace kow_whois_api
 	public class Registrar
 	{
 		[Column("id")]
-		public int Id { get; set; }
+		public uint Id { get; set; }
 
 		[Column("name")]
+		[MaxLength(255)]
+		[Required]
 		public string Name { get; set; }
 
 		[Column("url")]
-		public string url { get; set; }
+		[MaxLength(255)]
+		public string Url { get; set; }
 
 		[Column("email")]
-		public string email { get; set; }
+		[MaxLength(255)]
+		public string Email { get; set; }
 
 		[Column("phone")]
 		[MaxLength(20)]
-		public string phone { get; set; }
+		public string Phone { get; set; }
 
 		[Column("created_at")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]

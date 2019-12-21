@@ -9,7 +9,7 @@ namespace kow_whois_api
 	public class Domain
 	{
 		[Column("id")]
-		public int Id { get; set; }
+		public uint Id { get; set; }
 
 		[Column("name")]
 		[Required]
