@@ -8,226 +8,226 @@ using kow_whois_api;
 
 namespace kow_whois_api.Migrations
 {
-    [DbContext(typeof(WhoisContext))]
-    [Migration("20191221073719_BigBang")]
-    partial class BigBang
-    {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
-        {
+	[DbContext(typeof(WhoisContext))]
+	[Migration("20191221073719_BigBang")]
+	partial class BigBang
+	{
+		protected override void BuildTargetModel(ModelBuilder modelBuilder)
+		{
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+			modelBuilder
+				.HasAnnotation("ProductVersion", "3.1.0")
+				.HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("kow_whois_api.Domain", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int unsigned");
+			modelBuilder.Entity("kow_whois_api.Domain", b =>
+				{
+					b.Property<uint>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnName("id")
+						.HasColumnType("int unsigned");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("created_at")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime>("CreatedAt")
+						.ValueGeneratedOnAdd()
+						.HasColumnName("created_at")
+						.HasColumnType("datetime(6)");
 
-                    b.Property<DateTime?>("CreationDate")
-                        .HasColumnName("creation")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime?>("CreationDate")
+						.HasColumnName("creation")
+						.HasColumnType("datetime(6)");
 
-                    b.Property<DateTime?>("ExpirationDate")
-                        .HasColumnName("expiration")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime?>("ExpirationDate")
+						.HasColumnName("expiration")
+						.HasColumnType("datetime(6)");
 
-                    b.Property<string>("Handle")
-                        .HasColumnName("handle")
-                        .HasColumnType("varchar(255)");
+					b.Property<string>("Handle")
+						.HasColumnName("handle")
+						.HasColumnType("varchar(255)");
 
-                    b.Property<DateTime?>("LastUpdate")
-                        .HasColumnName("last_update")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime?>("LastUpdate")
+						.HasColumnName("last_update")
+						.HasColumnType("datetime(6)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("varchar(255)");
+					b.Property<string>("Name")
+						.IsRequired()
+						.HasColumnName("name")
+						.HasColumnType("varchar(255)");
 
-                    b.Property<string>("ProtocolNumber")
-                        .HasColumnName("protonum")
-                        .HasColumnType("varchar(128)")
-                        .HasMaxLength(128);
+					b.Property<string>("ProtocolNumber")
+						.HasColumnName("protonum")
+						.HasColumnType("varchar(128)")
+						.HasMaxLength(128);
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnName("updated_at")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime>("UpdatedAt")
+						.ValueGeneratedOnAddOrUpdate()
+						.HasColumnName("updated_at")
+						.HasColumnType("datetime(6)");
 
-                    b.HasKey("Id");
+					b.HasKey("Id");
 
-                    b.HasIndex("Handle")
-                        .IsUnique();
+					b.HasIndex("Handle")
+						.IsUnique();
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+					b.HasIndex("Name")
+						.IsUnique();
 
-                    b.ToTable("domain");
-                });
+					b.ToTable("domain");
+				});
 
-            modelBuilder.Entity("kow_whois_api.NameServer", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int unsigned");
+			modelBuilder.Entity("kow_whois_api.NameServer", b =>
+				{
+					b.Property<uint>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnName("id")
+						.HasColumnType("int unsigned");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("created_at")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime>("CreatedAt")
+						.ValueGeneratedOnAdd()
+						.HasColumnName("created_at")
+						.HasColumnType("datetime(6)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("varchar(255)");
+					b.Property<string>("Name")
+						.IsRequired()
+						.HasColumnName("name")
+						.HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnName("updated_at")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime>("UpdatedAt")
+						.ValueGeneratedOnAddOrUpdate()
+						.HasColumnName("updated_at")
+						.HasColumnType("datetime(6)");
 
-                    b.HasKey("Id");
+					b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+					b.HasIndex("Name")
+						.IsUnique();
 
-                    b.ToTable("nameserver");
-                });
+					b.ToTable("nameserver");
+				});
 
-            modelBuilder.Entity("kow_whois_api.Registrar", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int unsigned");
+			modelBuilder.Entity("kow_whois_api.Registrar", b =>
+				{
+					b.Property<uint>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnName("id")
+						.HasColumnType("int unsigned");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("created_at")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime>("CreatedAt")
+						.ValueGeneratedOnAdd()
+						.HasColumnName("created_at")
+						.HasColumnType("datetime(6)");
 
-                    b.Property<string>("Email")
-                        .HasColumnName("email")
-                        .HasColumnType("varchar(255)")
-                        .HasMaxLength(255);
+					b.Property<string>("Email")
+						.HasColumnName("email")
+						.HasColumnType("varchar(255)")
+						.HasMaxLength(255);
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnName("name")
-                        .HasColumnType("varchar(255)")
-                        .HasMaxLength(255);
+					b.Property<string>("Name")
+						.IsRequired()
+						.HasColumnName("name")
+						.HasColumnType("varchar(255)")
+						.HasMaxLength(255);
 
-                    b.Property<string>("Phone")
-                        .HasColumnName("phone")
-                        .HasColumnType("varchar(20)")
-                        .HasMaxLength(20);
+					b.Property<string>("Phone")
+						.HasColumnName("phone")
+						.HasColumnType("varchar(20)")
+						.HasMaxLength(20);
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnName("updated_at")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime>("UpdatedAt")
+						.ValueGeneratedOnAddOrUpdate()
+						.HasColumnName("updated_at")
+						.HasColumnType("datetime(6)");
 
-                    b.Property<string>("Url")
-                        .HasColumnName("url")
-                        .HasColumnType("varchar(255)")
-                        .HasMaxLength(255);
+					b.Property<string>("Url")
+						.HasColumnName("url")
+						.HasColumnType("varchar(255)")
+						.HasMaxLength(255);
 
-                    b.HasKey("Id");
+					b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
+					b.HasIndex("Name")
+						.IsUnique();
 
-                    b.ToTable("registrar");
-                });
+					b.ToTable("registrar");
+				});
 
-            modelBuilder.Entity("kow_whois_api.Snapshot", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int unsigned");
+			modelBuilder.Entity("kow_whois_api.Snapshot", b =>
+				{
+					b.Property<uint>("Id")
+						.ValueGeneratedOnAdd()
+						.HasColumnName("id")
+						.HasColumnType("int unsigned");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("created_at")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime>("CreatedAt")
+						.ValueGeneratedOnAdd()
+						.HasColumnName("created_at")
+						.HasColumnType("datetime(6)");
 
-                    b.Property<uint>("DomainId")
-                        .HasColumnName("domain_id")
-                        .HasColumnType("int unsigned");
+					b.Property<uint>("DomainId")
+						.HasColumnName("domain_id")
+						.HasColumnType("int unsigned");
 
-                    b.Property<uint?>("RegistrarId")
-                        .HasColumnName("registrar_id")
-                        .HasColumnType("int unsigned");
+					b.Property<uint?>("RegistrarId")
+						.HasColumnName("registrar_id")
+						.HasColumnType("int unsigned");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnName("updated_at")
-                        .HasColumnType("datetime(6)");
+					b.Property<DateTime>("UpdatedAt")
+						.ValueGeneratedOnAddOrUpdate()
+						.HasColumnName("updated_at")
+						.HasColumnType("datetime(6)");
 
-                    b.HasKey("Id");
+					b.HasKey("Id");
 
-                    b.HasIndex("DomainId");
+					b.HasIndex("DomainId");
 
-                    b.HasIndex("RegistrarId");
+					b.HasIndex("RegistrarId");
 
-                    b.ToTable("snapshot");
-                });
+					b.ToTable("snapshot");
+				});
 
-            modelBuilder.Entity("kow_whois_api.SnapshotNameServer", b =>
-                {
-                    b.Property<uint>("SnapshotId")
-                        .HasColumnName("snapshot_id")
-                        .HasColumnType("int unsigned");
+			modelBuilder.Entity("kow_whois_api.SnapshotNameServer", b =>
+				{
+					b.Property<uint>("SnapshotId")
+						.HasColumnName("snapshot_id")
+						.HasColumnType("int unsigned");
 
-                    b.Property<uint>("NameServerId")
-                        .HasColumnName("nameserver_id")
-                        .HasColumnType("int unsigned");
+					b.Property<uint>("NameServerId")
+						.HasColumnName("nameserver_id")
+						.HasColumnType("int unsigned");
 
-                    b.HasKey("SnapshotId", "NameServerId");
+					b.HasKey("SnapshotId", "NameServerId");
 
-                    b.HasIndex("NameServerId");
+					b.HasIndex("NameServerId");
 
-                    b.ToTable("rel_snapshot_nameserver");
-                });
+					b.ToTable("rel_snapshot_nameserver");
+				});
 
-            modelBuilder.Entity("kow_whois_api.Snapshot", b =>
-                {
-                    b.HasOne("kow_whois_api.Domain", "Domain")
-                        .WithMany("Snapshots")
-                        .HasForeignKey("DomainId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+			modelBuilder.Entity("kow_whois_api.Snapshot", b =>
+				{
+					b.HasOne("kow_whois_api.Domain", "Domain")
+						.WithMany("Snapshots")
+						.HasForeignKey("DomainId")
+						.OnDelete(DeleteBehavior.Cascade)
+						.IsRequired();
 
-                    b.HasOne("kow_whois_api.Registrar", "Registrar")
-                        .WithMany("Snapshots")
-                        .HasForeignKey("RegistrarId");
-                });
+					b.HasOne("kow_whois_api.Registrar", "Registrar")
+						.WithMany("Snapshots")
+						.HasForeignKey("RegistrarId");
+				});
 
-            modelBuilder.Entity("kow_whois_api.SnapshotNameServer", b =>
-                {
-                    b.HasOne("kow_whois_api.NameServer", "NameServer")
-                        .WithMany("SnapshotNameServers")
-                        .HasForeignKey("NameServerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+			modelBuilder.Entity("kow_whois_api.SnapshotNameServer", b =>
+				{
+					b.HasOne("kow_whois_api.NameServer", "NameServer")
+						.WithMany("SnapshotNameServers")
+						.HasForeignKey("NameServerId")
+						.OnDelete(DeleteBehavior.Cascade)
+						.IsRequired();
 
-                    b.HasOne("kow_whois_api.Snapshot", "Snapshot")
-                        .WithMany("SnapshotNameServers")
-                        .HasForeignKey("SnapshotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+					b.HasOne("kow_whois_api.Snapshot", "Snapshot")
+						.WithMany("SnapshotNameServers")
+						.HasForeignKey("SnapshotId")
+						.OnDelete(DeleteBehavior.Cascade)
+						.IsRequired();
+				});
 #pragma warning restore 612, 618
-        }
-    }
+		}
+	}
 }
