@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <RootNamespace>kow_whois_api</RootNamespace>
+    <RootNamespace>KowWhoisApi</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

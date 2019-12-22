@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "kow_whois_api": {
+    "KowWhoisApi": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "whois",

@@ -13,8 +13,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Pomelo.EntityFrameworkCore.MySql.Storage;
+using KowWhoisApi.Models;
 
-namespace kow_whois_api
+namespace KowWhoisApi
 {
 	public class Startup
 	{
