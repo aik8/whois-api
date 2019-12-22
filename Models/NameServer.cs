@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace kow_whois_api
+namespace KowWhoisApi.Models
 {
 	[Table("nameserver")]
 	public class NameServer

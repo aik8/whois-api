@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace kow_whois_api
+namespace KowWhoisApi.Models
 {
 	[Table("rel_snapshot_nameserver")]
 	public class SnapshotNameServer
