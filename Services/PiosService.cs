@@ -6,7 +6,7 @@ using KowWhoisApi.Models;
 
 namespace KowWhoisApi
 {
-	public class PiosService
+	public class PiosService : IPiosService
 	{
 		private string _scheme = "https";
 		private string _host = @"grwhois.ics.forth.gr";
