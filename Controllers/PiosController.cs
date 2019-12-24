@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using KowWhoisApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace KowWhoisApi
+namespace KowWhoisApi.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]
