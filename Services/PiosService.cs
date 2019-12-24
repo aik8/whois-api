@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using HtmlAgilityPack;
 using KowWhoisApi.Models;
+using KowWhoisApi.Data;
 
-namespace KowWhoisApi
+namespace KowWhoisApi.Services
 {
 	public class PiosService : IPiosService
 	{

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using KowWhoisApi.Models;
 
-namespace KowWhoisApi
+namespace KowWhoisApi.Data
 {
 	public class PiosResult : IPiosResult
 	{
