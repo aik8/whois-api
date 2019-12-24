@@ -1,4 +1,4 @@
-namespace KowWhoisApi
+namespace KowWhoisApi.Interfaces
 {
 	public interface IPiosService
 	{

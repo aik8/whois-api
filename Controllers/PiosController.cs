@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using KowWhoisApi.Models;
+using KowWhoisApi.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace KowWhoisApi.Controllers

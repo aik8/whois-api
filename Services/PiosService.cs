@@ -4,6 +4,7 @@ using System.Globalization;
 using HtmlAgilityPack;
 using KowWhoisApi.Models;
 using KowWhoisApi.Data;
+using KowWhoisApi.Interfaces;
 
 namespace KowWhoisApi.Services
 {

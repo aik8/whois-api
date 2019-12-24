@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using KowWhoisApi.Models;
+using KowWhoisApi.Interfaces;
 
 namespace KowWhoisApi.Data
 {
