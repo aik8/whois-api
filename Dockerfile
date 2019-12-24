@@ -1,29 +1,26 @@
 ## Build Stage ##
-FROM node:erbium-alpine as build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 
 # Set the workdir.
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy our source and build.
-COPY . .
-RUN npm install
-RUN npm run build
+# Copy csproj and resotre as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out
 
 ## Final Stage ##
-FROM node:erbium-alpine
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1
 
-# Create app directory
-WORKDIR /usr/src/app
+# Set the workdir.
+WORKDIR /app
 
-# Install app dependencies
-COPY package*.json ./
-RUN npm install --only=production
+# Copy your built stuff over.
+COPY --from=build /app/out .
 
-# Copy our built stuff over.
-COPY --from=build /usr/src/app/dist ./dist
+# Define the entry point.
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
 
-# Open up to the network.
-EXPOSE 3000
-
-# Start the application.
-CMD ["npm", "run", "start:prod"]

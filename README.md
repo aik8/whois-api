@@ -14,7 +14,7 @@ This project has now become a bit more complicated. This is the API part, that p
 There are a lot of things that need to be done:
 - [ ] Add some authentication mechanism.
 - [ ] Allow users to manage their own results.
-- [ ] Make Docker deployment easy.
+- [x] Make Docker deployment easy.
 
 ## **DISCLAIMER:**
 At the moment this is meant to be used only in local networks. It should not be exposed to the public, as it does not incorporate any kind of security mechanism.
