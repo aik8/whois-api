@@ -22,5 +22,5 @@ WORKDIR /app
 COPY --from=build /app/out .
 
 # Define the entry point.
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+ENTRYPOINT ["/app/kow-whois-api"]
 
