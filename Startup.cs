@@ -15,6 +15,8 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Pomelo.EntityFrameworkCore.MySql.Storage;
 using KowWhoisApi.Models;
 using KowWhoisApi.Services;
+using KowWhoisApi.Interfaces;
+using KowWhoisApi.Data;
 
 namespace KowWhoisApi
 {

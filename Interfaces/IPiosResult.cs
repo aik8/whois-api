@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using KowWhoisApi.Models;
 
-namespace KowWhoisApi {
+namespace KowWhoisApi.Interfaces {
 	public interface IPiosResult {
 		Domain Domain { get; }
 		Registrar Registrar { get; }

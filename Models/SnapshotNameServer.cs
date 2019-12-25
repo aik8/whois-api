@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace KowWhoisApi.Models
 {
@@ -9,6 +10,7 @@ namespace KowWhoisApi.Models
 		[Column("snapshot_id")]
 		[Required]
 		public uint SnapshotId { get; set; }
+		[JsonIgnore]
 		public Snapshot Snapshot { get; set; }
 
 		[Column("nameserver_id")]
