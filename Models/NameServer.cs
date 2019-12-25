@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace KowWhoisApi.Models
 {
@@ -23,6 +24,7 @@ namespace KowWhoisApi.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
 
+		[JsonIgnore]
 		public virtual ICollection<SnapshotNameServer> SnapshotNameServers { get; set; }
 
 		public NameServer()
