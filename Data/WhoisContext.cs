@@ -1,10 +1,10 @@
 using System;
+using KowWhoisApi.Models;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Storage;
 
-namespace KowWhoisApi.Models
+namespace KowWhoisApi.Data
 {
-	class WhoisContext : DbContext
+	public class WhoisContext : DbContext
 	{
 		public DbSet<Registrar> Registrars { get; set; }
 		public DbSet<Domain> Domains { get; set; }
@@ -33,14 +33,6 @@ namespace KowWhoisApi.Models
 			modelBuilder.Entity<SnapshotNameServer>(entity =>
 			{
 				entity.HasKey(sns => new { sns.SnapshotId, sns.NameServerId });
-
-				entity.HasOne(sns => sns.Snapshot)
-					.WithMany(s => s.SnapshotNameServers)
-					.HasForeignKey(sns => sns.SnapshotId);
-
-				entity.HasOne(sns => sns.NameServer)
-					.WithMany(ns => ns.SnapshotNameServers)
-					.HasForeignKey(sns => sns.NameServerId);
 			});
 		}
 	}
