@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,11 @@ namespace KowWhoisApi
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+					// Make sure it listens to 127.0.0.1.
+					// (Docker does not like IPv6 that much.)
+					webBuilder.ConfigureKestrel(serverOptions =>
+						serverOptions.Listen(IPAddress.Loopback, 5000));
+
                     webBuilder.UseStartup<Startup>();
                 });
     }
