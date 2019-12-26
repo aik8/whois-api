@@ -10,6 +10,7 @@ namespace KowWhoisApi.Data
 		public DbSet<Domain> Domains { get; set; }
 		public DbSet<NameServer> NameServers { get; set; }
 		public DbSet<Snapshot> Snapshots { get; set; }
+		public DbSet<NameServerAddress> Addresses { get; set; }
 		public DbSet<SnapshotNameServer> NameServerSnapshots { get; set; }
 
 		public WhoisContext(DbContextOptions<WhoisContext> options) : base(options) { }
@@ -28,6 +29,12 @@ namespace KowWhoisApi.Data
 
 			// NameServer
 			modelBuilder.Entity<NameServer>().HasIndex(e => e.Name).IsUnique();
+
+			// NameServerAddress
+			modelBuilder.Entity<NameServerAddress>(entity => {
+				entity.HasKey(e => new { e.Id, e.Ip });
+				entity.Property(e => e.Address).HasComputedColumnSql("INET_NTOA(ip)");
+			});
 
 			// NameServer - Snapshot Relationship
 			modelBuilder.Entity<SnapshotNameServer>(entity =>
