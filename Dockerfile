@@ -21,6 +21,9 @@ WORKDIR /app
 # Copy your built stuff over.
 COPY --from=build /app/out .
 
+# Expose the serivce.
+EXPOSE 5000
+
 # Define the entry point.
 ENTRYPOINT ["/app/kow-whois-api"]
 

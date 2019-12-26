@@ -24,7 +24,7 @@ namespace KowWhoisApi
 					// Make sure it listens to 127.0.0.1.
 					// (Docker does not like IPv6 that much.)
 					webBuilder.ConfigureKestrel(serverOptions =>
-						serverOptions.Listen(IPAddress.Loopback, 5000));
+						serverOptions.Listen(IPAddress.Any, 5000));
 
                     webBuilder.UseStartup<Startup>();
                 });
