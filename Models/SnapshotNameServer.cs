@@ -11,11 +11,11 @@ namespace KowWhoisApi.Models
 		[Required]
 		public uint SnapshotId { get; set; }
 		[JsonIgnore]
-		public Snapshot Snapshot { get; set; }
+		public virtual Snapshot Snapshot { get; set; }
 
 		[Column("nameserver_id")]
 		[Required]
 		public uint NameServerId { get; set; }
-		public NameServer NameServer { get; set; }
+		public virtual NameServer NameServer { get; set; }
 	}
 }

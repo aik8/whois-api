@@ -4,17 +4,21 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace KowWhoisApi.Models
-{
-	[Table("nameserver")]
-	public class NameServer
-	{
+namespace KowWhoisApi.Models {
+	[Table("address")]
+	public class Address {
 		[Column("id")]
 		public uint Id { get; set; }
 
-		[Column("name")]
+		[Column("ip")]
+		[MaxLength(16)]
 		[Required]
-		public string Name { get; set; }
+		public byte[] Ip { get; set; }
+
+		[Column("addr")]
+		[MaxLength(45)]
+		[Required]
+		public string Addr { get; set; }
 
 		[Column("created_at")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,16 +27,5 @@ namespace KowWhoisApi.Models
 		[Column("updated_at")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
-
-		[JsonIgnore]
-		public virtual ICollection<SnapshotNameServer> SnapshotNameServers { get; set; }
-
-		public virtual ICollection<AddressSet> AddressSets { get; set; }
-
-		public NameServer()
-		{
-			SnapshotNameServers = new List<SnapshotNameServer>();
-			AddressSets = new List<AddressSet>();
-		}
 	}
 }
