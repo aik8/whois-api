@@ -33,6 +33,11 @@ namespace KowWhoisApi
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddTransient<IPiosService, PiosService>();
+			services.AddTransient<IDomainsService, DomainsService>();
+			services.AddTransient<IRegistrarsService, RegistrarsService>();
+			services.AddTransient<INameServersService, NameServersService>();
+			services.AddTransient<ISnapshotsService, SnapshotsService>();
+
 			services.AddDbContext<WhoisContext>(options
 				=> options.UseMySql(Configuration.GetConnectionString("WhoisDatabase"), mysqlOptions
 					=> mysqlOptions
