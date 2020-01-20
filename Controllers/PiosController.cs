@@ -13,13 +13,13 @@ namespace KowWhoisApi.Controllers
 	[Route("[controller]")]
 	public class PiosController : ControllerBase
 	{
-		private WhoisContext _context;
 		private IPiosService _pios;
+		private ISnapshotsService _snapshots;
 
-		public PiosController(WhoisContext context, IPiosService pios)
+		public PiosController(IPiosService pios, ISnapshotsService snapshots)
 		{
-			_context = context;
 			_pios = pios;
+			_snapshots = snapshots;
 		}
 
 		[HttpGet]
@@ -30,73 +30,32 @@ namespace KowWhoisApi.Controllers
 			if (fast)
 			{
 				// Start the whole data collection chain...
-				Task.Factory.StartNew(() =>
-				{
-					var result = _pios.AskPios(domain);
-					Console.WriteLine(result.ToString());
-				});
+				Response.OnCompleted(() => Ask(domain));
 
-				// ... and send immediately just a 201 to the requester.
-				return StatusCode(201);
+				// ... and send immediately just a 200 to the requester.
+				return Ok();
 			}
 
-			var piosResult = _pios.AskPios(domain);
-			var snapshot = CreateSnapshot(piosResult);
+			// Wait for the result.
+			var task = Ask(domain);
+			task.Wait();
 
-			Domain d = FindOrAddDomain(snapshot.Domain);
-			if (d != null) snapshot.Domain = d;
-
-			if (piosResult.IsRegistered)
-			{
-				Registrar r = FindOrAddRegistrar(snapshot.Registrar);
-				if (r != null) snapshot.Registrar = r;
-			}
-
-			SaveSnapshot(snapshot);
+			var piosResult = task.Result;
 
 			// Otherwise do return something.
-			return new ActionResult<IPiosResult>(piosResult);
+			return CreatedAtAction(nameof(Get), piosResult);
 		}
 
-		private Snapshot CreateSnapshot(IPiosResult piosResult)
+		private Task<IPiosResult> Ask(string domain)
 		{
-			var snapshot = new Snapshot();
-			snapshot.Domain = piosResult.Domain;
-			snapshot.Registrar = piosResult.Registrar;
-
-			foreach (var ns in piosResult.NameServers)
+			return Task.Factory.StartNew(() =>
 			{
-				NameServer n = FindOrAddNameServer(ns);
+				var result = _pios.AskPios(domain);
+				var snapshot = _snapshots.Create(result);
+				_snapshots.Save(snapshot);
 
-				if (n != null) {
-					snapshot.SnapshotNameServers.Add(new SnapshotNameServer { NameServer = n });
-				} else {
-					snapshot.SnapshotNameServers.Add(new SnapshotNameServer { NameServer = ns });
-				}
-			}
-
-			return snapshot;
-		}
-
-		private void SaveSnapshot(Snapshot snapshot)
-		{
-			_context.Snapshots.Add(snapshot);
-			_context.SaveChanges();
-		}
-
-		private Domain FindOrAddDomain(Domain domain)
-		{
-			return _context.Domains.SingleOrDefault(d => d.Name == domain.Name);
-		}
-
-		private Registrar FindOrAddRegistrar(Registrar registrar)
-		{
-			return _context.Registrars.SingleOrDefault(r => r.Name == registrar.Name);
-		}
-
-		private NameServer FindOrAddNameServer(NameServer nameServer)
-		{
-			return _context.NameServers.SingleOrDefault(n => n.Name == nameServer.Name);
+				return result;
+			});
 		}
 	}
 }
