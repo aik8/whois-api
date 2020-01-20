@@ -1,0 +1,10 @@
+# REST Client tests for /pios route.
+@baseUrl = http://localhost:5000
+
+# Normal request.
+GET {{baseUrl}}/pios?domain=devoid.gr
+
+###
+
+# "Fast" request.
+GET {{baseUrl}}/pios?domain=devoid.gr&fast=true
