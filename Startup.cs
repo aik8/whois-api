@@ -1,22 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Pomelo.EntityFrameworkCore.MySql.Storage;
-using KowWhoisApi.Models;
 using KowWhoisApi.Services;
 using KowWhoisApi.Interfaces;
 using KowWhoisApi.Data;
+using StackExchange.Redis.Extensions.Core.Configuration;
+using StackExchange.Redis.Extensions.Core.Abstractions;
+using StackExchange.Redis.Extensions.Core.Implementations;
+using StackExchange.Redis.Extensions.Core;
+using StackExchange.Redis.Extensions.MsgPack;
 
 namespace KowWhoisApi
 {
@@ -25,9 +22,11 @@ namespace KowWhoisApi
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
+			RedisConfiguration = Configuration.GetSection("Redis").Get<RedisConfiguration>();
 		}
 
 		public IConfiguration Configuration { get; }
+		public RedisConfiguration RedisConfiguration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
@@ -44,6 +43,13 @@ namespace KowWhoisApi
 						.CharSet(CharSet.Utf8Mb4)
 						.CharSetBehavior(CharSetBehavior.NeverAppend)
 				));
+
+			services.AddSingleton(RedisConfiguration);
+			services.AddSingleton<IRedisCacheClient, RedisCacheClient>();
+			services.AddSingleton<IRedisCacheConnectionPoolManager, RedisCacheConnectionPoolManager>();
+			services.AddSingleton<IRedisDefaultCacheClient, RedisDefaultCacheClient>();
+			services.AddSingleton<ISerializer, MsgPackObjectSerializer>();
+
 			services.AddControllers();
 		}
 

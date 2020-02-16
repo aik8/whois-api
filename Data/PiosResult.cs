@@ -11,6 +11,8 @@ namespace KowWhoisApi.Data
 		public ICollection<NameServer> NameServers { get; private set; }
 		public bool IsRegistered { get; private set; }
 
+		public PiosResult() {}
+
 		public PiosResult(string domain, bool registered)
 		{
 			// Get the domain status of the result.
