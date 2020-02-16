@@ -1,0 +1,11 @@
+# REST Client tests for /snapshots route.
+@baseUrl = http://localhost:5000
+
+# Get all snapshots
+GET {{baseUrl}}/snapshots
+
+###
+
+# Get cached snapshot.
+GET {{baseUrl}}/snapshots/cached/fps.gr`
+
