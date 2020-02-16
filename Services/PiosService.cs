@@ -43,7 +43,14 @@ namespace KowWhoisApi.Services
 			var cached = queryCache.Result;
 
 			// If it's really cached, return the result.
-			if (cached != null) return cached;
+			if (cached != null)
+			{
+				_logger.LogInformation($"Found {domain} in cache. Serving stale results.");
+				return cached;
+			}
+
+			// At this point it's clear we need to query The Registry.
+			_logger.LogInformation($"No cached results for {domain}. Fetching some fresh information.");
 
 			// Fill in the domain query.
 			_builder.Query = $"domainName={domain}";
@@ -102,15 +109,15 @@ namespace KowWhoisApi.Services
 			var cult = new CultureInfo("el-GR");
 
 			/* Domain */
-			parsed.Domain.Handle         = pairs[1][1];
+			parsed.Domain.Handle = pairs[1][1];
 			parsed.Domain.ProtocolNumber = pairs[2][1];
-			parsed.Domain.CreationDate   = DateTime.Parse(pairs[3][1], cult);
+			parsed.Domain.CreationDate = DateTime.Parse(pairs[3][1], cult);
 			parsed.Domain.ExpirationDate = DateTime.Parse(pairs[4][1], cult);
-			parsed.Domain.LastUpdate     = DateTime.Parse(pairs[5][1], cult);
+			parsed.Domain.LastUpdate = DateTime.Parse(pairs[5][1], cult);
 
 			/* Current Registrar */
-			parsed.Registrar.Name  = pairs[6][1];
-			parsed.Registrar.Url   = pairs[7][1];
+			parsed.Registrar.Name = pairs[6][1];
+			parsed.Registrar.Url = pairs[7][1];
 			parsed.Registrar.Email = pairs[8][1];
 			parsed.Registrar.Phone = pairs[9][1];
 
