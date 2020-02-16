@@ -5,25 +5,46 @@ using HtmlAgilityPack;
 using KowWhoisApi.Models;
 using KowWhoisApi.Data;
 using KowWhoisApi.Interfaces;
+using Microsoft.Extensions.Logging;
+using StackExchange.Redis.Extensions.Core.Abstractions;
 
 namespace KowWhoisApi.Services
 {
 	public class PiosService : IPiosService
 	{
+		private const int _cache_ttl = 86400;
+		private readonly ILogger _logger;
+		private readonly IRedisCacheClient _redis;
 		private string _scheme = "https";
 		private string _host = @"grwhois.ics.forth.gr";
 		private int _port = 800;
 		private string _path = @"plainwhois/plainWhois";
 		private UriBuilder _builder;
 
-		public PiosService()
+
+		public PiosService(ILogger<PiosService> logger, IRedisCacheClient redis)
 		{
+			// Initialize injected stuff.
+			_logger = logger;
+			_redis = redis;
+
 			// Initialize the builder.
 			_builder = new UriBuilder(_scheme, _host, _port, _path);
 		}
 
 		public IPiosResult AskPios(string domain)
 		{
+			// Log stuff.
+			_logger.LogInformation($"Got request for {domain}");
+
+			// Check if it's cached.
+			var queryCache = _redis.Db0.GetAsync<PiosResult>(domain);
+			queryCache.Wait();
+			var cached = queryCache.Result;
+
+			// If it's really cached, return the result.
+			if (cached != null) return cached;
+
 			// Fill in the domain query.
 			_builder.Query = $"domainName={domain}";
 
@@ -37,11 +58,15 @@ namespace KowWhoisApi.Services
 			// Parse the result.
 			var result = ParsePios(domain, node.InnerText);
 
+			// Cache the result.
+			var writeCache = _redis.Db0.AddAsync<PiosResult>(domain, result, TimeSpan.FromSeconds(_cache_ttl));
+			writeCache.Wait();
+
 			// We are done here.
 			return result;
 		}
 
-		private IPiosResult ParsePios(string domain, string result)
+		private PiosResult ParsePios(string domain, string result)
 		{
 			// Split the result into fields.
 			var fields = result.Split('\n');
