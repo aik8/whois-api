@@ -93,9 +93,22 @@ namespace KowWhoisApi.Services
 				// Split the pair.
 				var pair = field.Split(':');
 
-				// Get the kay and value.
+				// Get the key.
 				var key = pair[0];
-				var value = pair.Length == 2 ? pair[1] : String.Empty;
+
+				// Initialize the value.
+				var value = String.Empty;
+
+				// The URL field gets split more than once, thus we need to
+				// take extra care of the value field.
+				if (pair.Length == 2)
+				{
+					value = pair[1];
+				}
+				else if (pair.Length == 3)
+				{
+					value = $"{pair[1]}:{pair[2]}";
+				}
 
 				// Check if there is anything in there.
 				if (key.Length == 0) continue;
