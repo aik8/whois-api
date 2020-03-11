@@ -37,6 +37,14 @@ namespace KowWhoisApi
 			services.AddTransient<INameServersService, NameServersService>();
 			services.AddTransient<ISnapshotsService, SnapshotsService>();
 
+			services.AddCors(options =>
+			{
+				options.AddPolicy("allow_everything", builder =>
+				{
+					builder.WithOrigins("*");
+				});
+			});
+
 			services.AddDbContext<WhoisContext>(options
 				=> options.UseMySql(Configuration.GetConnectionString("WhoisDatabase"), mysqlOptions
 					=> mysqlOptions
@@ -60,6 +68,8 @@ namespace KowWhoisApi
 			{
 				app.UseDeveloperExceptionPage();
 			}
+
+			app.UseCors("allow_everything");
 
 			app.UseStaticFiles();
 
