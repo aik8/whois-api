@@ -2,10 +2,15 @@
 @baseUrl = http://localhost:5000
 
 # Get all snapshots
-GET {{baseUrl}}/snapshots
-
+GET {{baseUrl}}/snapshots?per_page=1&page=0
 ###
 
-# Get cached snapshot.
-GET {{baseUrl}}/snapshots/cached/fps.gr`
+# Get snapshots for a specific domain.
+GET {{baseUrl}}/snapshots?domainId=1
+###
+GET {{baseUrl}}/snapshots?domainName=devoid.gr
+###
 
+# Get paginated snapshots.
+GET {{baseUrl}}/snapshots?per_page=1&page=0
+###

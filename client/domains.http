@@ -1,0 +1,7 @@
+# REST Client tests for /domains route.
+@baseUrl = http://localhost:5000
+
+# Get all domains
+GET {{baseUrl}}/domains
+###
+

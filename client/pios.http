@@ -3,6 +3,21 @@
 
 # Normal request.
 GET {{baseUrl}}/pios?domain=devoid.gr
+###
+GET {{baseUrl}}/pios?domain=fps.gr
+###
+GET {{baseUrl}}/pios?domain=in.gr
+###
+GET {{baseUrl}}/pios?domain=fastpath.gr
+###
+GET {{baseUrl}}/pios?domain=odt.gr
+###
+GET {{baseUrl}}/pios?domain=cortex.gr
+###
+GET {{baseUrl}}/pios?domain=asdf.gr
+###
+GET {{baseUrl}}/pios?domain=cretaforce.gr
+
 
 ###
 
