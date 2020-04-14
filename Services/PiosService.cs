@@ -32,7 +32,7 @@ namespace KowWhoisApi.Services
 			_builder = new UriBuilder(_scheme, _host, _port, _path);
 		}
 
-		public IPiosResult AskPios(string domain)
+		public IPiosResult AskPios(string domain, bool fresh = false)
 		{
 			// Log stuff.
 			_logger.LogInformation($"Got request for {domain}");
@@ -42,8 +42,9 @@ namespace KowWhoisApi.Services
 			queryCache.Wait();
 			var cached = queryCache.Result;
 
-			// If it's really cached, return the result.
-			if (cached != null)
+			// If it's really cached and we are not forced to
+			// fetch fresh results, return the cached result.
+			if (cached != null && !fresh)
 			{
 				_logger.LogInformation($"Found {domain} in cache. Serving stale results.");
 				return cached;
