@@ -25,6 +25,11 @@ namespace KowWhoisApi.Controllers
 		[HttpGet]
 		public ActionResult<IPiosResult> Get([FromQuery] string domain, [FromQuery] bool fast = false)
 		{
+			// Check if we got a valid query.
+			if (domain == null) {
+				return BadRequest();
+			}
+
 			// If this request comes from an automated system,
 			// there is no need for it to wait for a response.
 			if (fast)
