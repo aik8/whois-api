@@ -26,22 +26,23 @@ namespace KowWhoisApi.Services
 			Domain d = _domains.FindOrAdd(piosResult.Domain);
 			snapshot.Domain = d != null ? d : piosResult.Domain;
 
-			if (piosResult.IsRegistered){
+			if (piosResult.IsRegistered)
+			{
 				Registrar r = _registrars.FindOrAdd(piosResult.Registrar);
 				snapshot.Registrar = r != null ? r : piosResult.Registrar;
-			}
 
-			foreach (var ns in piosResult.NameServers)
-			{
-				NameServer n = _nameServers.FindOrAdd(ns);
+				foreach (var ns in piosResult.NameServers)
+				{
+					NameServer n = _nameServers.FindOrAdd(ns);
 
-				if (n != null)
-				{
-					snapshot.SnapshotNameServers.Add(new SnapshotNameServer { NameServer = n });
-				}
-				else
-				{
-					snapshot.SnapshotNameServers.Add(new SnapshotNameServer { NameServer = ns });
+					if (n != null)
+					{
+						snapshot.SnapshotNameServers.Add(new SnapshotNameServer { NameServer = n });
+					}
+					else
+					{
+						snapshot.SnapshotNameServers.Add(new SnapshotNameServer { NameServer = ns });
+					}
 				}
 			}
 
