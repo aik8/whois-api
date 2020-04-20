@@ -7,6 +7,7 @@ using KowWhoisApi.Data;
 using KowWhoisApi.Interfaces;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis.Extensions.Core.Abstractions;
+using KowWhoisApi.Utilities;
 
 namespace KowWhoisApi.Services
 {
@@ -32,28 +33,39 @@ namespace KowWhoisApi.Services
 			_builder = new UriBuilder(_scheme, _host, _port, _path);
 		}
 
-		public IPiosResult AskPios(string domain)
+		public IPiosResult AskPios(string domain, bool fresh = false)
 		{
 			// Log stuff.
 			_logger.LogInformation($"Got request for {domain}");
 
+			// Extract the base domain.
+			var baseDomain = new BaseDomain(domain);
+
+			// Check if it is a valid domain.
+			if (!baseDomain.IsValid) {
+				_logger.LogInformation($"\"{domain}\" is an invalid .gr/.ελ domain.");
+				var empty = new PiosResult();
+				return empty;
+			}
+
 			// Check if it's cached.
-			var queryCache = _redis.Db0.GetAsync<PiosResult>(domain);
+			var queryCache = _redis.Db0.GetAsync<PiosResult>(baseDomain.Value);
 			queryCache.Wait();
 			var cached = queryCache.Result;
 
-			// If it's really cached, return the result.
-			if (cached != null)
+			// If it's really cached and we are not forced to
+			// fetch fresh results, return the cached result.
+			if (cached != null && !fresh)
 			{
-				_logger.LogInformation($"Found {domain} in cache. Serving stale results.");
+				_logger.LogInformation($"Found {baseDomain} in cache. Serving stale results.");
 				return cached;
 			}
 
 			// At this point it's clear we need to query The Registry.
-			_logger.LogInformation($"No cached results for {domain}. Fetching some fresh information.");
+			_logger.LogInformation($"No cached results for {baseDomain}. Fetching some fresh information.");
 
 			// Fill in the domain query.
-			_builder.Query = $"domainName={domain}";
+			_builder.Query = $"domainName={baseDomain}";
 
 			// Fetch what needs to be fetched.
 			HtmlWeb web = new HtmlWeb();
@@ -63,10 +75,10 @@ namespace KowWhoisApi.Services
 			var node = htmlDoc.DocumentNode.SelectSingleNode("//body");
 
 			// Parse the result.
-			var result = ParsePios(domain, node.InnerText);
+			var result = ParsePios(baseDomain.Value, node.InnerText);
 
 			// Cache the result.
-			var writeCache = _redis.Db0.AddAsync<PiosResult>(domain, result, TimeSpan.FromSeconds(_cache_ttl));
+			var writeCache = _redis.Db0.AddAsync<PiosResult>(baseDomain.Value, result, TimeSpan.FromSeconds(_cache_ttl));
 			writeCache.Wait();
 
 			// We are done here.
