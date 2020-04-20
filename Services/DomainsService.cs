@@ -16,6 +16,10 @@ namespace KowWhoisApi.Services
 
 		public Domain FindOrAdd(Domain domain)
 		{
+			// Check that proper input has been passed.
+			if (domain == null) return null;
+
+			// Return the query result.
 			return _context.Domains.SingleOrDefault(d => d.Name == domain.Name);
 		}
 	}
