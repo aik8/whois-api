@@ -13,7 +13,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 ## Final Stage ##
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 
 # Set the workdir.
 WORKDIR /app
