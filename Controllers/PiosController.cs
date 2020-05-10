@@ -38,7 +38,7 @@ namespace KowWhoisApi.Controllers
 				Response.OnCompleted(() => Ask(domain));
 
 				// ... and send immediately just a 200 to the requester.
-				return Ok();
+				return Accepted();
 			}
 
 			// Wait for the result.
