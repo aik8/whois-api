@@ -84,6 +84,10 @@ namespace KowWhoisApi.Services
 			return result;
 		}
 
+		/// <summary>
+		/// Writes results to the cache.
+		/// </summary>
+		/// <param name="result">The result to be cached.</param>
 		private void CacheResult(PiosResult result)
 		{
 			// Cache the result.
@@ -93,6 +97,12 @@ namespace KowWhoisApi.Services
 			writeCache.Wait();
 		}
 
+		/// <summary>
+		/// Parse the results returned from the Registry.
+		/// </summary>
+		/// <param name="domain">The domain to which the results refer.</param>
+		/// <param name="result">The raw registry query results.</param>
+		/// <returns></returns>
 		private PiosResult ParsePios(string domain, string result)
 		{
 			// Split the result into fields.
