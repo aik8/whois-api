@@ -42,7 +42,8 @@ namespace KowWhoisApi.Services
 			var baseDomain = new BaseDomain(domain);
 
 			// Check if it is a valid domain.
-			if (!baseDomain.IsValid) {
+			if (!baseDomain.IsValid)
+			{
 				_logger.LogInformation($"\"{domain}\" is an invalid .gr/.ελ domain.");
 				var empty = new PiosResult();
 				return empty;
