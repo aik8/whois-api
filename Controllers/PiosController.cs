@@ -59,8 +59,8 @@ namespace KowWhoisApi.Controllers
 				// Fetch the resutls.
 				var result = _pios.AskPios(domain, fresh);
 
-				// Create a snapshot if the results are supposed to be fresh.
-				if (fresh)
+				// Create a snapshot if the results were not recalled from the cache.
+				if (!result.IsCached)
 				{
 					var snapshot = _snapshots.Create(result);
 					_snapshots.Save(snapshot);
