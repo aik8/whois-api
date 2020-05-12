@@ -78,11 +78,19 @@ namespace KowWhoisApi.Services
 			var result = ParsePios(baseDomain.Value, node.InnerText);
 
 			// Cache the result.
-			var writeCache = _redis.Db0.AddAsync<PiosResult>(baseDomain.Value, result, TimeSpan.FromSeconds(_cache_ttl));
-			writeCache.Wait();
+			CacheResult(result);
 
 			// We are done here.
 			return result;
+		}
+
+		private void CacheResult(PiosResult result)
+		{
+			// Cache the result.
+			var writeCache = _redis.Db0.AddAsync<PiosResult>(result.Domain.Name, result, TimeSpan.FromSeconds(_cache_ttl));
+
+			// Wait for it to finish.
+			writeCache.Wait();
 		}
 
 		private PiosResult ParsePios(string domain, string result)
