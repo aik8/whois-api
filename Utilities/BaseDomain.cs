@@ -77,7 +77,7 @@ namespace KowWhoisApi.Utilities
 		/// <summary>
 		/// Extract the base domain from the given hostname.
 		/// </summary>
-		/// <param name="input"></param>
+		/// <param name="input">The input from which the base domain extraction will be attempted.</param>
 		/// <returns>The resulting base domain.</returns>
 		private string ExtractBase(string input)
 		{
