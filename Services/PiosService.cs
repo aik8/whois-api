@@ -41,29 +41,25 @@ namespace KowWhoisApi.Services
 			// Extract the base domain.
 			var baseDomain = new BaseDomain(domain);
 
-			// Check if it is a valid domain.
+			// Check if a valid domain could be found, otherwise return an empty result.
 			if (!baseDomain.IsValid)
 			{
 				_logger.LogInformation($"\"{domain}\" is an invalid .gr/.ελ domain.");
-				var empty = new PiosResult();
-				return empty;
+				return new PiosResult();
 			}
 
-			// Check if it's cached.
-			var queryCache = _redis.Db0.GetAsync<PiosResult>(baseDomain.Value);
-			queryCache.Wait();
-			var cached = queryCache.Result;
-
-			// If it's really cached and we are not forced to
-			// fetch fresh results, return the cached result.
-			if (cached != null && !fresh)
+			// Check for cached results, unless otherwise requested.
+			if (!fresh)
 			{
-				_logger.LogInformation($"Found {baseDomain} in cache. Serving stale results.");
-				return cached;
+				var cached = RecallResult(baseDomain.Value);
+				if (cached != null)
+				{
+					return cached;
+				}
 			}
 
 			// At this point it's clear we need to query The Registry.
-			_logger.LogInformation($"No cached results for {baseDomain}. Fetching some fresh information.");
+			_logger.LogInformation($"No cached results found or fresh results were requested for {baseDomain}. Fetching some fresh information.");
 
 			// Fill in the domain query.
 			_builder.Query = $"domainName={baseDomain}";
@@ -96,6 +92,30 @@ namespace KowWhoisApi.Services
 
 			// Wait for it to finish.
 			writeCache.Wait();
+		}
+
+		/// <summary>
+		/// Tries to recall the results for a given domain from the cache.
+		/// </summary>
+		/// <param name="domain">The domain for which to check.</param>
+		/// <returns>The <see cref="PiosResult"> for the domain (marked as "cached") or null.</returns>
+		private PiosResult RecallResult(string domain)
+		{
+			// Query the cache for the given domain.
+			var queryCache = _redis.Db0.GetAsync<PiosResult>(domain);
+			queryCache.Wait();
+			var cached = queryCache.Result;
+
+			// If the result was found in the cache, mark it accordingly
+			// before returning it.
+			if (cached != null)
+			{
+				_logger.LogInformation($"Found {domain} in cache.");
+				cached.IsCached = true;
+			}
+
+			// Return whatever the cache served.
+			return cached;
 		}
 
 		/// <summary>
