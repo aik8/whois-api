@@ -23,10 +23,11 @@ namespace KowWhoisApi.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult<IPiosResult> Get([FromQuery] string domain, [FromQuery] bool fast = false)
+		public ActionResult<IPiosResult> Get([FromQuery] string domain, [FromQuery] bool fast = false, [FromQuery] bool fresh = false)
 		{
 			// Check if we got a valid query.
-			if (domain == null) {
+			if (domain == null)
+			{
 				return BadRequest();
 			}
 
@@ -35,29 +36,35 @@ namespace KowWhoisApi.Controllers
 			if (fast)
 			{
 				// Start the whole data collection chain...
-				Response.OnCompleted(() => Ask(domain));
+				Response.OnCompleted(() => Ask(domain, fresh));
 
 				// ... and send immediately just a 200 to the requester.
 				return Accepted();
 			}
 
 			// Wait for the result.
-			var task = Ask(domain);
+			var task = Ask(domain, fresh);
 			task.Wait();
 
 			var piosResult = task.Result;
 
 			// Otherwise do return something.
-			return CreatedAtAction(nameof(Get), piosResult);
+			return Ok(piosResult);
 		}
 
-		private Task<IPiosResult> Ask(string domain)
+		private Task<IPiosResult> Ask(string domain, bool fresh)
 		{
 			return Task.Factory.StartNew(() =>
 			{
-				var result = _pios.AskPios(domain);
-				var snapshot = _snapshots.Create(result);
-				_snapshots.Save(snapshot);
+				// Fetch the resutls.
+				var result = _pios.AskPios(domain, fresh);
+
+				// Create a snapshot if the results are supposed to be fresh.
+				if (fresh)
+				{
+					var snapshot = _snapshots.Create(result);
+					_snapshots.Save(snapshot);
+				}
 
 				return result;
 			});
