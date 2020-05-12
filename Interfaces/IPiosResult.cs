@@ -7,5 +7,6 @@ namespace KowWhoisApi.Interfaces {
 		Registrar Registrar { get; }
 		ICollection<NameServer> NameServers { get; }
 		bool IsRegistered { get; }
+		bool IsCached { get; }
 	}
 }

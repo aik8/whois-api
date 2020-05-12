@@ -10,13 +10,17 @@ namespace KowWhoisApi.Data
 		public Registrar Registrar { get; private set; }
 		public ICollection<NameServer> NameServers { get; private set; }
 		public bool IsRegistered { get; private set; }
+		public bool IsCached { get; set; }
 
 		public PiosResult() {}
 
-		public PiosResult(string domain, bool registered)
+		public PiosResult(string domain, bool registered = false, bool cached = false)
 		{
 			// Get the domain status of the result.
 			IsRegistered = registered;
+
+			// Let's start with "un-cached".
+			IsCached = cached;
 
 			// Fill in the domain name.
 			Domain = new Domain { Name = domain };
