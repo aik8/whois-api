@@ -4,6 +4,9 @@ using KowWhoisApi.Interfaces;
 
 namespace KowWhoisApi.Data
 {
+	/// <summary>
+	/// Implements the <see cref="IPiosResult"> interface in a simple way.
+	/// </summary>
 	public class PiosResult : IPiosResult
 	{
 		public Domain Domain { get; private set; }
