@@ -1,10 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using KowWhoisApi.Data;
-using KowWhoisApi.Models;
+using KowWhoisApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace KowWhoisApi.Controllers
 {
@@ -12,24 +8,25 @@ namespace KowWhoisApi.Controllers
 	[Route("[controller]")]
 	public class DomainsController : ControllerBase
 	{
-		private readonly WhoisContext _context;
+		private readonly IDomainsService _domains;
 
-		public DomainsController(WhoisContext context)
+		public DomainsController(WhoisContext context, IDomainsService domains)
 		{
-			_context = context;
+			_domains = domains;
 		}
 
 		[HttpGet]
 		[Route("{id?}")]
-		public List<Domain> Get(uint? id, [FromQuery] string name = null, [FromQuery] int page = 0, [FromQuery] int per_page = int.MaxValue)
+		public IActionResult Get(uint? id, [FromQuery] string name = null, [FromQuery] int page = 0, [FromQuery] int per_page = int.MaxValue)
 		{
-			return _context.Domains
-				.Where(d => id == null || d.Id == id)
-				.Where(d => name == null || d.Name == name)
-				.Include(d => d.Snapshots)
-				.Skip(page * per_page)
-				.Take(per_page)
-				.ToList();
+			if (per_page == int.MaxValue)
+			{
+				return Ok(_domains.Get(id, name));
+			}
+			else
+			{
+				return Ok(_domains.GetPaged(per_page, page));
+			}
 		}
 	}
 }
