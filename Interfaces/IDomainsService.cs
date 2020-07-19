@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using KowWhoisApi.Models;
 
 namespace KowWhoisApi.Interfaces
@@ -5,5 +6,7 @@ namespace KowWhoisApi.Interfaces
 	public interface IDomainsService
 	{
 		Domain FindOrAdd(Domain domain);
+		List<Domain> Get(uint? id, string name);
+		IPagedResponse<Domain> GetPaged(int per_page, int page);
 	}
 }
