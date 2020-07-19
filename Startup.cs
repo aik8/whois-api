@@ -14,6 +14,7 @@ using StackExchange.Redis.Extensions.Core.Abstractions;
 using StackExchange.Redis.Extensions.Core.Implementations;
 using StackExchange.Redis.Extensions.Core;
 using StackExchange.Redis.Extensions.MsgPack;
+using KowWhoisApi.Middleware;
 
 namespace KowWhoisApi
 {
@@ -74,6 +75,8 @@ namespace KowWhoisApi
 			app.UseStaticFiles();
 
 			app.UseRouting();
+
+			app.UseMiddleware<RequestLoggingMiddleware>();
 
 			app.UseAuthorization();
 
