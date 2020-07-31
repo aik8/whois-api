@@ -7,6 +7,6 @@ namespace KowWhoisApi.Interfaces
 	{
 		Domain FindOrAdd(Domain domain);
 		List<Domain> Get(uint? id, string name);
-		IPagedResponse<Domain> GetPaged(int per_page, int page);
+		IPagedResponse<Domain> GetPaged(string name, int per_page, int page);
 	}
 }

@@ -29,14 +29,15 @@ namespace KowWhoisApi.Services
 		{
 			return _context.Domains
 				.Where(dom => id == null || dom.Id == id)
-				.Where(dom => name == null || dom.Name == name)
+				.Where(dom => name == null || EF.Functions.Like(dom.Name, $"%{name}%"))
 				.OrderBy(dom => dom.Name)
 				.ToList();
 		}
 
-		public IPagedResponse<Domain> GetPaged(int per_page = int.MaxValue, int page = 0)
+		public IPagedResponse<Domain> GetPaged(string name = null, int per_page = int.MaxValue, int page = 0)
 		{
 			var data = _context.Domains
+				.Where(dom => name == null || EF.Functions.Like(dom.Name, $"%name%"))
 				.OrderBy(dom => dom.Name)
 				.Skip(page * per_page)
 				.Take(per_page)
