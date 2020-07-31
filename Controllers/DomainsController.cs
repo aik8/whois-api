@@ -25,7 +25,7 @@ namespace KowWhoisApi.Controllers
 			}
 			else
 			{
-				return Ok(_domains.GetPaged(per_page, page));
+				return Ok(_domains.GetPaged(name, per_page, page));
 			}
 		}
 	}
