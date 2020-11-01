@@ -8,29 +8,37 @@ using KowWhoisApi.Interfaces;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis.Extensions.Core.Abstractions;
 using KowWhoisApi.Utilities;
+using Microsoft.Extensions.Options;
 
 namespace KowWhoisApi.Services
 {
 	public class PiosService : IPiosService
 	{
-		private const int _cache_ttl = 86400;
+		private readonly PiosServiceOptions _options;
+
+		private readonly int _cache_ttl;
 		private readonly ILogger _logger;
 		private readonly IRedisCacheClient _redis;
-		private string _scheme = "https";
-		private string _host = @"grwhois.ics.forth.gr";
-		private int _port = 800;
-		private string _path = @"plainwhois/plainWhois";
 		private UriBuilder _builder;
 
 
-		public PiosService(ILogger<PiosService> logger, IRedisCacheClient redis)
+		public PiosService(IOptions<PiosServiceOptions> options, ILogger<PiosService> logger, IRedisCacheClient redis)
 		{
+			// Initialize the options.
+			_options = options.Value;
+
 			// Initialize injected stuff.
 			_logger = logger;
 			_redis = redis;
 
+			// Save the cache TTL.
+			_cache_ttl = _options.CacheTtl;
+
+			// Determine the scheme to be used.
+			var scheme = _options.Secure ? "https" : "http";
+
 			// Initialize the builder.
-			_builder = new UriBuilder(_scheme, _host, _port, _path);
+			_builder = new UriBuilder(scheme, _options.Host, _options.Port, _options.Path);
 		}
 
 		public IPiosResult AskPios(string domain, bool fresh = false)
