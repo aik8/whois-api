@@ -4,4 +4,8 @@
 # Get all domains
 GET {{baseUrl}}/domains
 ###
-
+GET {{baseUrl}}/domains/4
+###
+GET {{baseUrl}}/domains?id=4
+###
+GET {{baseUrl}}/domains?name=devoid.gr

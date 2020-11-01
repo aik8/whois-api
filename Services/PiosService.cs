@@ -8,29 +8,37 @@ using KowWhoisApi.Interfaces;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis.Extensions.Core.Abstractions;
 using KowWhoisApi.Utilities;
+using Microsoft.Extensions.Options;
 
 namespace KowWhoisApi.Services
 {
 	public class PiosService : IPiosService
 	{
-		private const int _cache_ttl = 86400;
+		private readonly PiosServiceOptions _options;
+
+		private readonly int _cache_ttl;
 		private readonly ILogger _logger;
 		private readonly IRedisCacheClient _redis;
-		private string _scheme = "https";
-		private string _host = @"grwhois.ics.forth.gr";
-		private int _port = 800;
-		private string _path = @"plainwhois/plainWhois";
 		private UriBuilder _builder;
 
 
-		public PiosService(ILogger<PiosService> logger, IRedisCacheClient redis)
+		public PiosService(IOptions<PiosServiceOptions> options, ILogger<PiosService> logger, IRedisCacheClient redis)
 		{
+			// Initialize the options.
+			_options = options.Value;
+
 			// Initialize injected stuff.
 			_logger = logger;
 			_redis = redis;
 
+			// Save the cache TTL.
+			_cache_ttl = _options.CacheTtl;
+
+			// Determine the scheme to be used.
+			var scheme = _options.Secure ? "https" : "http";
+
 			// Initialize the builder.
-			_builder = new UriBuilder(_scheme, _host, _port, _path);
+			_builder = new UriBuilder(scheme, _options.Host, _options.Port, _options.Path);
 		}
 
 		public IPiosResult AskPios(string domain, bool fresh = false)
@@ -41,28 +49,25 @@ namespace KowWhoisApi.Services
 			// Extract the base domain.
 			var baseDomain = new BaseDomain(domain);
 
-			// Check if it is a valid domain.
-			if (!baseDomain.IsValid) {
+			// Check if a valid domain could be found, otherwise return an empty result.
+			if (!baseDomain.IsValid)
+			{
 				_logger.LogInformation($"\"{domain}\" is an invalid .gr/.ελ domain.");
-				var empty = new PiosResult();
-				return empty;
+				return new PiosResult();
 			}
 
-			// Check if it's cached.
-			var queryCache = _redis.Db0.GetAsync<PiosResult>(baseDomain.Value);
-			queryCache.Wait();
-			var cached = queryCache.Result;
-
-			// If it's really cached and we are not forced to
-			// fetch fresh results, return the cached result.
-			if (cached != null && !fresh)
+			// Check for cached results, unless otherwise requested.
+			if (!fresh)
 			{
-				_logger.LogInformation($"Found {baseDomain} in cache. Serving stale results.");
-				return cached;
+				var cached = RecallResult(baseDomain.Value);
+				if (cached != null)
+				{
+					return cached;
+				}
 			}
 
 			// At this point it's clear we need to query The Registry.
-			_logger.LogInformation($"No cached results for {baseDomain}. Fetching some fresh information.");
+			_logger.LogInformation($"No cached results found or fresh results were requested for {baseDomain}. Fetching some fresh information.");
 
 			// Fill in the domain query.
 			_builder.Query = $"domainName={baseDomain}";
@@ -78,13 +83,55 @@ namespace KowWhoisApi.Services
 			var result = ParsePios(baseDomain.Value, node.InnerText);
 
 			// Cache the result.
-			var writeCache = _redis.Db0.AddAsync<PiosResult>(baseDomain.Value, result, TimeSpan.FromSeconds(_cache_ttl));
-			writeCache.Wait();
+			CacheResult(result);
 
 			// We are done here.
 			return result;
 		}
 
+		/// <summary>
+		/// Writes results to the cache.
+		/// </summary>
+		/// <param name="result">The result to be cached.</param>
+		private void CacheResult(PiosResult result)
+		{
+			// Cache the result.
+			var writeCache = _redis.Db0.AddAsync<PiosResult>(result.Domain.Name, result, TimeSpan.FromSeconds(_cache_ttl));
+
+			// Wait for it to finish.
+			writeCache.Wait();
+		}
+
+		/// <summary>
+		/// Tries to recall the results for a given domain from the cache.
+		/// </summary>
+		/// <param name="domain">The domain for which to check.</param>
+		/// <returns>The <see cref="PiosResult"> for the domain (marked as "cached") or null.</returns>
+		private PiosResult RecallResult(string domain)
+		{
+			// Query the cache for the given domain.
+			var queryCache = _redis.Db0.GetAsync<PiosResult>(domain);
+			queryCache.Wait();
+			var cached = queryCache.Result;
+
+			// If the result was found in the cache, mark it accordingly
+			// before returning it.
+			if (cached != null)
+			{
+				_logger.LogInformation($"Found {domain} in cache.");
+				cached.IsCached = true;
+			}
+
+			// Return whatever the cache served.
+			return cached;
+		}
+
+		/// <summary>
+		/// Parse the results returned from the Registry.
+		/// </summary>
+		/// <param name="domain">The domain to which the results refer.</param>
+		/// <param name="result">The raw registry query results.</param>
+		/// <returns></returns>
 		private PiosResult ParsePios(string domain, string result)
 		{
 			// Split the result into fields.

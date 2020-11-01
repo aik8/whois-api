@@ -23,3 +23,9 @@ GET {{baseUrl}}/pios?domain=cretaforce.gr
 
 # "Fast" request.
 GET {{baseUrl}}/pios?domain=devoid.gr&fast=true
+
+
+###
+
+# "Fresh" request.
+GET {{baseUrl}}/pios?domain=devoid.gr&fresh=true

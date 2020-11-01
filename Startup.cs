@@ -14,6 +14,8 @@ using StackExchange.Redis.Extensions.Core.Abstractions;
 using StackExchange.Redis.Extensions.Core.Implementations;
 using StackExchange.Redis.Extensions.Core;
 using StackExchange.Redis.Extensions.MsgPack;
+using KowWhoisApi.Middleware;
+using KowWhoisApi.Models;
 
 namespace KowWhoisApi
 {
@@ -31,6 +33,8 @@ namespace KowWhoisApi
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+			services.Configure<PiosServiceOptions>(Configuration.GetSection(PiosServiceOptions.PiosService));
+
 			services.AddTransient<IPiosService, PiosService>();
 			services.AddTransient<IDomainsService, DomainsService>();
 			services.AddTransient<IRegistrarsService, RegistrarsService>();
@@ -74,6 +78,8 @@ namespace KowWhoisApi
 			app.UseStaticFiles();
 
 			app.UseRouting();
+
+			app.UseMiddleware<RequestLoggingMiddleware>();
 
 			app.UseAuthorization();
 
