@@ -59,7 +59,7 @@ namespace KowWhoisApi
 			services.AddSingleton(RedisConfiguration);
 			services.AddSingleton<IRedisCacheClient, RedisCacheClient>();
 			services.AddSingleton<IRedisCacheConnectionPoolManager, RedisCacheConnectionPoolManager>();
-			services.AddSingleton<IRedisDefaultCacheClient, RedisDefaultCacheClient>();
+			services.AddSingleton<IRedisCacheClient, RedisCacheClient>();
 			services.AddSingleton<ISerializer, MsgPackObjectSerializer>();
 
 			services.AddControllers();
