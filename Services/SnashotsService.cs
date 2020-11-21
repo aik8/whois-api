@@ -69,6 +69,8 @@ namespace KowWhoisApi.Services
 				.Include(s => s.Registrar)
 				.Include(s => s.SnapshotNameServers)
 					.ThenInclude(sns => sns.NameServer)
+				.Include(s => s.SnapshotNameServers)
+					.ThenInclude(sns => sns.Addresses)
 				.ToList();
 		}
 
@@ -84,6 +86,8 @@ namespace KowWhoisApi.Services
 				.Include(s => s.Registrar)
 				.Include(s => s.SnapshotNameServers)
 					.ThenInclude(sns => sns.NameServer)
+				.Include(s => s.SnapshotNameServers)
+					.ThenInclude(sns => sns.Addresses)
 				.ToList();
 
 			var total = _context.Snapshots.Count();
