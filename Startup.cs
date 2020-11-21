@@ -49,9 +49,11 @@ namespace KowWhoisApi
 				});
 			});
 
-			services.AddDbContext<WhoisContext>(options
-				=> options.UseMySql(Configuration.GetConnectionString("WhoisDatabase"), mysqlOptions
-					=> mysqlOptions
+			services.AddDbContext<WhoisContext>(
+				options => options.UseMySql(
+					Configuration.GetConnectionString("WhoisDatabase"),
+					new MariaDbServerVersion(new Version(10, 3, 24)),
+					mysqlOptions => mysqlOptions
 						.CharSet(CharSet.Utf8Mb4)
 						.CharSetBehavior(CharSetBehavior.NeverAppend)
 				));
