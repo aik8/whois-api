@@ -24,15 +24,11 @@ namespace KowWhoisApi.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
 
-		[JsonIgnore]
 		public virtual ICollection<SnapshotNameServer> SnapshotNameServers { get; set; }
-
-		public virtual ICollection<AddressSet> AddressSets { get; set; }
 
 		public NameServer()
 		{
 			SnapshotNameServers = new List<SnapshotNameServer>();
-			AddressSets = new List<AddressSet>();
 		}
 	}
 }
