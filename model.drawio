@@ -1,4 +1,4 @@
-<mxfile host="65bd71144e" modified="2020-11-23T22:29:40.545Z" agent="5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.51.1 Chrome/83.0.4103.122 Electron/9.3.3 Safari/537.36" etag="pfOz1rU6s9X48_Nj8W_e" version="13.6.5">
+<mxfile host="65bd71144e" modified="2020-11-23T22:33:54.983Z" agent="5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.51.1 Chrome/83.0.4103.122 Electron/9.3.3 Safari/537.36" etag="zWqly6OVmIoGD8lCOXE2" version="13.6.5">
     <diagram id="ZSAKdDLU09m8nj1zlMC5" name="Page-1">
         <mxGraphModel dx="738" dy="503" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
@@ -214,6 +214,9 @@
                 <mxCell id="127" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="114" target="125">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
+                <mxCell id="155" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="114" target="154">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
                 <mxCell id="114" value="Registry Query" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
                     <mxGeometry x="970" y="880" width="100" height="40" as="geometry"/>
                 </mxCell>
@@ -256,7 +259,13 @@
                 <mxCell id="129" value="results in" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
                     <mxGeometry x="770" y="530" width="120" height="60" as="geometry"/>
                 </mxCell>
-                <mxCell id="136" value="source ip" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                <mxCell id="152" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="136" target="150">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="153" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="136" target="151">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="136" value="source" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
                     <mxGeometry x="1100" y="580" width="100" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="138" value="response" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
@@ -300,6 +309,15 @@
                 </mxCell>
                 <mxCell id="149" value="1" style="resizable=0;html=1;align=right;verticalAlign=bottom;" connectable="0" vertex="1" parent="148">
                     <mxGeometry x="1" relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="150" value="ip" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="1260" y="565" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="151" value="hostname" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="1260" y="610" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="154" value="response" style="ellipse;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="1060" y="960" width="100" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
