@@ -12,6 +12,8 @@ namespace KowWhoisApi.Data
 		public DbSet<Snapshot> Snapshots { get; set; }
 		// public DbSet<Address> Addresses { get; set; }
 		public DbSet<SnapshotNameServer> NameServerSnapshots { get; set; }
+		public DbSet<WhoisQuery> Queries { get; set; }
+		public DbSet<RegistryQuery> RegistryQueries { get; set; }
 
 		public WhoisContext(DbContextOptions<WhoisContext> options) : base(options) { }
 
@@ -35,6 +37,12 @@ namespace KowWhoisApi.Data
 			{
 				entity.HasIndex(e => e.IpRaw).IsUnique();
 				entity.Property(e => e.Ip).HasComputedColumnSql("INET6_NTOA(ip_raw)");
+			});
+
+			// WhoisQuery
+			modelBuilder.Entity<WhoisQuery>(entity =>
+			{
+				entity.Property(e => e.ClientIp).HasComputedColumnSql("INET6_NTOA(client_ip_raw)");
 			});
 
 			// NameServer - Snapshot Relationship
