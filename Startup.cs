@@ -21,6 +21,8 @@ namespace KowWhoisApi
 {
 	public class Startup
 	{
+		readonly string CorsAllowEverything = "dev_policy";
+
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
@@ -43,7 +45,7 @@ namespace KowWhoisApi
 
 			services.AddCors(options =>
 			{
-				options.AddPolicy("allow_everything", builder =>
+				options.AddPolicy(CorsAllowEverything, builder =>
 				{
 					builder.WithOrigins("*");
 				});
@@ -76,16 +78,23 @@ namespace KowWhoisApi
 			{
 				app.UseDeveloperExceptionPage();
 			}
-
-			app.UseCors("allow_everything");
+			else
+			{
+				app.UseExceptionHandler("/Error");
+				// app.UseHsts();
+			}
 
 			app.UseStaticFiles();
 
-			app.UseRouting();
-
 			app.UseMiddleware<RequestLoggingMiddleware>();
 
+			app.UseRouting();
+			app.UseCors(CorsAllowEverything);
+
+			// app.UseAuthentication();
 			app.UseAuthorization();
+			// app.UseSession();
+			// app.UseResponseCaching();
 
 			app.UseEndpoints(endpoints =>
 			{
