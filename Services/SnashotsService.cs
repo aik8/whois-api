@@ -52,7 +52,7 @@ namespace KowWhoisApi.Services
 			return snapshot;
 		}
 
-		public void Save(Snapshot snapshot)
+		public void Add(Snapshot snapshot)
 		{
 			_context.Snapshots.Add(snapshot);
 			_context.SaveChanges();
