@@ -92,6 +92,10 @@ namespace KowWhoisApi.Data
 			// is always the same in the response.
 			var cult = new CultureInfo("el-GR");
 
+			// TODO: Don't forget to check this again in the future. Just set
+			//       ISO short date in the system's regional settings.
+			cult.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+
 			/* Domain */
 			parsed.Domain.Handle = pairs[1][1];
 			parsed.Domain.ProtocolNumber = pairs[2][1];
