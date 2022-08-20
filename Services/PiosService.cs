@@ -98,7 +98,7 @@ namespace KowWhoisApi.Services
 		{
 			// Cache the result.
 			var cacheOptions = new MemoryCacheEntryOptions()
-				.SetAbsoluteExpiration(TimeSpan.FromDays(7));
+				.SetAbsoluteExpiration(TimeSpan.FromSeconds(_options.CacheTtl));
 			_cache.Set<PiosResult>(result.Domain.Name, result, cacheOptions);
 		}
 
