@@ -1,6 +1,7 @@
 using System;
 using KowWhoisApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace KowWhoisApi.Data
 {
@@ -19,6 +20,9 @@ namespace KowWhoisApi.Data
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			// Set the default charset.
+			modelBuilder.HasCharSet(CharSet.Utf8Mb4, DelegationModes.ApplyToAll);
+
 			// Domain
 			modelBuilder.Entity<Domain>(entity =>
 			{
