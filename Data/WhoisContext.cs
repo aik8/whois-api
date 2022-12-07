@@ -1,6 +1,7 @@
 using System;
 using KowWhoisApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace KowWhoisApi.Data
 {
@@ -10,15 +11,18 @@ namespace KowWhoisApi.Data
 		public DbSet<Domain> Domains { get; set; }
 		public DbSet<NameServer> NameServers { get; set; }
 		public DbSet<Snapshot> Snapshots { get; set; }
-		public DbSet<Address> Addresses { get; set; }
-		public DbSet<AddressSet> AddressSets { get; set; }
+		// public DbSet<Address> Addresses { get; set; }
 		public DbSet<SnapshotNameServer> NameServerSnapshots { get; set; }
-		public DbSet<AddressSetAddress> AddressSetAddresses { get; set; }
+		public DbSet<WhoisQuery> Queries { get; set; }
+		public DbSet<RegistryQuery> RegistryQueries { get; set; }
 
 		public WhoisContext(DbContextOptions<WhoisContext> options) : base(options) { }
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+			// Set the default charset.
+			modelBuilder.HasCharSet(CharSet.Utf8Mb4, DelegationModes.ApplyToAll);
+
 			// Domain
 			modelBuilder.Entity<Domain>(entity =>
 			{
@@ -35,17 +39,19 @@ namespace KowWhoisApi.Data
 			// Address
 			modelBuilder.Entity<Address>(entity =>
 			{
-				entity.HasIndex(e => e.Ip).IsUnique();
-				entity.Property(e => e.Addr).HasComputedColumnSql("INET6_NTOA(ip)");
+				entity.HasIndex(e => e.IpRaw).IsUnique();
+				entity.Property(e => e.Ip).HasComputedColumnSql("INET6_NTOA(ip_raw)");
+			});
+
+			// WhoisQuery
+			modelBuilder.Entity<WhoisQuery>(entity =>
+			{
+				entity.Property(e => e.ClientIp).HasComputedColumnSql("INET6_NTOA(client_ip_raw)");
 			});
 
 			// NameServer - Snapshot Relationship
 			modelBuilder.Entity<SnapshotNameServer>()
 				.HasKey(sns => new { sns.SnapshotId, sns.NameServerId });
-
-			// Address - AddressSet Relationship
-			modelBuilder.Entity<AddressSetAddress>()
-				.HasKey(asa => new { asa.AddressSetId, asa.AddressId });
 		}
 	}
 }

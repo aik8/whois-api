@@ -63,7 +63,7 @@ namespace KowWhoisApi.Controllers
 				if (!result.IsCached)
 				{
 					var snapshot = _snapshots.Create(result);
-					_snapshots.Save(snapshot);
+					_snapshots.Add(snapshot);
 				}
 
 				return result;

@@ -1,24 +1,28 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
-namespace KowWhoisApi.Models {
+namespace KowWhoisApi.Models
+{
 	[Table("address")]
-	public class Address {
+	public class Address
+	{
 		[Column("id")]
 		public uint Id { get; set; }
 
-		[Column("ip")]
+		[Column("ip_raw")]
 		[MaxLength(16)]
 		[Required]
-		public byte[] Ip { get; set; }
+		public byte[] IpRaw { get; set; }
 
-		[Column("addr")]
-		[MaxLength(45)]
-		[Required]
-		public string Addr { get; set; }
+		[Column("ip")]
+		public string Ip { get; set; }
+
+		[Column("snapshot_id")]
+		public uint SnapshotNameServerSnapshotId { get; set; }
+		[Column("nameserver_id")]
+		public uint SnapshotNameServerNameServerId { get; set; }
+		public virtual SnapshotNameServer SnapshotNameServer { get; set; }
 
 		[Column("created_at")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]

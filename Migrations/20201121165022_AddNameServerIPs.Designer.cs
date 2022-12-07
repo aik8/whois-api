@@ -3,14 +3,16 @@ using System;
 using KowWhoisApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KowWhoisApi.Migrations
 {
     [DbContext(typeof(WhoisContext))]
-    partial class WhoisContextModelSnapshot : ModelSnapshot
+    [Migration("20201121165022_AddNameServerIPs")]
+    partial class AddNameServerIPs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,32 +196,6 @@ namespace KowWhoisApi.Migrations
                     b.ToTable("registrar");
                 });
 
-            modelBuilder.Entity("KowWhoisApi.Models.RegistryQuery", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Response")
-                        .HasColumnType("longtext")
-                        .HasColumnName("response");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("registry_query");
-                });
-
             modelBuilder.Entity("KowWhoisApi.Models.Snapshot", b =>
                 {
                     b.Property<uint>("Id")
@@ -271,55 +247,6 @@ namespace KowWhoisApi.Migrations
                     b.ToTable("rel_snapshot_nameserver");
                 });
 
-            modelBuilder.Entity("KowWhoisApi.Models.WhoisQuery", b =>
-                {
-                    b.Property<uint>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int unsigned")
-                        .HasColumnName("id");
-
-                    b.Property<string>("ClientHostname")
-                        .HasColumnType("longtext")
-                        .HasColumnName("client_hostname");
-
-                    b.Property<string>("ClientIp")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("longtext")
-                        .HasColumnName("client_ip")
-                        .HasComputedColumnSql("INET6_NTOA(client_ip_raw)");
-
-                    b.Property<byte[]>("ClientIpRaw")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("varbinary(16)")
-                        .HasColumnName("client_ip_raw");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("created_at");
-
-                    b.Property<uint?>("RegistryQueryId")
-                        .HasColumnType("int unsigned")
-                        .HasColumnName("registry_query_id");
-
-                    b.Property<ushort>("Response")
-                        .HasColumnType("smallint unsigned")
-                        .HasColumnName("response");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("updated_at");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RegistryQueryId")
-                        .IsUnique();
-
-                    b.ToTable("whois_query");
-                });
-
             modelBuilder.Entity("KowWhoisApi.Models.Address", b =>
                 {
                     b.HasOne("KowWhoisApi.Models.SnapshotNameServer", "SnapshotNameServer")
@@ -367,15 +294,6 @@ namespace KowWhoisApi.Migrations
                     b.Navigation("Snapshot");
                 });
 
-            modelBuilder.Entity("KowWhoisApi.Models.WhoisQuery", b =>
-                {
-                    b.HasOne("KowWhoisApi.Models.RegistryQuery", "RegistryQuery")
-                        .WithOne("Query")
-                        .HasForeignKey("KowWhoisApi.Models.WhoisQuery", "RegistryQueryId");
-
-                    b.Navigation("RegistryQuery");
-                });
-
             modelBuilder.Entity("KowWhoisApi.Models.Domain", b =>
                 {
                     b.Navigation("Snapshots");
@@ -389,11 +307,6 @@ namespace KowWhoisApi.Migrations
             modelBuilder.Entity("KowWhoisApi.Models.Registrar", b =>
                 {
                     b.Navigation("Snapshots");
-                });
-
-            modelBuilder.Entity("KowWhoisApi.Models.RegistryQuery", b =>
-                {
-                    b.Navigation("Query");
                 });
 
             modelBuilder.Entity("KowWhoisApi.Models.Snapshot", b =>

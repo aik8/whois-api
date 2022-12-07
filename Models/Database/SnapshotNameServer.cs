@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
@@ -17,5 +18,12 @@ namespace KowWhoisApi.Models
 		[Required]
 		public uint NameServerId { get; set; }
 		public virtual NameServer NameServer { get; set; }
+
+		public virtual ICollection<Address> Addresses { get; set; }
+
+		public SnapshotNameServer()
+		{
+			Addresses = new List<Address>();
+		}
 	}
 }

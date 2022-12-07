@@ -1,5 +1,5 @@
 ## Build Stage ##
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 
 # Set the workdir.
 WORKDIR /app
@@ -13,7 +13,7 @@ COPY . ./
 RUN dotnet publish -c Release -o out
 
 ## Final Stage ##
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 
 # Set the workdir.
 WORKDIR /app
