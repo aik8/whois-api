@@ -11,7 +11,7 @@ namespace KowWhoisApi.Data
 		public DbSet<Domain> Domains { get; set; }
 		public DbSet<NameServer> NameServers { get; set; }
 		public DbSet<Snapshot> Snapshots { get; set; }
-		// public DbSet<Address> Addresses { get; set; }
+		public DbSet<Address> Addresses { get; set; }
 		public DbSet<SnapshotNameServer> NameServerSnapshots { get; set; }
 		public DbSet<WhoisQuery> Queries { get; set; }
 		public DbSet<RegistryQuery> RegistryQueries { get; set; }
@@ -52,6 +52,10 @@ namespace KowWhoisApi.Data
 			// NameServer - Snapshot Relationship
 			modelBuilder.Entity<SnapshotNameServer>()
 				.HasKey(sns => new { sns.SnapshotId, sns.NameServerId });
+
+			// NameServer - Address Relationship
+			modelBuilder.Entity<NameServerAddress>()
+				.HasKey(nsa => new { nsa.NameServerId, nsa.AddressId });
 		}
 	}
 }

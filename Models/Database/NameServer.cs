@@ -25,10 +25,12 @@ namespace KowWhoisApi.Models
 		public DateTime UpdatedAt { get; set; }
 
 		public virtual ICollection<SnapshotNameServer> SnapshotNameServers { get; set; }
+		public virtual ICollection<NameServerAddress> NameServerAddresses { get; set; }
 
 		public NameServer()
 		{
 			SnapshotNameServers = new List<SnapshotNameServer>();
+			NameServerAddresses = new List<NameServerAddress>();
 		}
 	}
 }
