@@ -32,11 +32,11 @@ namespace KowWhoisApi.Models
 		[Column("last_update")]
 		public DateTime? LastUpdate { get; set; }
 
-		[Column("created_at")]
+		[Column("created_at", TypeName = "TIMESTAMP")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public DateTime CreatedAt { get; set; }
 
-		[Column("updated_at")]
+		[Column("updated_at", TypeName = "TIMESTAMP")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
 
