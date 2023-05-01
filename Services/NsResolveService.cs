@@ -29,19 +29,25 @@ namespace KowWhoisApi.Services
 		/// <returns>An array of IPAddress, containing both IPv4 and IPv6 entries.</returns>
 		public async Task<IPAddress[]> Resolve(string domain)
 		{
-			// Run the query, asking for ANY.
-			var result = await _client.QueryAsync(domain, QueryType.ANY);
+			// Run the query, asking for A records and then for AAAA records.
+			var result_v4 = await _client.QueryAsync(domain, QueryType.A);
+			var result_v6 = await _client.QueryAsync(domain, QueryType.AAAA);
 
-			// If there is an error, return an null pointer.
-			if (result.HasError) { return null; }
+			// If there is an error in both queries, return an null pointer.
+			if (result_v4.HasError && result_v6.HasError) { return null; }
 
 			// Get the addresses from the returned records, and prepare the
 			// IPAddress array for filling.
-			var records = result.Answers.AddressRecords().ToArray();
+			var records_v4 = result_v4.Answers.AddressRecords().ToArray();
+			var records_v6 = result_v6.Answers.AddressRecords().ToArray();
 			var addresses = new List<IPAddress>();
 
-			// Fill the IPAddress array.
-			foreach (var record in records)
+			// Fill the IPAddress array with v4 and then v6 results.
+			foreach (var record in records_v4)
+			{
+				addresses.Add(record.Address);
+			}
+			foreach (var record in records_v6)
 			{
 				addresses.Add(record.Address);
 			}
