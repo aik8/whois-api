@@ -36,16 +36,10 @@ namespace KowWhoisApi.Services
 
 				foreach (var ns in piosResult.NameServers)
 				{
-					NameServer n = _nameServers.FindOrAdd(ns);
+					NameServer existing_ns = _nameServers.Find(ns);
 
-					if (n != null)
-					{
-						snapshot.SnapshotNameServers.Add(new SnapshotNameServer { NameServer = n });
-					}
-					else
-					{
-						snapshot.SnapshotNameServers.Add(new SnapshotNameServer { NameServer = ns });
-					}
+					if (existing_ns != null) { snapshot.NameServers.Add(existing_ns); }
+					else { snapshot.NameServers.Add(ns); }
 				}
 			}
 
@@ -67,8 +61,8 @@ namespace KowWhoisApi.Services
 				.OrderByDescending(s => s.CreatedAt)
 				.Include(s => s.Domain)
 				.Include(s => s.Registrar)
-				.Include(s => s.SnapshotNameServers)
-					.ThenInclude(sns => sns.NameServer)
+				.Include(s => s.NameServers)
+					.ThenInclude(ns => ns.Addresses)
 				.ToList();
 		}
 
@@ -82,8 +76,8 @@ namespace KowWhoisApi.Services
 				.Take(per_page)
 				.Include(s => s.Domain)
 				.Include(s => s.Registrar)
-				.Include(s => s.SnapshotNameServers)
-					.ThenInclude(sns => sns.NameServer)
+				.Include(s => s.NameServers)
+					.ThenInclude(ns => ns.Addresses)
 				.ToList();
 
 			var total = _context.Snapshots.Count();
