@@ -1,21 +1,22 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace KowWhoisApi.Models
 {
-	[Table("registry_query")]
-	public class RegistryQuery
+	[Table("rel_nameserver_address")]
+	public class NameServerAddress
 	{
-		[Column("id")]
-		public uint Id { get; set; }
+		[Column("nameserver_id")]
+		[Required]
+		public uint NameServerId { get; set; }
 
-		[Column("response")]
-		public string Response { get; set; }
-
-		virtual public WhoisQuery Query { get; set; }
+		[Column("address_id")]
+		[Required]
+		public uint AddressId { get; set; }
+		[JsonIgnore]
+		public virtual Address Address { get; set; }
 
 		[Column("created_at", TypeName = "TIMESTAMP")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]

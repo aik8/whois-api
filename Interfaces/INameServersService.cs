@@ -4,6 +4,6 @@ namespace KowWhoisApi.Interfaces
 {
 	public interface INameServersService
 	{
-		NameServer FindOrAdd(NameServer nameServer);
+		NameServer Find(NameServer nameServer);
 	}
 }

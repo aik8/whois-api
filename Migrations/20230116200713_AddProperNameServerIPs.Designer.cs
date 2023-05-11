@@ -3,6 +3,7 @@ using System;
 using KowWhoisApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,13 +11,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KowWhoisApi.Migrations
 {
     [DbContext(typeof(WhoisContext))]
-    partial class WhoisContextModelSnapshot : ModelSnapshot
+    [Migration("20230116200713_AddProperNameServerIPs")]
+    partial class AddProperNameServerIPs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.HasCharSet(modelBuilder, "utf8mb4", DelegationModes.ApplyToAll);
@@ -30,7 +32,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Ip")
@@ -47,7 +49,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -67,7 +69,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
                     b.Property<DateTime?>("CreationDate")
@@ -98,7 +100,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -121,7 +123,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Name")
@@ -131,7 +133,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -154,12 +156,12 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
                     b.HasKey("NameServerId", "AddressId");
@@ -178,7 +180,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Email")
@@ -199,7 +201,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
                     b.Property<string>("Url")
@@ -224,7 +226,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
                     b.Property<uint>("DomainId")
@@ -237,7 +239,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TIMESTAMP")
+                        .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -268,17 +270,21 @@ namespace KowWhoisApi.Migrations
 
             modelBuilder.Entity("KowWhoisApi.Models.NameServerAddress", b =>
                 {
-                    b.HasOne("KowWhoisApi.Models.Address", null)
+                    b.HasOne("KowWhoisApi.Models.Address", "Address")
                         .WithMany("NameServerAddresses")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KowWhoisApi.Models.NameServer", null)
+                    b.HasOne("KowWhoisApi.Models.NameServer", "NameServer")
                         .WithMany("NameServerAddresses")
                         .HasForeignKey("NameServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("NameServer");
                 });
 
             modelBuilder.Entity("KowWhoisApi.Models.Snapshot", b =>
@@ -300,17 +306,21 @@ namespace KowWhoisApi.Migrations
 
             modelBuilder.Entity("KowWhoisApi.Models.SnapshotNameServer", b =>
                 {
-                    b.HasOne("KowWhoisApi.Models.NameServer", null)
+                    b.HasOne("KowWhoisApi.Models.NameServer", "NameServer")
                         .WithMany("SnapshotNameServers")
                         .HasForeignKey("NameServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KowWhoisApi.Models.Snapshot", null)
+                    b.HasOne("KowWhoisApi.Models.Snapshot", "Snapshot")
                         .WithMany("SnapshotNameServers")
                         .HasForeignKey("SnapshotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("NameServer");
+
+                    b.Navigation("Snapshot");
                 });
 
             modelBuilder.Entity("KowWhoisApi.Models.Address", b =>

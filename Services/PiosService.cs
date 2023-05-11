@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using KowWhoisApi.Utilities;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Caching.Memory;
+using System.Threading.Tasks;
+using System.Net;
 
 namespace KowWhoisApi.Services
 {
@@ -17,13 +19,15 @@ namespace KowWhoisApi.Services
 		private readonly int _cache_ttl;
 		private readonly ILogger _logger;
 		private readonly IMemoryCache _cache;
+		private readonly INsResolveSerivce _resolver;
 		private UriBuilder _builder;
 
 
 		public PiosService(
 			IOptions<PiosServiceOptions> options,
 			ILogger<PiosService> logger,
-			IMemoryCache cache)
+			IMemoryCache cache,
+			INsResolveSerivce resolver)
 		{
 			// Initialize the options.
 			_options = options.Value;
@@ -31,6 +35,7 @@ namespace KowWhoisApi.Services
 			// Initialize injected stuff.
 			_logger = logger;
 			_cache = cache;
+			_resolver = resolver;
 
 			// Save the cache TTL.
 			_cache_ttl = _options.CacheTtl;
@@ -42,7 +47,7 @@ namespace KowWhoisApi.Services
 			_builder = new UriBuilder(scheme, _options.Host, _options.Port, _options.Path);
 		}
 
-		public IPiosResult AskPios(string domain, bool fresh = false)
+		public async Task<IPiosResult> AskPios(string domain, bool fresh = false)
 		{
 			// Log stuff.
 			_logger.LogInformation($"Got request for {domain}");
@@ -83,6 +88,15 @@ namespace KowWhoisApi.Services
 			// Parse the result.
 			var result = PiosResult.Parse(baseDomain.Value, node.InnerText);
 
+			// Resolve the addresses of the nameservers.
+			foreach (var ns in result.NameServers)
+			{
+				var addresses = await _resolver.Resolve(ns.Name);
+				foreach (var address in addresses) {
+					ns.Addresses.Add(new Address(address));
+				}
+			}
+
 			// Cache the result.
 			CacheResult(result);
 
@@ -111,7 +125,8 @@ namespace KowWhoisApi.Services
 		{
 			// If we find a previous result in the cache, mark it and return it.
 			PiosResult cached = new PiosResult();
-			if (_cache.TryGetValue<PiosResult>(domain, out cached)){
+			if (_cache.TryGetValue<PiosResult>(domain, out cached))
+			{
 				_logger.LogInformation($"Found {domain} in cache.");
 				cached.IsCached = true;
 			}

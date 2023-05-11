@@ -8,15 +8,17 @@ namespace KowWhoisApi.Services
 	public class NameServersService : INameServersService
 	{
 		private WhoisContext _context;
+		private readonly INsResolveSerivce _resolver;
 
-		public NameServersService(WhoisContext context)
+		public NameServersService(WhoisContext context, INsResolveSerivce resolver)
 		{
 			_context = context;
+			_resolver = resolver;
 		}
 
-		public NameServer FindOrAdd(NameServer nameServer)
+		public NameServer Find(NameServer nameServer)
 		{
-			return _context.NameServers.SingleOrDefault(n => n.Name == nameServer.Name);
+			return _context.NameServers.SingleOrDefault(ns => ns.Name == nameServer.Name);
 		}
 	}
 }

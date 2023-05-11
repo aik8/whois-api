@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace KowWhoisApi.Models
 {
@@ -29,11 +29,11 @@ namespace KowWhoisApi.Models
 		[MaxLength(20)]
 		public string Phone { get; set; }
 
-		[Column("created_at")]
+		[Column("created_at", TypeName = "TIMESTAMP")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public DateTime CreatedAt { get; set; }
 
-		[Column("updated_at")]
+		[Column("updated_at", TypeName = "TIMESTAMP")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
 

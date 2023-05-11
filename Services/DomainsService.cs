@@ -16,16 +16,12 @@ namespace KowWhoisApi.Services
 			_context = context;
 		}
 
-		public Domain FindOrAdd(Domain domain)
+		public Domain Get(Domain domain)
 		{
-			// Check that proper input has been passed.
-			if (domain == null) return null;
-
-			// Return the query result.
 			return _context.Domains.SingleOrDefault(d => d.Name == domain.Name);
 		}
 
-		public List<Domain> Get(uint? id, string name = null)
+		public List<Domain> Find(uint? id, string name = null)
 		{
 			return _context.Domains
 				.Where(dom => id == null || dom.Id == id)
@@ -34,10 +30,10 @@ namespace KowWhoisApi.Services
 				.ToList();
 		}
 
-		public IPagedResponse<Domain> GetPaged(string name = null, int per_page = int.MaxValue, int page = 0)
+		public IPagedResponse<Domain> FindPaged(string name = null, int per_page = int.MaxValue, int page = 0)
 		{
 			var data = _context.Domains
-				.Where(dom => name == null || EF.Functions.Like(dom.Name, $"%name%"))
+				.Where(dom => name == null || EF.Functions.Like(dom.Name, $"%{name}%"))
 				.OrderBy(dom => dom.Name)
 				.Skip(page * per_page)
 				.Take(per_page)

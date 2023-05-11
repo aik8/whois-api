@@ -52,22 +52,19 @@ namespace KowWhoisApi.Controllers
 			return Ok(piosResult);
 		}
 
-		private Task<IPiosResult> Ask(string domain, bool fresh)
+		private async Task<IPiosResult> Ask(string domain, bool fresh)
 		{
-			return Task.Factory.StartNew(() =>
+			// Fetch the resutls.
+			var result = await _pios.AskPios(domain, fresh);
+
+			// Create a snapshot if the results were not recalled from the cache.
+			if (!result.IsCached)
 			{
-				// Fetch the resutls.
-				var result = _pios.AskPios(domain, fresh);
+				var snapshot = _snapshots.Create(result);
+				_snapshots.Add(snapshot);
+			}
 
-				// Create a snapshot if the results were not recalled from the cache.
-				if (!result.IsCached)
-				{
-					var snapshot = _snapshots.Create(result);
-					_snapshots.Add(snapshot);
-				}
-
-				return result;
-			});
+			return result;
 		}
 	}
 }
