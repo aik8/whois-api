@@ -8,10 +8,10 @@ using Microsoft.Extensions.Hosting;
 using KowWhoisApi.Services;
 using KowWhoisApi.Interfaces;
 using KowWhoisApi.Data;
-using KowWhoisApi.Middleware;
 using KowWhoisApi.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Caching.Memory;
+using Serilog;
 
 namespace KowWhoisApi
 {
@@ -80,7 +80,23 @@ namespace KowWhoisApi
 
 			app.UseStaticFiles();
 
-			app.UseMiddleware<RequestLoggingMiddleware>();
+			// Setup request logging using Serilog.
+			app.UseSerilogRequestLogging(options =>
+			{
+				// Customize the message template
+				options.MessageTemplate = "{RemoteIpAddress} {RequestScheme} {RequestHost} {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+
+				// Emit debug-level events instead of the defaults
+				options.GetLevel = (httpContext, elapsed, ex) => Serilog.Events.LogEventLevel.Debug;
+
+				// Attach additional properties to the request completion event
+				options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+				{
+					diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+					diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
+					diagnosticContext.Set("RemoteIpAddress", httpContext.Connection.RemoteIpAddress);
+				};
+			});
 
 			app.UseRouting();
 			app.UseCors(CorsAllowEverything);
