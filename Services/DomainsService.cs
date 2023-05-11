@@ -37,7 +37,7 @@ namespace KowWhoisApi.Services
 		public IPagedResponse<Domain> GetPaged(string name = null, int per_page = int.MaxValue, int page = 0)
 		{
 			var data = _context.Domains
-				.Where(dom => name == null || EF.Functions.Like(dom.Name, $"%name%"))
+				.Where(dom => name == null || EF.Functions.Like(dom.Name, $"%{name}%"))
 				.OrderBy(dom => dom.Name)
 				.Skip(page * per_page)
 				.Take(per_page)
