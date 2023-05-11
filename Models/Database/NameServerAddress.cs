@@ -11,8 +11,6 @@ namespace KowWhoisApi.Models
 		[Column("nameserver_id")]
 		[Required]
 		public uint NameServerId { get; set; }
-		[JsonIgnore]
-		public virtual NameServer NameServer { get; set; }
 
 		[Column("address_id")]
 		[Required]

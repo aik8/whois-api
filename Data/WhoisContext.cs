@@ -13,8 +13,9 @@ namespace KowWhoisApi.Data
 		public DbSet<Snapshot> Snapshots { get; set; }
 		public DbSet<Address> Addresses { get; set; }
 		public DbSet<SnapshotNameServer> NameServerSnapshots { get; set; }
-		public DbSet<WhoisQuery> Queries { get; set; }
-		public DbSet<RegistryQuery> RegistryQueries { get; set; }
+		public DbSet<NameServerAddress> NameServerAddresses { get; set; }
+		// public DbSet<WhoisQuery> Queries { get; set; }
+		// public DbSet<RegistryQuery> RegistryQueries { get; set; }
 
 		public WhoisContext(DbContextOptions<WhoisContext> options) : base(options) { }
 
@@ -44,18 +45,26 @@ namespace KowWhoisApi.Data
 			});
 
 			// WhoisQuery
-			modelBuilder.Entity<WhoisQuery>(entity =>
-			{
-				entity.Property(e => e.ClientIp).HasComputedColumnSql("INET6_NTOA(client_ip_raw)");
-			});
+			// modelBuilder.Entity<WhoisQuery>(entity =>
+			// {
+			// 	entity.Property(e => e.ClientIp).HasComputedColumnSql("INET6_NTOA(client_ip_raw)");
+			// });
 
 			// NameServer - Snapshot Relationship
 			modelBuilder.Entity<SnapshotNameServer>()
 				.HasKey(sns => new { sns.SnapshotId, sns.NameServerId });
+			modelBuilder.Entity<Snapshot>()
+				.HasMany(e => e.NameServers)
+				.WithMany(e => e.Snapshots)
+				.UsingEntity<SnapshotNameServer>();
 
 			// NameServer - Address Relationship
 			modelBuilder.Entity<NameServerAddress>()
 				.HasKey(nsa => new { nsa.NameServerId, nsa.AddressId });
+			modelBuilder.Entity<NameServer>()
+				.HasMany(e => e.Addresses)
+				.WithMany(e => e.NameServers)
+				.UsingEntity<NameServerAddress>();
 		}
 	}
 }

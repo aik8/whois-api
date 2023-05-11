@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace KowWhoisApi.Models
 {
@@ -31,10 +32,13 @@ namespace KowWhoisApi.Models
 		public DateTime UpdatedAt { get; set; }
 
 		// NameServers
+		public virtual ICollection<NameServer> NameServers { get; set; }
+		[JsonIgnore]
 		public virtual ICollection<SnapshotNameServer> SnapshotNameServers { get; set; }
 
 		public Snapshot()
 		{
+			NameServers = new List<NameServer>();
 			SnapshotNameServers = new List<SnapshotNameServer>();
 		}
 	}

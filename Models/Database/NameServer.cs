@@ -24,12 +24,20 @@ namespace KowWhoisApi.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
 
+		[JsonIgnore]
+		public virtual ICollection<Snapshot> Snapshots { get; set; }
+		[JsonIgnore]
 		public virtual ICollection<SnapshotNameServer> SnapshotNameServers { get; set; }
+
+		public ICollection<Address> Addresses { get; set; }
+		[JsonIgnore]
 		public virtual ICollection<NameServerAddress> NameServerAddresses { get; set; }
 
 		public NameServer()
 		{
+			Snapshots = new List<Snapshot>();
 			SnapshotNameServers = new List<SnapshotNameServer>();
+			Addresses = new List<Address>();
 			NameServerAddresses = new List<NameServerAddress>();
 		}
 	}
