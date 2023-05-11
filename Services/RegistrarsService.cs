@@ -14,7 +14,7 @@ namespace KowWhoisApi.Services
 			_context = context;
 		}
 
-		public Registrar FindOrAdd(Registrar registrar)
+		public Registrar Find(Registrar registrar)
 		{
 			return _context.Registrars.SingleOrDefault(r => r.Name == registrar.Name);
 		}

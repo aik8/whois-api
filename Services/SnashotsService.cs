@@ -31,7 +31,7 @@ namespace KowWhoisApi.Services
 
 			if (piosResult.IsRegistered)
 			{
-				Registrar r = _registrars.FindOrAdd(piosResult.Registrar);
+				Registrar r = _registrars.Find(piosResult.Registrar);
 				snapshot.Registrar = r != null ? r : piosResult.Registrar;
 
 				foreach (var ns in piosResult.NameServers)
