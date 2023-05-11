@@ -21,11 +21,11 @@ namespace KowWhoisApi.Controllers
 		{
 			if (per_page == int.MaxValue)
 			{
-				return Ok(_domains.Get(id, name));
+				return Ok(_domains.Find(id, name));
 			}
 			else
 			{
-				return Ok(_domains.GetPaged(name, per_page, page));
+				return Ok(_domains.FindPaged(name, per_page, page));
 			}
 		}
 	}
