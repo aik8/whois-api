@@ -52,16 +52,27 @@ namespace KowWhoisApi.Models
 		[JsonIgnore]
 		public virtual ICollection<NameServerAddress> NameServerAddresses { get; set; }
 
+		public ICollection<Domain> Domains { get; set; }
+		[JsonIgnore]
+		public virtual ICollection<DomainAddress> DomainAddresses { get; set; }
+
 		public Address()
 		{
 			NameServers = new List<NameServer>();
 			NameServerAddresses = new List<NameServerAddress>();
+
+			Domains = new List<Domain>();
+			DomainAddresses = new List<DomainAddress>();
 		}
 
 		public Address(IPAddress ipaddress)
 		{
 			NameServers = new List<NameServer>();
 			NameServerAddresses = new List<NameServerAddress>();
+
+			Domains = new List<Domain>();
+			DomainAddresses = new List<DomainAddress>();
+
 			IPAddress = ipaddress;
 		}
 	}
