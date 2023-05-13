@@ -38,6 +38,8 @@ namespace KowWhoisApi.Services
 			var total = data.Count();
 
 			var paged_data = data
+				.Include(ns => ns.NameServerAddresses)
+					.ThenInclude(nsa => nsa.Address)
 				.OrderBy(ns => ns.Id)
 				.Skip(per_page * page)
 				.Take(per_page)
