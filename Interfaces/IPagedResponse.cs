@@ -6,7 +6,6 @@ namespace KowWhoisApi.Interfaces
 	{
 		List<T> Data { get; }
 		int Count { get; }
-		int Total { get; }
 		int Page { get; }
 		int PageCount { get; }
 	}
