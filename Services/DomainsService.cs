@@ -39,6 +39,8 @@ namespace KowWhoisApi.Services
 			var total = data.Count();
 
 			var paged_data = data
+				.Include(d => d.DomainAddresses)
+					.ThenInclude(da => da.Address)
 				.OrderBy(dom => dom.Name)
 				.Skip(page * per_page)
 				.Take(per_page)
