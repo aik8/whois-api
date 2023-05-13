@@ -2,8 +2,8 @@ using KowWhoisApi.Models;
 
 namespace KowWhoisApi.Interfaces
 {
-	public interface IRegistrarsService
+	public interface IRegistrarsService : IDbService<Registrar>
 	{
-		Registrar Find(Registrar registrar);
+
 	}
 }
