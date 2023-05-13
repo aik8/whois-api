@@ -16,32 +16,35 @@ namespace KowWhoisApi.Services
 			_context = context;
 		}
 
-		public Domain Get(Domain domain)
+		public Domain FindOrAdd(Domain domain)
 		{
-			return _context.Domains.SingleOrDefault(d => d.Name == domain.Name);
+			// Try to find the entity in the database.
+			var from_db = _context.Domains.SingleOrDefault(d => d.Name == domain.Name);
+
+			// If it's not in the DB, create it. Either way, return the entity.
+			if (from_db == null) return _context.Domains.Add(domain).Entity;
+			return from_db;
 		}
 
-		public List<Domain> Find(uint? id, string name = null)
+		public Domain Find(uint id)
 		{
-			return _context.Domains
-				.Where(dom => id == null || dom.Id == id)
-				.Where(dom => name == null || EF.Functions.Like(dom.Name, $"%{name}%"))
-				.OrderBy(dom => dom.Name)
-				.ToList();
+			return _context.Domains.SingleOrDefault(d => d.Id == id);
 		}
 
-		public IPagedResponse<Domain> FindPaged(string name = null, int per_page = int.MaxValue, int page = 0)
+		public IPagedResponse<Domain> Find(string name = null, int per_page = int.MaxValue, int page = 0)
 		{
 			var data = _context.Domains
-				.Where(dom => name == null || EF.Functions.Like(dom.Name, $"%{name}%"))
+				.Where(dom => name == null || EF.Functions.Like(dom.Name, $"%{name}%"));
+
+			var total = data.Count();
+
+			var paged_data = data
 				.OrderBy(dom => dom.Name)
 				.Skip(page * per_page)
 				.Take(per_page)
 				.ToList();
 
-			var total = _context.Domains.Count();
-
-			return new PagedResponse<Domain>(data, total, page, per_page);
+			return new PagedResponse<Domain>(paged_data, total, page, per_page);
 		}
 	}
 }

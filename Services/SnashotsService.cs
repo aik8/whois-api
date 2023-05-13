@@ -26,8 +26,7 @@ namespace KowWhoisApi.Services
 		{
 			var snapshot = new Snapshot();
 
-			Domain d = _domains.Get(piosResult.Domain);
-			snapshot.Domain = d != null ? d : piosResult.Domain;
+			snapshot.Domain = _domains.FindOrAdd(piosResult.Domain);
 
 			if (piosResult.IsRegistered)
 			{
