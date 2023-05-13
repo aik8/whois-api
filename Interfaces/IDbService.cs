@@ -12,24 +12,19 @@ namespace KowWhoisApi.Interfaces
 		T FindOrAdd(T entity);
 
 		/// <summary>
-		/// Find a specific entity by ID.
+		/// Find a specific entity (or all entities, if no parameter is given)
 		/// </summary>
 		/// <param name="id">The entity ID to be found.</param>
 		/// <returns>The requested entity, or null.</returns>
-		T FindById(uint? id);
+		T Find(uint id);
 
 		/// <summary>
-		/// Get all entities in the database.
+		/// Search for entities based on an identifying string property.
 		/// </summary>
-		/// <returns>A List of entities in the database.</returns>
-		List<T> Get();
-
-		/// <summary>
-		/// Get all entities in the database, in a paged manner.
-		/// </summary>
-		/// <param name="per_page">Entities per page</param>
-		/// <param name="page">The page to get</param>
-		/// <returns>A nice paged response.</returns>
-		IPagedResponse<T> GetPaged(int per_page, int page);
+		/// <param name="property">The property to be used as a search criterion</param>
+		/// <param name="per_page">The number of entities per page.</param>
+		/// <param name="page">The page to fetch.</param>
+		/// <returns>A nice, paged response containing the results.</returns>
+		IPagedResponse<T> Find(string property = null, int per_page = int.MaxValue, int page = 0);
 	}
 }
