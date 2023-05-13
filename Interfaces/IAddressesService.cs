@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using KowWhoisApi.Models;
 
 namespace KowWhoisApi.Interfaces
 {
-	public interface IAddressesService
+	public interface IAddressesService : IDbService<Address>
 	{
-		Address Get(Address address);
+
 	}
 }

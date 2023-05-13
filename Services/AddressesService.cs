@@ -16,17 +16,35 @@ namespace KowWhoisApi.Services
 			_context = context;
 		}
 
-		public Address Get(Address address)
+		public Address FindOrAdd(Address address)
 		{
-			return _context.Addresses.SingleOrDefault(a => a.Ip == address.Ip);
+			// Try to find the address in the database.
+			var from_db = _context.Addresses.SingleOrDefault(a => a.IpRaw == address.IpRaw);
+
+			// If it's not in the DB, create it. Either way, return the Address.
+			if (from_db == null) return _context.Addresses.Add(address).Entity;
+			return from_db;
 		}
 
-		public List<Address> Find(string address)
+		public Address Find(uint id)
 		{
-			return _context.Addresses
-				.Where(a => address == null || EF.Functions.Like(a.Ip, $"%{address}%"))
+			return _context.Addresses.SingleOrDefault(a => a.Id == id);
+		}
+
+		public IPagedResponse<Address> Find(string address = null, int per_page = int.MaxValue, int page = 0)
+		{
+			var data = _context.Addresses
+				.Where(a => address == null || EF.Functions.Like(a.Ip, $"%{address}%"));
+
+			var total = data.Count();
+
+			var paged_data = data
 				.OrderBy(a => a.Ip)
+				.Skip(page * per_page)
+				.Take(per_page)
 				.ToList();
+
+			return new PagedResponse<Address>(paged_data, total, page, per_page);
 		}
 	}
 }
