@@ -15,7 +15,6 @@ namespace KowWhoisApi.Models
 		[Column("address_id")]
 		[Required]
 		public uint AddressId { get; set; }
-		[JsonIgnore]
 		public virtual Address Address { get; set; }
 
 		[Column("created_at", TypeName = "TIMESTAMP")]

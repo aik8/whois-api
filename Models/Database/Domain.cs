@@ -43,8 +43,8 @@ namespace KowWhoisApi.Models
 		[JsonIgnore]
 		public virtual ICollection<Snapshot> Snapshots { get; set; }
 
-		public virtual ICollection<Address> Addresses { get; set; }
 		[JsonIgnore]
+		public virtual ICollection<Address> Addresses { get; set; }
 		public virtual ICollection<DomainAddress> DomainAddresses { get; set; }
 
 		public Domain()
