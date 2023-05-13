@@ -34,10 +34,8 @@ namespace KowWhoisApi.Services
 
 				foreach (var ns in piosResult.NameServers)
 				{
-					NameServer existing_ns = _nameServers.Find(ns);
-
-					if (existing_ns != null) { snapshot.NameServers.Add(existing_ns); }
-					else { snapshot.NameServers.Add(ns); }
+					NameServer existing_ns = _nameServers.FindOrAdd(ns);
+					snapshot.NameServers.Add(existing_ns);
 				}
 			}
 

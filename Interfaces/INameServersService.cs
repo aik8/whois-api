@@ -2,8 +2,8 @@ using KowWhoisApi.Models;
 
 namespace KowWhoisApi.Interfaces
 {
-	public interface INameServersService
+	public interface INameServersService : IDbService<NameServer>
 	{
-		NameServer Find(NameServer nameServer);
+
 	}
 }
