@@ -36,7 +36,6 @@ namespace KowWhoisApi
 			services.AddTransient<IRegistrarsService, RegistrarsService>();
 			services.AddTransient<INameServersService, NameServersService>();
 			services.AddTransient<ISnapshotsService, SnapshotsService>();
-			services.AddTransient<INsResolveSerivce, NsResolveService>();
 
 			services.AddCors(options =>
 			{

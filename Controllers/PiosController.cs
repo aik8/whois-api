@@ -55,7 +55,7 @@ namespace KowWhoisApi.Controllers
 		private async Task<IPiosResult> Ask(string domain, bool fresh)
 		{
 			// Fetch the resutls.
-			var result = await _pios.AskPios(domain, fresh);
+			var result = _pios.AskPios(domain, fresh);
 
 			// Create a snapshot if the results were not recalled from the cache.
 			if (!result.IsCached)
