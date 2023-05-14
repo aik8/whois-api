@@ -31,13 +31,19 @@ namespace KowWhoisApi
 		{
 			services.Configure<PiosServiceOptions>(Configuration.GetSection(PiosServiceOptions.PiosService));
 
+			// Add our services.
 			services.AddTransient<IPiosService, PiosService>();
 			services.AddTransient<IDomainsService, DomainsService>();
 			services.AddTransient<IRegistrarsService, RegistrarsService>();
 			services.AddTransient<INameServersService, NameServersService>();
 			services.AddTransient<ISnapshotsService, SnapshotsService>();
 			services.AddTransient<IAddressesService, AddressesService>();
+			services.AddTransient<ICacheService<Snapshot>, CacheService>();
 
+			// Add the actual MemoryCache service.
+			services.AddSingleton<IMemoryCache, MemoryCache>();
+
+			// Add CORS.
 			services.AddCors(options =>
 			{
 				options.AddPolicy(CorsAllowEverything, builder =>
@@ -46,6 +52,7 @@ namespace KowWhoisApi
 				});
 			});
 
+			// Add the DB context as a service.
 			services.AddDbContext<WhoisContext>(
 				options => options.UseMySql(
 					Configuration.GetConnectionString("WhoisDatabase"),
@@ -58,8 +65,7 @@ namespace KowWhoisApi
 				.EnableDetailedErrors()
 			);
 
-			services.AddSingleton<IMemoryCache, MemoryCache>();
-
+			// Add controllers, using Newtonsoft.JSON to
 			services.AddControllers()
 				.AddNewtonsoftJson(
 					options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
