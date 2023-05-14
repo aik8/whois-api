@@ -16,7 +16,7 @@ namespace KowWhoisApi.Services
 			_context = context;
 		}
 
-		public Address FindOrAdd(Address address)
+		public Address FindOrInsert(Address address)
 		{
 			// Try to find the address in the database.
 			var from_db = _context.Addresses.SingleOrDefault(a => a.IpRaw == address.IpRaw);

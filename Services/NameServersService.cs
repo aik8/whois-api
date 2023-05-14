@@ -15,7 +15,7 @@ namespace KowWhoisApi.Services
 			_context = context;
 		}
 
-		public NameServer FindOrAdd(NameServer nameserver)
+		public NameServer FindOrInsert(NameServer nameserver)
 		{
 			// Try to find the entity in the database.
 			var from_db = _context.NameServers.SingleOrDefault(ns => ns.Name == nameserver.Name);

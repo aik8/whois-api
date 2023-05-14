@@ -16,7 +16,7 @@ namespace KowWhoisApi.Services
 			_context = context;
 		}
 
-		public Domain FindOrAdd(Domain domain)
+		public Domain FindOrInsert(Domain domain)
 		{
 			// Try to find the entity in the database.
 			var from_db = _context.Domains.SingleOrDefault(d => d.Name == domain.Name);

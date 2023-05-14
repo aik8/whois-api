@@ -15,7 +15,7 @@ namespace KowWhoisApi.Services
 			_context = context;
 		}
 
-		public Registrar FindOrAdd(Registrar registrar)
+		public Registrar FindOrInsert(Registrar registrar)
 		{
 			// Try to find the entity in the database.
 			var from_db = _context.Registrars.SingleOrDefault(d => d.Name == registrar.Name);
