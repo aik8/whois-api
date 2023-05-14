@@ -16,6 +16,7 @@ namespace KowWhoisApi.Data
 		public ICollection<NameServer> NameServers { get; private set; }
 		public bool IsRegistered { get; private set; }
 		public bool IsCached { get; set; }
+		public string Raw { get; set; }
 
 		public PiosResult() { }
 
@@ -121,6 +122,9 @@ namespace KowWhoisApi.Data
 				// Add it to the list.
 				parsed.NameServers.Add(ns);
 			}
+
+			// Don't forget to add the raw results in the mix.
+			parsed.Raw = raw_results;
 
 			// We are done here.
 			return parsed;
