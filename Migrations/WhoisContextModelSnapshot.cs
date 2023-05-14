@@ -132,7 +132,7 @@ namespace KowWhoisApi.Migrations
                         .HasColumnType("TIMESTAMP")
                         .HasColumnName("updated_at");
 
-                    b.HasKey("DomainId", "AddressId");
+                    b.HasKey("DomainId", "AddressId", "CreatedAt");
 
                     b.HasIndex("AddressId");
 
@@ -189,7 +189,7 @@ namespace KowWhoisApi.Migrations
                         .HasColumnType("TIMESTAMP")
                         .HasColumnName("updated_at");
 
-                    b.HasKey("NameServerId", "AddressId");
+                    b.HasKey("NameServerId", "AddressId", "CreatedAt");
 
                     b.HasIndex("AddressId");
 

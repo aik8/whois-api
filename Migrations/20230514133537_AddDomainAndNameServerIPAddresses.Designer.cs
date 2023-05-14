@@ -6,18 +6,23 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace KowWhoisApi.Migrations
 {
     [DbContext(typeof(WhoisContext))]
-    [Migration("20201121165022_AddNameServerIPs")]
-    partial class AddNameServerIPs
+    [Migration("20230514133537_AddDomainAndNameServerIPAddresses")]
+    partial class AddDomainAndNameServerIPAddresses
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            MySqlModelBuilderExtensions.HasCharSet(modelBuilder, "utf8mb4", DelegationModes.ApplyToAll);
 
             modelBuilder.Entity("KowWhoisApi.Models.Address", b =>
                 {
@@ -28,7 +33,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Ip")
@@ -43,25 +48,15 @@ namespace KowWhoisApi.Migrations
                         .HasColumnType("varbinary(16)")
                         .HasColumnName("ip_raw");
 
-                    b.Property<uint>("SnapshotNameServerNameServerId")
-                        .HasColumnType("int unsigned")
-                        .HasColumnName("nameserver_id");
-
-                    b.Property<uint>("SnapshotNameServerSnapshotId")
-                        .HasColumnType("int unsigned")
-                        .HasColumnName("snapshot_id");
-
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IpRaw")
                         .IsUnique();
-
-                    b.HasIndex("SnapshotNameServerSnapshotId", "SnapshotNameServerNameServerId");
 
                     b.ToTable("address");
                 });
@@ -75,7 +70,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("created_at");
 
                     b.Property<DateTime?>("CreationDate")
@@ -106,7 +101,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -120,6 +115,33 @@ namespace KowWhoisApi.Migrations
                     b.ToTable("domain");
                 });
 
+            modelBuilder.Entity("KowWhoisApi.Models.DomainAddress", b =>
+                {
+                    b.Property<uint>("DomainId")
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("domain_id");
+
+                    b.Property<uint>("AddressId")
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("address_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TIMESTAMP")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("TIMESTAMP")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("DomainId", "AddressId", "CreatedAt");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("rel_domain_address");
+                });
+
             modelBuilder.Entity("KowWhoisApi.Models.NameServer", b =>
                 {
                     b.Property<uint>("Id")
@@ -129,7 +151,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Name")
@@ -139,7 +161,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -148,6 +170,33 @@ namespace KowWhoisApi.Migrations
                         .IsUnique();
 
                     b.ToTable("nameserver");
+                });
+
+            modelBuilder.Entity("KowWhoisApi.Models.NameServerAddress", b =>
+                {
+                    b.Property<uint>("NameServerId")
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("nameserver_id");
+
+                    b.Property<uint>("AddressId")
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("address_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TIMESTAMP")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("TIMESTAMP")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("NameServerId", "AddressId", "CreatedAt");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("rel_nameserver_address");
                 });
 
             modelBuilder.Entity("KowWhoisApi.Models.Registrar", b =>
@@ -159,7 +208,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("created_at");
 
                     b.Property<string>("Email")
@@ -180,7 +229,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("updated_at");
 
                     b.Property<string>("Url")
@@ -205,7 +254,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("created_at");
 
                     b.Property<uint>("DomainId")
@@ -218,7 +267,7 @@ namespace KowWhoisApi.Migrations
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime(6)")
+                        .HasColumnType("TIMESTAMP")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
@@ -247,15 +296,38 @@ namespace KowWhoisApi.Migrations
                     b.ToTable("rel_snapshot_nameserver");
                 });
 
-            modelBuilder.Entity("KowWhoisApi.Models.Address", b =>
+            modelBuilder.Entity("KowWhoisApi.Models.DomainAddress", b =>
                 {
-                    b.HasOne("KowWhoisApi.Models.SnapshotNameServer", "SnapshotNameServer")
-                        .WithMany("Addresses")
-                        .HasForeignKey("SnapshotNameServerSnapshotId", "SnapshotNameServerNameServerId")
+                    b.HasOne("KowWhoisApi.Models.Address", "Address")
+                        .WithMany("DomainAddresses")
+                        .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SnapshotNameServer");
+                    b.HasOne("KowWhoisApi.Models.Domain", null)
+                        .WithMany("DomainAddresses")
+                        .HasForeignKey("DomainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("KowWhoisApi.Models.NameServerAddress", b =>
+                {
+                    b.HasOne("KowWhoisApi.Models.Address", "Address")
+                        .WithMany("NameServerAddresses")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KowWhoisApi.Models.NameServer", null)
+                        .WithMany("NameServerAddresses")
+                        .HasForeignKey("NameServerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("KowWhoisApi.Models.Snapshot", b =>
@@ -277,30 +349,37 @@ namespace KowWhoisApi.Migrations
 
             modelBuilder.Entity("KowWhoisApi.Models.SnapshotNameServer", b =>
                 {
-                    b.HasOne("KowWhoisApi.Models.NameServer", "NameServer")
+                    b.HasOne("KowWhoisApi.Models.NameServer", null)
                         .WithMany("SnapshotNameServers")
                         .HasForeignKey("NameServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KowWhoisApi.Models.Snapshot", "Snapshot")
+                    b.HasOne("KowWhoisApi.Models.Snapshot", null)
                         .WithMany("SnapshotNameServers")
                         .HasForeignKey("SnapshotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("NameServer");
+            modelBuilder.Entity("KowWhoisApi.Models.Address", b =>
+                {
+                    b.Navigation("DomainAddresses");
 
-                    b.Navigation("Snapshot");
+                    b.Navigation("NameServerAddresses");
                 });
 
             modelBuilder.Entity("KowWhoisApi.Models.Domain", b =>
                 {
+                    b.Navigation("DomainAddresses");
+
                     b.Navigation("Snapshots");
                 });
 
             modelBuilder.Entity("KowWhoisApi.Models.NameServer", b =>
                 {
+                    b.Navigation("NameServerAddresses");
+
                     b.Navigation("SnapshotNameServers");
                 });
 
@@ -312,11 +391,6 @@ namespace KowWhoisApi.Migrations
             modelBuilder.Entity("KowWhoisApi.Models.Snapshot", b =>
                 {
                     b.Navigation("SnapshotNameServers");
-                });
-
-            modelBuilder.Entity("KowWhoisApi.Models.SnapshotNameServer", b =>
-                {
-                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }
