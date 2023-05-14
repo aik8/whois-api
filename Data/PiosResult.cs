@@ -44,8 +44,9 @@ namespace KowWhoisApi.Data
 		/// </summary>
 		/// <param name="domain">The domain to which the results refer.</param>
 		/// <param name="raw_results">The raw registry query results.</param>
+		/// <param name="date_format">The date format to expect.</param>
 		/// <returns>A PiosResult object containing the parsed results.</returns>
-		public static PiosResult Parse(string domain, string raw_results)
+		public static PiosResult Parse(string domain, string raw_results, string date_format = "dd-MM-yyyy")
 		{
 			// Split the result into fields.
 			var fields = raw_results.Split('\n');
@@ -95,7 +96,7 @@ namespace KowWhoisApi.Data
 
 			// TODO: Don't forget to check this again in the future. Just set
 			//       ISO short date in the system's regional settings.
-			cult.DateTimeFormat.ShortDatePattern = "dd-MM-yyyy";
+			cult.DateTimeFormat.ShortDatePattern = date_format;
 
 			/* Domain */
 			parsed.Domain.Handle = pairs[1][1];
