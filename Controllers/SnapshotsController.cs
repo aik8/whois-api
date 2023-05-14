@@ -21,14 +21,16 @@ namespace KowWhoisApi.Controllers
 		[Route("{id?}")]
 		public IActionResult Get(uint? id, [FromQuery] uint? domainId, [FromQuery] string domainName = null, [FromQuery] int per_page = int.MaxValue, [FromQuery] int page = 0)
 		{
-			if (per_page == int.MaxValue)
-			{
-				return Ok(_snapshots.Get(id, domainId, domainName));
-			}
-			else
-			{
-				return Ok(_snapshots.GetPaged(domainId, domainName, page, per_page));
-			}
+			// if (per_page == int.MaxValue)
+			// {
+			// 	return Ok(_snapshots.Get(id, domainId, domainName));
+			// }
+			// else
+			// {
+			// 	return Ok(_snapshots.GetPaged(domainId, domainName, page, per_page));
+			// }
+
+			return Ok();
 		}
 	}
 }
