@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using KowWhoisApi.Data;
 using KowWhoisApi.Interfaces;
 using KowWhoisApi.Models;
@@ -23,6 +24,16 @@ namespace KowWhoisApi.Services
 
 			// If it's not in the DB, create it. Either way, return the Address.
 			if (from_db == null) return _context.Addresses.Add(address).Entity;
+			return from_db;
+		}
+
+		public Address FindOrInsert(IPAddress address)
+		{
+			// Try to find the address in the database.
+			var from_db = _context.Addresses.SingleOrDefault(a => a.IpRaw == address.GetAddressBytes());
+
+			// If it's not in the DB, create it. Either way, return the Address.
+			if (from_db == null) return _context.Addresses.Add(new Address(address)).Entity;
 			return from_db;
 		}
 
