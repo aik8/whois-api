@@ -31,6 +31,9 @@ namespace KowWhoisApi.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
 		public DateTime UpdatedAt { get; set; }
 
+		[NotMapped]
+		public bool IsCached { get; set; } = false;
+
 		// NameServers
 		public virtual ICollection<NameServer> NameServers { get; set; }
 		[JsonIgnore]

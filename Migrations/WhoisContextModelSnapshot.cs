@@ -112,6 +112,33 @@ namespace KowWhoisApi.Migrations
                     b.ToTable("domain");
                 });
 
+            modelBuilder.Entity("KowWhoisApi.Models.DomainAddress", b =>
+                {
+                    b.Property<uint>("DomainId")
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("domain_id");
+
+                    b.Property<uint>("AddressId")
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("address_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TIMESTAMP")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("TIMESTAMP")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("DomainId", "AddressId", "CreatedAt");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("rel_domain_address");
+                });
+
             modelBuilder.Entity("KowWhoisApi.Models.NameServer", b =>
                 {
                     b.Property<uint>("Id")
@@ -162,7 +189,7 @@ namespace KowWhoisApi.Migrations
                         .HasColumnType("TIMESTAMP")
                         .HasColumnName("updated_at");
 
-                    b.HasKey("NameServerId", "AddressId");
+                    b.HasKey("NameServerId", "AddressId", "CreatedAt");
 
                     b.HasIndex("AddressId");
 
@@ -266,9 +293,26 @@ namespace KowWhoisApi.Migrations
                     b.ToTable("rel_snapshot_nameserver");
                 });
 
+            modelBuilder.Entity("KowWhoisApi.Models.DomainAddress", b =>
+                {
+                    b.HasOne("KowWhoisApi.Models.Address", "Address")
+                        .WithMany("DomainAddresses")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("KowWhoisApi.Models.Domain", null)
+                        .WithMany("DomainAddresses")
+                        .HasForeignKey("DomainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+                });
+
             modelBuilder.Entity("KowWhoisApi.Models.NameServerAddress", b =>
                 {
-                    b.HasOne("KowWhoisApi.Models.Address", null)
+                    b.HasOne("KowWhoisApi.Models.Address", "Address")
                         .WithMany("NameServerAddresses")
                         .HasForeignKey("AddressId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -279,6 +323,8 @@ namespace KowWhoisApi.Migrations
                         .HasForeignKey("NameServerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("KowWhoisApi.Models.Snapshot", b =>
@@ -315,11 +361,15 @@ namespace KowWhoisApi.Migrations
 
             modelBuilder.Entity("KowWhoisApi.Models.Address", b =>
                 {
+                    b.Navigation("DomainAddresses");
+
                     b.Navigation("NameServerAddresses");
                 });
 
             modelBuilder.Entity("KowWhoisApi.Models.Domain", b =>
                 {
+                    b.Navigation("DomainAddresses");
+
                     b.Navigation("Snapshots");
                 });
 

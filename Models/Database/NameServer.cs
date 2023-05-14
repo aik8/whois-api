@@ -29,8 +29,8 @@ namespace KowWhoisApi.Models
 		[JsonIgnore]
 		public virtual ICollection<SnapshotNameServer> SnapshotNameServers { get; set; }
 
-		public ICollection<Address> Addresses { get; set; }
 		[JsonIgnore]
+		public ICollection<Address> Addresses { get; set; }
 		public virtual ICollection<NameServerAddress> NameServerAddresses { get; set; }
 
 		public NameServer()

@@ -19,13 +19,13 @@ namespace KowWhoisApi.Controllers
 		[Route("{id?}")]
 		public IActionResult Get(uint? id, [FromQuery] string name = null, [FromQuery] int page = 0, [FromQuery] int per_page = int.MaxValue)
 		{
-			if (per_page == int.MaxValue)
+			if (id != null)
 			{
-				return Ok(_domains.Find(id, name));
+				return Ok(_domains.Find((uint)id));
 			}
 			else
 			{
-				return Ok(_domains.FindPaged(name, per_page, page));
+				return Ok(_domains.Find(name, per_page, page));
 			}
 		}
 	}

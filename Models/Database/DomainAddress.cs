@@ -5,12 +5,12 @@ using Newtonsoft.Json;
 
 namespace KowWhoisApi.Models
 {
-	[Table("rel_nameserver_address")]
-	public class NameServerAddress
+	[Table("rel_domain_address")]
+	public class DomainAddress
 	{
-		[Column("nameserver_id")]
+		[Column("domain_id")]
 		[Required]
-		public uint NameServerId { get; set; }
+		public uint DomainId { get; set; }
 
 		[Column("address_id")]
 		[Required]
