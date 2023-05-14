@@ -61,7 +61,7 @@ namespace KowWhoisApi.Data
 
 			// NameServer - Address Relationship
 			modelBuilder.Entity<NameServerAddress>()
-				.HasKey(nsa => new { nsa.NameServerId, nsa.AddressId });
+				.HasKey(nsa => new { nsa.NameServerId, nsa.AddressId, nsa.CreatedAt });
 			modelBuilder.Entity<NameServer>()
 				.HasMany(e => e.Addresses)
 				.WithMany(e => e.NameServers)
@@ -69,7 +69,7 @@ namespace KowWhoisApi.Data
 
 			// Domain - Address Relationship
 			modelBuilder.Entity<DomainAddress>()
-				.HasKey(dsa => new { dsa.DomainId, dsa.AddressId });
+				.HasKey(dsa => new { dsa.DomainId, dsa.AddressId, dsa.CreatedAt });
 			modelBuilder.Entity<Domain>()
 				.HasMany(e => e.Addresses)
 				.WithMany(e => e.Domains)
