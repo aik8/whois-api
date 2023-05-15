@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,18 +7,21 @@ using KowWhoisApi.Data;
 using KowWhoisApi.Interfaces;
 using KowWhoisApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace KowWhoisApi.Services
 {
 	public class SnapshotsService : ISnapshotsService
 	{
-		private WhoisContext _context;
-		private INameServersService _nameServers;
-		private IDomainsService _domains;
-		private IRegistrarsService _registrars;
-		private IAddressesService _addresses;
+		private readonly ILogger _logger;
+		private readonly WhoisContext _context;
+		private readonly INameServersService _nameServers;
+		private readonly IDomainsService _domains;
+		private readonly IRegistrarsService _registrars;
+		private readonly IAddressesService _addresses;
 
 		public SnapshotsService(
+			ILogger<SnapshotsService> logger,
 			WhoisContext context,
 			INameServersService nameServers,
 			IDomainsService domains,
@@ -25,6 +29,7 @@ namespace KowWhoisApi.Services
 			IAddressesService addresses
 			)
 		{
+			_logger = logger;
 			_context = context;
 			_nameServers = nameServers;
 			_domains = domains;
@@ -37,7 +42,7 @@ namespace KowWhoisApi.Services
 			var snapshot = new Snapshot();
 
 			snapshot.Domain = _domains.FindOrInsert(piosResult.Domain);
-			var addresses = Dns.GetHostAddresses(snapshot.Domain.Name);
+			var addresses = Resolve(snapshot.Domain.Name);
 			foreach (var address in addresses)
 			{
 				var ip = _addresses.FindOrInsert(address);
@@ -46,13 +51,13 @@ namespace KowWhoisApi.Services
 
 			if (piosResult.IsRegistered)
 			{
-				Registrar r = _registrars.FindOrInsert(piosResult.Registrar);
+				snapshot.Registrar = _registrars.FindOrInsert(piosResult.Registrar);
 
 				foreach (var nameServer in piosResult.NameServers)
 				{
 					NameServer ns = _nameServers.FindOrInsert(nameServer);
 
-					addresses = Dns.GetHostAddresses(ns.Name);
+					addresses = Resolve(ns.Name);
 					foreach (var address in addresses)
 					{
 						var ip = _addresses.FindOrInsert(address);
@@ -130,6 +135,19 @@ namespace KowWhoisApi.Services
 		public Snapshot FindOrInsert(Snapshot entity)
 		{
 			throw new System.NotImplementedException();
+		}
+
+		private IPAddress[] Resolve(string hostName)
+		{
+			try
+			{
+				return Dns.GetHostAddresses(hostName);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogWarning($"Host {hostName} not found.");
+				return new IPAddress[] { };
+			}
 		}
 	}
 }

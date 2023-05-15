@@ -18,10 +18,16 @@ namespace KowWhoisApi.Services
 		public Registrar FindOrInsert(Registrar registrar)
 		{
 			// Try to find the entity in the database.
-			var from_db = _context.Registrars.SingleOrDefault(d => d.Name == registrar.Name);
+			var from_db = _context.Registrars.SingleOrDefault(r => r.Name == registrar.Name);
 
 			// If it's not in the DB, create it. Either way, return the entity.
-			if (from_db == null) return _context.Registrars.Add(registrar).Entity;
+			if (from_db == null)
+			{
+				var fresh = _context.Registrars.Add(registrar).Entity;
+				_context.SaveChanges();
+				return fresh;
+			}
+
 			return from_db;
 		}
 
