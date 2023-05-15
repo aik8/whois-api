@@ -20,6 +20,6 @@ insert_final_newline = true
 trim_trailing_whitespace = false
 
 # Different indentaion rules for JSON files
-[*.{json,rules,xml,csproj}]
+[*.{json,rules,xml,csproj,yml}]
 indent_style = space
 indent_size = 2

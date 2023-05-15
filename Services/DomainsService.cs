@@ -22,7 +22,13 @@ namespace KowWhoisApi.Services
 			var from_db = _context.Domains.SingleOrDefault(d => d.Name == domain.Name);
 
 			// If it's not in the DB, create it. Either way, return the entity.
-			if (from_db == null) return _context.Domains.Add(domain).Entity;
+			if (from_db == null)
+			{
+				var fresh = _context.Domains.Add(domain).Entity;
+				_context.SaveChanges();
+				return fresh;
+			}
+
 			return from_db;
 		}
 

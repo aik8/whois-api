@@ -21,7 +21,13 @@ namespace KowWhoisApi.Services
 			var from_db = _context.NameServers.SingleOrDefault(ns => ns.Name == nameserver.Name);
 
 			// If it's not in the DB, create it. Either way, return the entity.
-			if (from_db == null) return _context.NameServers.Add(nameserver).Entity;
+			if (from_db == null)
+			{
+				var fresh = _context.NameServers.Add(nameserver).Entity;
+				_context.SaveChanges();
+				return fresh;
+			}
+
 			return from_db;
 		}
 

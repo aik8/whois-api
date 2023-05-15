@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using KowWhoisApi.Data;
@@ -23,7 +22,13 @@ namespace KowWhoisApi.Services
 			var from_db = _context.Addresses.SingleOrDefault(a => a.IpRaw == address.IpRaw);
 
 			// If it's not in the DB, create it. Either way, return the Address.
-			if (from_db == null) return _context.Addresses.Add(address).Entity;
+			if (from_db == null)
+			{
+				var fresh = _context.Addresses.Add(address).Entity;
+				_context.SaveChanges();
+				return fresh;
+			}
+
 			return from_db;
 		}
 
