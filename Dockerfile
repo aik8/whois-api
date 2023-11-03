@@ -10,7 +10,7 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o out -p:PublishSingleFile=true --self-contained=true
 
 ## Final Stage ##
 FROM mcr.microsoft.com/dotnet/aspnet:7.0

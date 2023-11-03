@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace KowWhoisApi.Interfaces
 {
 	public interface IDbService<T>
@@ -10,6 +8,13 @@ namespace KowWhoisApi.Interfaces
 		/// <param name="entity">The entity to be found.</param>
 		/// <returns>The found or the freshly created entity.</returns>
 		T FindOrInsert(T entity);
+
+		/// <summary>
+		/// Saves the given entity to the database.
+		/// </summary>
+		/// <param name="entity">The entity to be saved in the database.</param>
+		/// <returns></returns>
+		// T Insert(T entity);
 
 		/// <summary>
 		/// Find a specific entity (or all entities, if no parameter is given)

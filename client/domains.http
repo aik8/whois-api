@@ -9,3 +9,5 @@ GET {{baseUrl}}/domains/4
 GET {{baseUrl}}/domains?id=4
 ###
 GET {{baseUrl}}/domains?name=devoid.gr
+###
+GET {{baseUrl}}/domains?name=dev&per_page=3&page=1
