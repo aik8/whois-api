@@ -39,9 +39,16 @@ namespace KowWhoisApi.Services
 
 		public Snapshot Generate(IPiosResult piosResult)
 		{
+			// Create an empty snapshot.
 			var snapshot = new Snapshot();
 
+			// Is the domain registered?
+			snapshot.IsRegistered = piosResult.IsRegistered;
+
+			// Add the basic domain information.
 			snapshot.Domain = _domains.FindOrInsert(piosResult.Domain);
+
+			// Add addresses to the domain.
 			var addresses = Resolve(snapshot.Domain.Name);
 			foreach (var address in addresses)
 			{
@@ -143,7 +150,7 @@ namespace KowWhoisApi.Services
 			{
 				return Dns.GetHostAddresses(hostName);
 			}
-			catch (Exception ex)
+			catch
 			{
 				_logger.LogWarning($"Host {hostName} not found.");
 				return new IPAddress[] { };

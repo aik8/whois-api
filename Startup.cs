@@ -69,6 +69,8 @@ namespace KowWhoisApi
 			services.AddControllers()
 				.AddNewtonsoftJson(
 					options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+			services.AddEndpointsApiExplorer();
+			services.AddSwaggerGen();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +79,8 @@ namespace KowWhoisApi
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
+				app.UseSwagger();
+				app.UseSwaggerUI();
 			}
 			else
 			{
@@ -85,6 +89,7 @@ namespace KowWhoisApi
 			}
 
 			app.UseStaticFiles();
+			app.UseStatusCodePages();
 
 			// Setup request logging using Serilog.
 			app.UseSerilogRequestLogging(options =>

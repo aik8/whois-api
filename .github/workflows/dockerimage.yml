@@ -3,12 +3,12 @@ name: Docker Image CI
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - v*.*.*
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag proteuscortex/whois-api:$(GITHUB_REF#refs/*/) --tag proteuscortex/whois-api:latest
+        run: docker build . --file Dockerfile --tag proteuscortex/whois-api:${GITHUB_REF#refs/*/} --tag proteuscortex/whois-api:latest

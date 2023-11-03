@@ -23,6 +23,9 @@ namespace KowWhoisApi.Models
 		public uint DomainId { get; set; }
 		public virtual Domain Domain { get; set; }
 
+		[Column("is_registered")]
+		public bool IsRegistered { get; set; }
+
 		[Column("created_at", TypeName = "TIMESTAMP")]
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public DateTime CreatedAt { get; set; }

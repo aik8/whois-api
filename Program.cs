@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Threading;
 using KowWhoisApi.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -15,23 +16,7 @@ namespace KowWhoisApi
 		public static void Main(string[] args)
 		{
 			var webHost = CreateHostBuilder(args).Build();
-
-			using (var scope = webHost.Services.CreateScope())
-			{
-				var services = scope.ServiceProvider;
-
-				try
-				{
-					var db = services.GetRequiredService<WhoisContext>();
-					db.Database.Migrate();
-				}
-				catch (Exception ex)
-				{
-					var logger = services.GetRequiredService<ILogger<Program>>();
-					logger.LogError(ex, "An error occured while migrating the datbase.");
-				}
-			}
-
+			Migrate(webHost);
 			webHost.Run();
 		}
 
@@ -51,5 +36,26 @@ namespace KowWhoisApi
 
 					webBuilder.UseStartup<Startup>();
 				});
+
+		private static void Migrate(IHost webHost)
+		{
+			using (var scope = webHost.Services.CreateScope())
+			{
+				var services = scope.ServiceProvider;
+
+				try
+				{
+					var db = services.GetRequiredService<WhoisContext>();
+					db.Database.Migrate();
+				}
+				catch (Exception ex)
+				{
+					var logger = services.GetRequiredService<ILogger<Program>>();
+					logger.LogError(ex, "An error occured while migrating the datbase.");
+					Thread.Sleep(TimeSpan.FromSeconds(10));
+					Migrate(webHost);
+				}
+			}
+		}
 	}
 }
