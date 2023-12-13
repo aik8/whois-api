@@ -4,11 +4,29 @@ on:
   push:
     tags:
       - v*.*.*
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Log in to Github Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag proteuscortex/whois-api:${GITHUB_REF#refs/*/} --tag proteuscortex/whois-api:latest
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository }}:${{ github.ref }}
+          VERSION=${GITHUB_REF#refs/*/}
+
+          # Build the Docker image
+          docker build . --file Dockerfile --tag $IMAGE_ID --build-arg VERSION=$VERSION
+
+          # Push the Docker image to the Github Container Registry
+          docker push $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:latest
