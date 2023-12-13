@@ -21,11 +21,11 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          IMAGE_ID=ghcr.io/proteuscortex/kow-whois-api:${GITHUB_REF#refs/*/}
+          IMAGE_ID=ghcr.io/proteuscortex/whois-api
           VERSION=${GITHUB_REF#refs/*/}
 
           # Build the Docker image
-          docker build . --file Dockerfile --tag $IMAGE_ID --build-arg VERSION=$VERSION
+          docker build . --file Dockerfile --tag $IMAGE_ID:$VERSION --tag $IMAGE_ID:latest --build-arg VERSION=$VERSION
 
           # Push the Docker image to the Github Container Registry
           docker push $IMAGE_ID:$VERSION
