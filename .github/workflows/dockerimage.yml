@@ -19,14 +19,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set lower case owner name
-        run: echo "OWNER_LC=${OWNER,,}" >> ${GITHUB_ENV}
-        env:
-          OWNER: '${{ github.repository_owner }}'
-
       - name: Build the Docker image
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/*/}
+          IMAGE_ID=ghcr.io/proteuscortex/kow-whois-api:${GITHUB_REF#refs/*/}
           VERSION=${GITHUB_REF#refs/*/}
 
           # Build the Docker image
