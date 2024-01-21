@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Create Docker Image
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
 
       - name: Build the Docker image
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository }}:${{ github.ref }}
+          IMAGE_ID=ghcr.io/${{ github.repository }}:${GITHUB_REF#refs/*/}
           VERSION=${GITHUB_REF#refs/*/}
 
           # Build the Docker image
