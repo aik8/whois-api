@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using KowWhoisApi.Services;
-using KowWhoisApi.Interfaces;
-using KowWhoisApi.Data;
-using KowWhoisApi.Models;
+using GrWhoisApi.Services;
+using GrWhoisApi.Interfaces;
+using GrWhoisApi.Data;
+using GrWhoisApi.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Caching.Memory;
 using Serilog;
 
-namespace KowWhoisApi
+namespace GrWhoisApi
 {
 	public class Startup
 	{

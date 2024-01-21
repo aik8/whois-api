@@ -1,11 +1,11 @@
 using System;
-using KowWhoisApi.Interfaces;
-using KowWhoisApi.Models;
+using GrWhoisApi.Interfaces;
+using GrWhoisApi.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace KowWhoisApi.Services
+namespace GrWhoisApi.Services
 {
 	public class CacheService : ICacheService<Snapshot>
 	{

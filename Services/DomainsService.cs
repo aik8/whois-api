@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using KowWhoisApi.Data;
-using KowWhoisApi.Interfaces;
-using KowWhoisApi.Models;
+using GrWhoisApi.Data;
+using GrWhoisApi.Interfaces;
+using GrWhoisApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace KowWhoisApi.Services
+namespace GrWhoisApi.Services
 {
 	public class DomainsService : IDomainsService
 	{

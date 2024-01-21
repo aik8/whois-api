@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using KowWhoisApi.Data;
-using KowWhoisApi.Interfaces;
-using KowWhoisApi.Models;
+using GrWhoisApi.Data;
+using GrWhoisApi.Interfaces;
+using GrWhoisApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace KowWhoisApi.Services
+namespace GrWhoisApi.Services
 {
 	public class SnapshotsService : ISnapshotsService
 	{

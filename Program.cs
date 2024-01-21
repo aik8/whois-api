@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using System.Threading;
-using KowWhoisApi.Data;
+using GrWhoisApi.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
 
-namespace KowWhoisApi
+namespace GrWhoisApi
 {
 	public class Program
 	{

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace KowWhoisApi.Migrations
+namespace GrWhoisApi.Migrations
 {
     /// <inheritdoc />
     public partial class AddSnapshotIsRegisteredProperty : Migration

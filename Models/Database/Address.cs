@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 using Newtonsoft.Json;
 
-namespace KowWhoisApi.Models
+namespace GrWhoisApi.Models
 {
 	[Table("address")]
 	public class Address

@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using KowWhoisApi.Interfaces;
-using KowWhoisApi.Models;
+using GrWhoisApi.Interfaces;
+using GrWhoisApi.Models;
 
-namespace KowWhoisApi.Controllers
+namespace GrWhoisApi.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]

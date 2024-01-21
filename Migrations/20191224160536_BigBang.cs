@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace KowWhoisApi.Migrations
+namespace GrWhoisApi.Migrations
 {
 	public partial class BigBang : Migration
 	{

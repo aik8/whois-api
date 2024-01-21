@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Net;
-using KowWhoisApi.Models;
+using GrWhoisApi.Models;
 
-namespace KowWhoisApi.Interfaces
+namespace GrWhoisApi.Interfaces
 {
 	public interface IAddressesService : IDbService<Address>
 	{

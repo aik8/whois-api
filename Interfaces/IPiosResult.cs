@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using KowWhoisApi.Models;
+using GrWhoisApi.Models;
 
-namespace KowWhoisApi.Interfaces {
+namespace GrWhoisApi.Interfaces {
 
 	/// <summary>
 	/// Represents the processed results from a query to the registry.

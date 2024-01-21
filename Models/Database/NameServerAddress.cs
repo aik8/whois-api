@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
-namespace KowWhoisApi.Models
+namespace GrWhoisApi.Models
 {
 	[Table("rel_nameserver_address")]
 	public class NameServerAddress

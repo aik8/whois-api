@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using KowWhoisApi.Models;
-using KowWhoisApi.Interfaces;
+using GrWhoisApi.Models;
+using GrWhoisApi.Interfaces;
 using System;
 using System.Globalization;
 
-namespace KowWhoisApi.Data
+namespace GrWhoisApi.Data
 {
 	/// <summary>
 	/// Implements the <see cref="IPiosResult"> interface in a simple way.

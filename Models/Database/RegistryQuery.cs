@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
-namespace KowWhoisApi.Models
+namespace GrWhoisApi.Models
 {
 	[Table("registry_query")]
 	public class RegistryQuery

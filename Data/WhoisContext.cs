@@ -1,9 +1,9 @@
 using System;
-using KowWhoisApi.Models;
+using GrWhoisApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
-namespace KowWhoisApi.Data
+namespace GrWhoisApi.Data
 {
 	public class WhoisContext : DbContext
 	{

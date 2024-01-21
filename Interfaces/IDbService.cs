@@ -1,4 +1,4 @@
-namespace KowWhoisApi.Interfaces
+namespace GrWhoisApi.Interfaces
 {
 	public interface IDbService<T>
 	{

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace KowWhoisApi.Migrations
+namespace GrWhoisApi.Migrations
 {
     /// <inheritdoc />
     public partial class AddDomainAndNameServerIPAddresses : Migration

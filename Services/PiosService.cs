@@ -1,16 +1,16 @@
 using System;
 using HtmlAgilityPack;
-using KowWhoisApi.Models;
-using KowWhoisApi.Data;
-using KowWhoisApi.Interfaces;
+using GrWhoisApi.Models;
+using GrWhoisApi.Data;
+using GrWhoisApi.Interfaces;
 using Microsoft.Extensions.Logging;
-using KowWhoisApi.Utilities;
+using GrWhoisApi.Utilities;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Caching.Memory;
 using System.Threading.Tasks;
 using System.Net;
 
-namespace KowWhoisApi.Services
+namespace GrWhoisApi.Services
 {
 	public class PiosService : IPiosService
 	{

@@ -1,8 +1,8 @@
-using KowWhoisApi.Data;
-using KowWhoisApi.Interfaces;
+using GrWhoisApi.Data;
+using GrWhoisApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace KowWhoisApi.Controllers
+namespace GrWhoisApi.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]

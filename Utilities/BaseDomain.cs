@@ -3,7 +3,7 @@ using System.Globalization;
 using System;
 using System.Text.RegularExpressions;
 
-namespace KowWhoisApi.Utilities
+namespace GrWhoisApi.Utilities
 {
 	/// <summary>
 	/// Represents a base domain, extracted from a provided hostname.

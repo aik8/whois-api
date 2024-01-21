@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace KowWhoisApi.Interfaces
+namespace GrWhoisApi.Interfaces
 {
 	public interface IPagedResponse<T>
 	{

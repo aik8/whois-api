@@ -1,8 +1,8 @@
-using KowWhoisApi.Interfaces;
+using GrWhoisApi.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace KowWhoisApi.Controllers
+namespace GrWhoisApi.Controllers
 {
 	[ApiController]
 	[Route("[controller]")]

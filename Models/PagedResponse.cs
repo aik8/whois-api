@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using KowWhoisApi.Interfaces;
+using GrWhoisApi.Interfaces;
 
-namespace KowWhoisApi.Models
+namespace GrWhoisApi.Models
 {
 	public class PagedResponse<T> : IPagedResponse<T>
 	{

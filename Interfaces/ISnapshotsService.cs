@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using KowWhoisApi.Models;
+using GrWhoisApi.Models;
 
-namespace KowWhoisApi.Interfaces
+namespace GrWhoisApi.Interfaces
 {
 	public interface ISnapshotsService : IDbService<Snapshot>
 	{
