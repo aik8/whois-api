@@ -21,7 +21,7 @@ namespace GrWhoisApi.Controllers
 		{
 			if (id != null)
 			{
-				return Ok(_domains.Find((uint)id));
+				return Ok(_domains.Get((uint)id));
 			}
 			else
 			{

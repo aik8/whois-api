@@ -1,4 +1,3 @@
-using System;
 using GrWhoisApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;

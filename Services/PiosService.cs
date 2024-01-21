@@ -7,29 +7,30 @@ using Microsoft.Extensions.Logging;
 using GrWhoisApi.Utilities;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Caching.Memory;
-using System.Threading.Tasks;
-using System.Net;
 
 namespace GrWhoisApi.Services
 {
 	public class PiosService : IPiosService
 	{
-		private readonly PiosServiceOptions _options;
+		private readonly QueryServiceOptions _options;
 
 		private readonly ILogger _logger;
-		private UriBuilder _builder;
+		private readonly UriBuilder _builder;
+		private readonly HtmlWeb _web;
 
 
 		public PiosService(
-			IOptions<PiosServiceOptions> options,
+			IOptions<QueryServiceOptions> options,
 			ILogger<PiosService> logger,
-			IMemoryCache cache)
+			IMemoryCache cache,
+			HtmlWeb web)
 		{
 			// Initialize the options.
 			_options = options.Value;
 
 			// Initialize injected stuff.
 			_logger = logger;
+			_web = web;
 
 			// Determine the scheme to be used.
 			var scheme = _options.Secure ? "https" : "http";
@@ -59,17 +60,30 @@ namespace GrWhoisApi.Services
 			// Fill in the domain query.
 			_builder.Query = $"domainName={baseDomain}";
 
-			// Fetch what needs to be fetched.
-			HtmlWeb web = new HtmlWeb();
-			var htmlDoc = web.Load(_builder.Uri);
+			// Prepare the result variable.
+			PiosResult result;
 
-			// Isolate the response body.
-			var node = htmlDoc.DocumentNode.SelectSingleNode("//body");
+			try
+			{
+				// Fetch the resutls from the registry.
+				var htmlDoc = _web.Load(_builder.Uri);
 
-			// Parse the result.
-			var result = PiosResult.Parse(baseDomain.Value, node.InnerText);
+				// Isolate the response body.
+				var node = htmlDoc.DocumentNode.SelectSingleNode("//body");
 
-			// We are done here.
+				// Parse the result.
+				result = PiosResult.Parse(baseDomain.Value, node.InnerText);
+			}
+			catch (Exception ex)
+			{
+				// Log the error.
+				_logger.LogError(ex, $"An error occured while fetching results for {baseDomain}.");
+
+				// Return an empty result.
+				result = new PiosResult(domain);
+			}
+
+			// Return the result.
 			return result;
 		}
 	}

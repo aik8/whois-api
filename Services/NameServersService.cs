@@ -31,7 +31,7 @@ namespace GrWhoisApi.Services
 			return from_db;
 		}
 
-		public NameServer Find(uint id)
+		public NameServer Get(uint id)
 		{
 			return _context.NameServers.SingleOrDefault(ns => ns.Id == id);
 		}
@@ -52,6 +52,16 @@ namespace GrWhoisApi.Services
 				.ToList();
 
 			return new PagedResponse<NameServer>(paged_data, total, page, per_page);
+		}
+
+		public NameServer Insert(NameServer entity)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public NameServer Update(NameServer entity)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

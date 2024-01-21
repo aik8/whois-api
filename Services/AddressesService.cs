@@ -42,7 +42,7 @@ namespace GrWhoisApi.Services
 			return from_db;
 		}
 
-		public Address Find(uint id)
+		public Address Get(uint id)
 		{
 			return _context.Addresses.SingleOrDefault(a => a.Id == id);
 		}
@@ -61,6 +61,16 @@ namespace GrWhoisApi.Services
 				.ToList();
 
 			return new PagedResponse<Address>(paged_data, total, page, per_page);
+		}
+
+		public Address Insert(Address entity)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public Address Update(Address entity)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

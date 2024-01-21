@@ -13,15 +13,23 @@ namespace GrWhoisApi.Interfaces
 		/// Saves the given entity to the database.
 		/// </summary>
 		/// <param name="entity">The entity to be saved in the database.</param>
-		/// <returns></returns>
-		// T Insert(T entity);
+		/// <returns>The inserted entity.</returns>
+		T Insert(T entity);
 
 		/// <summary>
-		/// Find a specific entity (or all entities, if no parameter is given)
+		/// Updates the given entity in the database.
+		/// </summary>
+		/// <param name="entity">The entity to be updated in the database.</param>
+		/// <returns>The updated entity.</returns>
+		/// <exception cref="System.ArgumentException">Thrown when the entity does not exist in the database.</exception>
+		T Update(T entity);
+
+		/// <summary>
+		/// Get a specific entity.
 		/// </summary>
 		/// <param name="id">The entity ID to be found.</param>
 		/// <returns>The requested entity, or null.</returns>
-		T Find(uint id);
+		T Get(uint id);
 
 		/// <summary>
 		/// Search for entities based on an identifying string property.

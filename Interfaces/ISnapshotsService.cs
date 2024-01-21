@@ -13,7 +13,6 @@ namespace GrWhoisApi.Interfaces
 		/// <returns>A <see cref="Task"/> that resolves to the newly created <see cref="Snapshot"/>.</returns>
 		Snapshot Find(IPiosResult piosResult);
 
-		void Insert(Snapshot snapshot);
 		Snapshot Generate(IPiosResult piosResult);
 	}
 }

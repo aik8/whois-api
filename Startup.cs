@@ -29,7 +29,7 @@ namespace GrWhoisApi
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.Configure<PiosServiceOptions>(Configuration.GetSection(PiosServiceOptions.PiosService));
+			services.Configure<QueryServiceOptions>(Configuration.GetSection(QueryServiceOptions.QueryService));
 
 			// Add our services.
 			services.AddTransient<IPiosService, PiosService>();
@@ -42,6 +42,7 @@ namespace GrWhoisApi
 
 			// Add the actual MemoryCache service.
 			services.AddSingleton<IMemoryCache, MemoryCache>();
+			services.AddTransient<HtmlAgilityPack.HtmlWeb>();
 
 			// Add CORS.
 			services.AddCors(options =>

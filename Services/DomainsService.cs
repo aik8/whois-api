@@ -32,7 +32,7 @@ namespace GrWhoisApi.Services
 			return from_db;
 		}
 
-		public Domain Find(uint id)
+		public Domain Get(uint id)
 		{
 			return _context.Domains.SingleOrDefault(d => d.Id == id);
 		}
@@ -53,6 +53,16 @@ namespace GrWhoisApi.Services
 				.ToList();
 
 			return new PagedResponse<Domain>(paged_data, total, page, per_page);
+		}
+
+		public Domain Insert(Domain entity)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public Domain Update(Domain entity)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

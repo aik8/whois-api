@@ -31,7 +31,7 @@ namespace GrWhoisApi.Services
 			return from_db;
 		}
 
-		public Registrar Find(uint id)
+		public Registrar Get(uint id)
 		{
 			return _context.Registrars.SingleOrDefault(r => r.Id == id);
 		}
@@ -50,6 +50,16 @@ namespace GrWhoisApi.Services
 				.ToList();
 
 			return new PagedResponse<Registrar>(paged_data, total, page, per_page);
+		}
+
+		public Registrar Insert(Registrar entity)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public Registrar Update(Registrar entity)
+		{
+			throw new System.NotImplementedException();
 		}
 	}
 }

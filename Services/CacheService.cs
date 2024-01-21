@@ -14,7 +14,7 @@ namespace GrWhoisApi.Services
 		private readonly MemoryCacheEntryOptions _entry_options;
 
 		public CacheService(
-			IOptions<PiosServiceOptions> options,
+			IOptions<QueryServiceOptions> options,
 			ILogger<CacheService> logger,
 			IMemoryCache cache
 		)
@@ -34,7 +34,7 @@ namespace GrWhoisApi.Services
 			Snapshot value = new Snapshot();
 			if (_cache.TryGetValue<Snapshot>(key, out value))
 			{
-				_logger.LogInformation($"Found {key} in cache.");
+				_logger.LogDebug($"Found {key} in cache.");
 				value.IsCached = true;
 			}
 

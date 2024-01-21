@@ -85,7 +85,7 @@ namespace GrWhoisApi.Services
 			_context.SaveChanges();
 		}
 
-		public Snapshot Find(uint id)
+		public Snapshot Get(uint id)
 		{
 			return _context.Snapshots
 				.Include(s => s.Domain)
@@ -155,6 +155,16 @@ namespace GrWhoisApi.Services
 				_logger.LogWarning($"Host {hostName} not found.");
 				return new IPAddress[] { };
 			}
+		}
+
+		Snapshot IDbService<Snapshot>.Insert(Snapshot entity)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Snapshot Update(Snapshot entity)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
