@@ -68,8 +68,7 @@ namespace GrWhoisApi
 
 			// Add controllers, using Newtonsoft.JSON to
 			services.AddControllers()
-				.AddNewtonsoftJson(
-					options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+				.AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 			services.AddEndpointsApiExplorer();
 			services.AddSwaggerGen();
 		}
