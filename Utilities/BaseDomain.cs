@@ -22,6 +22,7 @@ namespace GrWhoisApi.Utilities
 
 		public string Value { get; private set; }
 		public bool IsValid { get => Value != null; }
+		public bool IsGreek { get; private set; } = false;
 
 		public override string ToString() => Value;
 
@@ -96,6 +97,7 @@ namespace GrWhoisApi.Utilities
 
 			// Is it Greek?
 			if (!IsGreekTld(tld)) return null;
+			IsGreek = true;
 
 			// Does it use a subTLD?
 			var subtld = parts[length - 2];
@@ -103,8 +105,8 @@ namespace GrWhoisApi.Utilities
 
 			// Take the necessary parts to build the base domain.
 			return sub
-			? String.Join('.', new string[] { parts[length - 3], subtld, tld })
-			: String.Join('.', new string[] { subtld, tld });
+			? string.Join('.', [parts[length - 3], subtld, tld])
+			: string.Join('.', [subtld, tld]);
 		}
 
 		/// <summary>
